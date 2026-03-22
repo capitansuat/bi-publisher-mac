@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="TaskPaneApp">
+
+  <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>BI Publisher Tools</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="BI Publisher"/>
+  <Description DefaultValue="Oracle BI Publisher Template Builder for macOS — design report templates in Word."/>
+  <IconUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-80.png"/>
+  <SupportUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/help.html"/>
+
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html"/>
+  </DefaultSettings>
+
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+                    xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+
+          <FunctionFile resid="Commands.Url"/>
+
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <CustomTab id="TabPublisher">
+
+              <!-- ============ ONLINE ============ -->
+              <Group id="grpOnline">
+                <Label resid="grpOnline.Label"/>
+                <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnLogOn">
+                  <Label resid="btnLogOn.Label"/>
+                  <Supertip><Title resid="btnLogOn.Label"/><Description resid="btnLogOn.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>BIPTaskpane</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnOpen">
+                  <Label resid="btnOpen.Label"/>
+                  <Supertip><Title resid="btnOpen.Label"/><Description resid="btnOpen.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdOpen</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnUpload">
+                  <Label resid="btnUpload.Label"/>
+                  <Supertip><Title resid="btnUpload.Label"/><Description resid="btnUpload.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdUpload</FunctionName></Action>
+                </Control>
+              </Group>
+
+              <!-- ============ LOAD DATA ============ -->
+              <Group id="grpLoadData">
+                <Label resid="grpLoadData.Label"/>
+                <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnSampleXML">
+                  <Label resid="btnSampleXML.Label"/>
+                  <Supertip><Title resid="btnSampleXML.Label"/><Description resid="btnSampleXML.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdSampleXML</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnXMLSchema">
+                  <Label resid="btnXMLSchema.Label"/>
+                  <Supertip><Title resid="btnXMLSchema.Label"/><Description resid="btnXMLSchema.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdXMLSchema</FunctionName></Action>
+                </Control>
+              </Group>
+
+              <!-- ============ INSERT ============ -->
+              <Group id="grpInsert">
+                <Label resid="grpInsert.Label"/>
+                <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnTableWizard">
+                  <Label resid="btnTableWizard.Label"/>
+                  <Supertip><Title resid="btnTableWizard.Label"/><Description resid="btnTableWizard.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdTableWizard</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnPivotTable">
+                  <Label resid="btnPivotTable.Label"/>
+                  <Supertip><Title resid="btnPivotTable.Label"/><Description resid="btnPivotTable.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPivotTable</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnChart">
+                  <Label resid="btnChart.Label"/>
+                  <Supertip><Title resid="btnChart.Label"/><Description resid="btnChart.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdChart</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnField">
+                  <Label resid="btnField.Label"/>
+                  <Supertip><Title resid="btnField.Label"/><Description resid="btnField.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdField</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnTableForm">
+                  <Label resid="btnTableForm.Label"/>
+                  <Supertip><Title resid="btnTableForm.Label"/><Description resid="btnTableForm.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdTableForm</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnRepeatingGroup">
+                  <Label resid="btnRepeatingGroup.Label"/>
+                  <Supertip><Title resid="btnRepeatingGroup.Label"/><Description resid="btnRepeatingGroup.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdRepeatingGroup</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnCondFormat">
+                  <Label resid="btnCondFormat.Label"/>
+                  <Supertip><Title resid="btnCondFormat.Label"/><Description resid="btnCondFormat.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondFormat</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnCondRegion">
+                  <Label resid="btnCondRegion.Label"/>
+                  <Supertip><Title resid="btnCondRegion.Label"/><Description resid="btnCondRegion.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondRegion</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnAllFields">
+                  <Label resid="btnAllFields.Label"/>
+                  <Supertip><Title resid="btnAllFields.Label"/><Description resid="btnAllFields.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdAllFields</FunctionName></Action>
+                </Control>
+              </Group>
+
+              <!-- ============ PREVIEW ============ -->
+              <Group id="grpPreview">
+                <Label resid="grpPreview.Label"/>
+                <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnPDF">
+                  <Label resid="btnPDF.Label"/>
+                  <Supertip><Title resid="btnPDF.Label"/><Description resid="btnPDF.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewPDF</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnHTML">
+                  <Label resid="btnHTML.Label"/>
+                  <Supertip><Title resid="btnHTML.Label"/><Description resid="btnHTML.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewHTML</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnExcel">
+                  <Label resid="btnExcel.Label"/>
+                  <Supertip><Title resid="btnExcel.Label"/><Description resid="btnExcel.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewExcel</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnExcel2000">
+                  <Label resid="btnExcel2000.Label"/>
+                  <Supertip><Title resid="btnExcel2000.Label"/><Description resid="btnExcel2000.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewExcel2000</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnRTF">
+                  <Label resid="btnRTF.Label"/>
+                  <Supertip><Title resid="btnRTF.Label"/><Description resid="btnRTF.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewRTF</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnPPTX">
+                  <Label resid="btnPPTX.Label"/>
+                  <Supertip><Title resid="btnPPTX.Label"/><Description resid="btnPPTX.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewPPTX</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnDOCX">
+                  <Label resid="btnDOCX.Label"/>
+                  <Supertip><Title resid="btnDOCX.Label"/><Description resid="btnDOCX.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewDOCX</FunctionName></Action>
+                </Control>
+              </Group>
+
+              <!-- ============ TOOLS ============ -->
+              <Group id="grpTools">
+                <Label resid="grpTools.Label"/>
+                <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnFieldBrowser">
+                  <Label resid="btnFieldBrowser.Label"/>
+                  <Supertip><Title resid="btnFieldBrowser.Label"/><Description resid="btnFieldBrowser.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdFieldBrowser</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnValidate">
+                  <Label resid="btnValidate.Label"/>
+                  <Supertip><Title resid="btnValidate.Label"/><Description resid="btnValidate.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdValidate</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnAccessibility">
+                  <Label resid="btnAccessibility.Label"/>
+                  <Supertip><Title resid="btnAccessibility.Label"/><Description resid="btnAccessibility.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdAccessibility</FunctionName></Action>
+                </Control>
+
+                <Control xsi:type="Menu" id="menuTranslation">
+                  <Label resid="menuTranslation.Label"/>
+                  <Supertip><Title resid="menuTranslation.Label"/><Description resid="menuTranslation.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Items>
+                    <Item id="itemExtractText">
+                      <Label resid="btnExtractText.Label"/>
+                      <Supertip><Title resid="btnExtractText.Label"/><Description resid="btnExtractText.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdExtractText</FunctionName></Action>
+                    </Item>
+                    <Item id="itemPreviewTranslation">
+                      <Label resid="btnPreviewTranslation.Label"/>
+                      <Supertip><Title resid="btnPreviewTranslation.Label"/><Description resid="btnPreviewTranslation.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewTranslation</FunctionName></Action>
+                    </Item>
+                    <Item id="itemLocalize">
+                      <Label resid="btnLocalize.Label"/>
+                      <Supertip><Title resid="btnLocalize.Label"/><Description resid="btnLocalize.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdLocalize</FunctionName></Action>
+                    </Item>
+                  </Items>
+                </Control>
+
+                <Control xsi:type="Menu" id="menuExport">
+                  <Label resid="menuExport.Label"/>
+                  <Supertip><Title resid="menuExport.Label"/><Description resid="menuExport.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Items>
+                    <Item id="itemExportXslFo">
+                      <Label resid="btnExportXslFo.Label"/>
+                      <Supertip><Title resid="btnExportXslFo.Label"/><Description resid="btnExportXslFo.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdExportXslFo</FunctionName></Action>
+                    </Item>
+                    <Item id="itemExportXml">
+                      <Label resid="btnExportXml.Label"/>
+                      <Supertip><Title resid="btnExportXml.Label"/><Description resid="btnExportXml.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdExportXml</FunctionName></Action>
+                    </Item>
+                    <Item id="itemExportPdf">
+                      <Label resid="btnExportPdf.Label"/>
+                      <Supertip><Title resid="btnExportPdf.Label"/><Description resid="btnExportPdf.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdExportPdf</FunctionName></Action>
+                    </Item>
+                  </Items>
+                </Control>
+              </Group>
+
+              <!-- ============ OPTIONS ============ -->
+              <Group id="grpOptions">
+                <Label resid="grpOptions.Label"/>
+                <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+
+                <Control xsi:type="Menu" id="menuOptions">
+                  <Label resid="menuOptions.Label"/>
+                  <Supertip><Title resid="menuOptions.Label"/><Description resid="menuOptions.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Items>
+                    <Item id="itemOptions">
+                      <Label resid="btnOptionsItem.Label"/>
+                      <Supertip><Title resid="btnOptionsItem.Label"/><Description resid="btnOptionsItem.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdOptions</FunctionName></Action>
+                    </Item>
+                    <Item id="itemHelp">
+                      <Label resid="btnHelp.Label"/>
+                      <Supertip><Title resid="btnHelp.Label"/><Description resid="btnHelp.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdHelp</FunctionName></Action>
+                    </Item>
+                    <Item id="itemAbout">
+                      <Label resid="btnAbout.Label"/>
+                      <Supertip><Title resid="btnAbout.Label"/><Description resid="btnAbout.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdAbout</FunctionName></Action>
+                    </Item>
+                  </Items>
+                </Control>
+              </Group>
+
+              <Label resid="tabPublisher.Label"/>
+            </CustomTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon.16" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-16.png"/>
+        <bt:Image id="icon.32" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-32.png"/>
+        <bt:Image id="icon.80" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="tabPublisher.Label" DefaultValue="Publisher"/>
+        <bt:String id="grpOnline.Label" DefaultValue="Online"/>
+        <bt:String id="btnLogOn.Label" DefaultValue="Log On"/>
+        <bt:String id="btnOpen.Label" DefaultValue="Open"/>
+        <bt:String id="btnUpload.Label" DefaultValue="Upload Template"/>
+        <bt:String id="grpLoadData.Label" DefaultValue="Load Data"/>
+        <bt:String id="btnSampleXML.Label" DefaultValue="Sample XML"/>
+        <bt:String id="btnXMLSchema.Label" DefaultValue="XML Schema"/>
+        <bt:String id="grpInsert.Label" DefaultValue="Insert"/>
+        <bt:String id="btnTableWizard.Label" DefaultValue="Table Wizard"/>
+        <bt:String id="btnPivotTable.Label" DefaultValue="Pivot Table"/>
+        <bt:String id="btnChart.Label" DefaultValue="Chart"/>
+        <bt:String id="btnField.Label" DefaultValue="Field"/>
+        <bt:String id="btnTableForm.Label" DefaultValue="Table/Form"/>
+        <bt:String id="btnRepeatingGroup.Label" DefaultValue="Repeating Group"/>
+        <bt:String id="btnCondFormat.Label" DefaultValue="Conditional Format"/>
+        <bt:String id="btnCondRegion.Label" DefaultValue="Conditional Region"/>
+        <bt:String id="btnAllFields.Label" DefaultValue="All Fields"/>
+        <bt:String id="grpPreview.Label" DefaultValue="Preview"/>
+        <bt:String id="btnPDF.Label" DefaultValue="PDF"/>
+        <bt:String id="btnHTML.Label" DefaultValue="HTML"/>
+        <bt:String id="btnExcel.Label" DefaultValue="Excel"/>
+        <bt:String id="btnExcel2000.Label" DefaultValue="Excel2000"/>
+        <bt:String id="btnRTF.Label" DefaultValue="RTF"/>
+        <bt:String id="btnPPTX.Label" DefaultValue="PowerPoint"/>
+        <bt:String id="btnDOCX.Label" DefaultValue="DOCX"/>
+        <bt:String id="grpTools.Label" DefaultValue="Tools"/>
+        <bt:String id="btnFieldBrowser.Label" DefaultValue="Field Browser"/>
+        <bt:String id="btnValidate.Label" DefaultValue="Validate Template"/>
+        <bt:String id="btnAccessibility.Label" DefaultValue="Check Accessibility"/>
+        <bt:String id="menuTranslation.Label" DefaultValue="Translation"/>
+        <bt:String id="btnExtractText.Label" DefaultValue="Extract Text"/>
+        <bt:String id="btnPreviewTranslation.Label" DefaultValue="Preview Translation"/>
+        <bt:String id="btnLocalize.Label" DefaultValue="Localize Template"/>
+        <bt:String id="menuExport.Label" DefaultValue="Export"/>
+        <bt:String id="btnExportXslFo.Label" DefaultValue="XSL-FO Stylesheet"/>
+        <bt:String id="btnExportXml.Label" DefaultValue="Formatted XML"/>
+        <bt:String id="btnExportPdf.Label" DefaultValue="PDF"/>
+        <bt:String id="grpOptions.Label" DefaultValue="Options"/>
+        <bt:String id="menuOptions.Label" DefaultValue="Options"/>
+        <bt:String id="btnOptionsItem.Label" DefaultValue="Options"/>
+        <bt:String id="btnHelp.Label" DefaultValue="Help"/>
+        <bt:String id="btnAbout.Label" DefaultValue="About"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="btnLogOn.Tip" DefaultValue="Log on to Oracle BI Publisher server"/>
+        <bt:String id="btnOpen.Tip" DefaultValue="Open a report from the BI Publisher catalog"/>
+        <bt:String id="btnUpload.Tip" DefaultValue="Upload the current template to the server"/>
+        <bt:String id="btnSampleXML.Tip" DefaultValue="Load sample XML data file"/>
+        <bt:String id="btnXMLSchema.Tip" DefaultValue="Load an XML Schema (.xsd) file"/>
+        <bt:String id="btnTableWizard.Tip" DefaultValue="Step-by-step wizard to create data tables"/>
+        <bt:String id="btnPivotTable.Tip" DefaultValue="Create a cross-tabulation (pivot table)"/>
+        <bt:String id="btnChart.Tip" DefaultValue="Insert a chart to visualize data"/>
+        <bt:String id="btnField.Tip" DefaultValue="Insert a data field placeholder"/>
+        <bt:String id="btnTableForm.Tip" DefaultValue="Insert a table or form layout"/>
+        <bt:String id="btnRepeatingGroup.Tip" DefaultValue="Define repeating sections"/>
+        <bt:String id="btnCondFormat.Tip" DefaultValue="Apply formatting based on conditions"/>
+        <bt:String id="btnCondRegion.Tip" DefaultValue="Show or hide regions based on conditions"/>
+        <bt:String id="btnAllFields.Tip" DefaultValue="Insert all fields from the data source"/>
+        <bt:String id="btnPDF.Tip" DefaultValue="Preview as PDF"/>
+        <bt:String id="btnHTML.Tip" DefaultValue="Preview as HTML"/>
+        <bt:String id="btnExcel.Tip" DefaultValue="Preview as Excel"/>
+        <bt:String id="btnExcel2000.Tip" DefaultValue="Preview as Excel 2000"/>
+        <bt:String id="btnRTF.Tip" DefaultValue="Preview as RTF"/>
+        <bt:String id="btnPPTX.Tip" DefaultValue="Preview as PowerPoint"/>
+        <bt:String id="btnDOCX.Tip" DefaultValue="Preview as DOCX"/>
+        <bt:String id="btnFieldBrowser.Tip" DefaultValue="Browse and edit template fields"/>
+        <bt:String id="btnValidate.Tip" DefaultValue="Validate template for errors"/>
+        <bt:String id="btnAccessibility.Tip" DefaultValue="Check template accessibility"/>
+        <bt:String id="menuTranslation.Tip" DefaultValue="Translation and localization tools"/>
+        <bt:String id="btnExtractText.Tip" DefaultValue="Extract translatable text to XLIFF"/>
+        <bt:String id="btnPreviewTranslation.Tip" DefaultValue="Preview with applied translations"/>
+        <bt:String id="btnLocalize.Tip" DefaultValue="Apply translations permanently"/>
+        <bt:String id="menuExport.Tip" DefaultValue="Export template in various formats"/>
+        <bt:String id="btnExportXslFo.Tip" DefaultValue="Export as XSL-FO stylesheet"/>
+        <bt:String id="btnExportXml.Tip" DefaultValue="Export as formatted XML"/>
+        <bt:String id="btnExportPdf.Tip" DefaultValue="Export directly to PDF"/>
+        <bt:String id="menuOptions.Tip" DefaultValue="Settings, help, and about"/>
+        <bt:String id="btnOptionsItem.Tip" DefaultValue="Configure add-in preferences"/>
+        <bt:String id="btnHelp.Tip" DefaultValue="Open help documentation"/>
+        <bt:String id="btnAbout.Tip" DefaultValue="About BI Publisher Template Builder"/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
