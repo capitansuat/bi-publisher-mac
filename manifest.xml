@@ -90,18 +90,18 @@
                 <Label resid="grpInsert.Label"/>
                 <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
 
+                <Control xsi:type="Button" id="btnField">
+                  <Label resid="btnField.Label"/>
+                  <Supertip><Title resid="btnField.Label"/><Description resid="btnField.Tip"/></Supertip>
+                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdField</FunctionName></Action>
+                </Control>
+
                 <Control xsi:type="Button" id="btnTableWizard">
                   <Label resid="btnTableWizard.Label"/>
                   <Supertip><Title resid="btnTableWizard.Label"/><Description resid="btnTableWizard.Tip"/></Supertip>
                   <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
                   <Action xsi:type="ExecuteFunction"><FunctionName>cmdTableWizard</FunctionName></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnPivotTable">
-                  <Label resid="btnPivotTable.Label"/>
-                  <Supertip><Title resid="btnPivotTable.Label"/><Description resid="btnPivotTable.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPivotTable</FunctionName></Action>
                 </Control>
 
                 <Control xsi:type="Button" id="btnChart">
@@ -111,46 +111,49 @@
                   <Action xsi:type="ExecuteFunction"><FunctionName>cmdChart</FunctionName></Action>
                 </Control>
 
-                <Control xsi:type="Button" id="btnField">
-                  <Label resid="btnField.Label"/>
-                  <Supertip><Title resid="btnField.Label"/><Description resid="btnField.Tip"/></Supertip>
+                <Control xsi:type="Button" id="btnPivotTable">
+                  <Label resid="btnPivotTable.Label"/>
+                  <Supertip><Title resid="btnPivotTable.Label"/><Description resid="btnPivotTable.Tip"/></Supertip>
                   <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdField</FunctionName></Action>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPivotTable</FunctionName></Action>
                 </Control>
 
-                <Control xsi:type="Button" id="btnTableForm">
-                  <Label resid="btnTableForm.Label"/>
-                  <Supertip><Title resid="btnTableForm.Label"/><Description resid="btnTableForm.Tip"/></Supertip>
+                <Control xsi:type="Menu" id="menuMoreInsert">
+                  <Label resid="menuMoreInsert.Label"/>
+                  <Supertip><Title resid="menuMoreInsert.Label"/><Description resid="menuMoreInsert.Tip"/></Supertip>
                   <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdTableForm</FunctionName></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnRepeatingGroup">
-                  <Label resid="btnRepeatingGroup.Label"/>
-                  <Supertip><Title resid="btnRepeatingGroup.Label"/><Description resid="btnRepeatingGroup.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdRepeatingGroup</FunctionName></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnCondFormat">
-                  <Label resid="btnCondFormat.Label"/>
-                  <Supertip><Title resid="btnCondFormat.Label"/><Description resid="btnCondFormat.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondFormat</FunctionName></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnCondRegion">
-                  <Label resid="btnCondRegion.Label"/>
-                  <Supertip><Title resid="btnCondRegion.Label"/><Description resid="btnCondRegion.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondRegion</FunctionName></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnAllFields">
-                  <Label resid="btnAllFields.Label"/>
-                  <Supertip><Title resid="btnAllFields.Label"/><Description resid="btnAllFields.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdAllFields</FunctionName></Action>
+                  <Items>
+                    <Item id="itemTableForm">
+                      <Label resid="btnTableForm.Label"/>
+                      <Supertip><Title resid="btnTableForm.Label"/><Description resid="btnTableForm.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdTableForm</FunctionName></Action>
+                    </Item>
+                    <Item id="itemRepeatingGroup">
+                      <Label resid="btnRepeatingGroup.Label"/>
+                      <Supertip><Title resid="btnRepeatingGroup.Label"/><Description resid="btnRepeatingGroup.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdRepeatingGroup</FunctionName></Action>
+                    </Item>
+                    <Item id="itemCondFormat">
+                      <Label resid="btnCondFormat.Label"/>
+                      <Supertip><Title resid="btnCondFormat.Label"/><Description resid="btnCondFormat.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondFormat</FunctionName></Action>
+                    </Item>
+                    <Item id="itemCondRegion">
+                      <Label resid="btnCondRegion.Label"/>
+                      <Supertip><Title resid="btnCondRegion.Label"/><Description resid="btnCondRegion.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondRegion</FunctionName></Action>
+                    </Item>
+                    <Item id="itemAllFields">
+                      <Label resid="btnAllFields.Label"/>
+                      <Supertip><Title resid="btnAllFields.Label"/><Description resid="btnAllFields.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdAllFields</FunctionName></Action>
+                    </Item>
+                  </Items>
                 </Control>
               </Group>
 
@@ -159,47 +162,54 @@
                 <Label resid="grpPreview.Label"/>
                 <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
 
-                <Control xsi:type="Button" id="btnPDF">
-                  <Label resid="btnPDF.Label"/>
-                  <Supertip><Title resid="btnPDF.Label"/><Description resid="btnPDF.Tip"/></Supertip>
+                <Control xsi:type="Menu" id="menuPreview">
+                  <Label resid="menuPreview.Label"/>
+                  <Supertip><Title resid="menuPreview.Label"/><Description resid="menuPreview.Tip"/></Supertip>
                   <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewPDF</FunctionName></Action>
-                </Control>
-                <Control xsi:type="Button" id="btnHTML">
-                  <Label resid="btnHTML.Label"/>
-                  <Supertip><Title resid="btnHTML.Label"/><Description resid="btnHTML.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewHTML</FunctionName></Action>
-                </Control>
-                <Control xsi:type="Button" id="btnExcel">
-                  <Label resid="btnExcel.Label"/>
-                  <Supertip><Title resid="btnExcel.Label"/><Description resid="btnExcel.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewExcel</FunctionName></Action>
-                </Control>
-                <Control xsi:type="Button" id="btnExcel2000">
-                  <Label resid="btnExcel2000.Label"/>
-                  <Supertip><Title resid="btnExcel2000.Label"/><Description resid="btnExcel2000.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewExcel2000</FunctionName></Action>
-                </Control>
-                <Control xsi:type="Button" id="btnRTF">
-                  <Label resid="btnRTF.Label"/>
-                  <Supertip><Title resid="btnRTF.Label"/><Description resid="btnRTF.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewRTF</FunctionName></Action>
-                </Control>
-                <Control xsi:type="Button" id="btnPPTX">
-                  <Label resid="btnPPTX.Label"/>
-                  <Supertip><Title resid="btnPPTX.Label"/><Description resid="btnPPTX.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewPPTX</FunctionName></Action>
-                </Control>
-                <Control xsi:type="Button" id="btnDOCX">
-                  <Label resid="btnDOCX.Label"/>
-                  <Supertip><Title resid="btnDOCX.Label"/><Description resid="btnDOCX.Tip"/></Supertip>
-                  <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
-                  <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewDOCX</FunctionName></Action>
+                  <Items>
+                    <Item id="itemPDF">
+                      <Label resid="btnPDF.Label"/>
+                      <Supertip><Title resid="btnPDF.Label"/><Description resid="btnPDF.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewPDF</FunctionName></Action>
+                    </Item>
+                    <Item id="itemHTML">
+                      <Label resid="btnHTML.Label"/>
+                      <Supertip><Title resid="btnHTML.Label"/><Description resid="btnHTML.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewHTML</FunctionName></Action>
+                    </Item>
+                    <Item id="itemExcel">
+                      <Label resid="btnExcel.Label"/>
+                      <Supertip><Title resid="btnExcel.Label"/><Description resid="btnExcel.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewExcel</FunctionName></Action>
+                    </Item>
+                    <Item id="itemExcel2000">
+                      <Label resid="btnExcel2000.Label"/>
+                      <Supertip><Title resid="btnExcel2000.Label"/><Description resid="btnExcel2000.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewExcel2000</FunctionName></Action>
+                    </Item>
+                    <Item id="itemRTF">
+                      <Label resid="btnRTF.Label"/>
+                      <Supertip><Title resid="btnRTF.Label"/><Description resid="btnRTF.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewRTF</FunctionName></Action>
+                    </Item>
+                    <Item id="itemPPTX">
+                      <Label resid="btnPPTX.Label"/>
+                      <Supertip><Title resid="btnPPTX.Label"/><Description resid="btnPPTX.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewPPTX</FunctionName></Action>
+                    </Item>
+                    <Item id="itemDOCX">
+                      <Label resid="btnDOCX.Label"/>
+                      <Supertip><Title resid="btnDOCX.Label"/><Description resid="btnDOCX.Tip"/></Supertip>
+                      <Icon><bt:Image size="16" resid="icon.16"/><bt:Image size="32" resid="icon.32"/><bt:Image size="80" resid="icon.80"/></Icon>
+                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdPreviewDOCX</FunctionName></Action>
+                    </Item>
+                  </Items>
                 </Control>
               </Group>
 
@@ -350,7 +360,9 @@
         <bt:String id="btnCondFormat.Label" DefaultValue="Conditional Format"/>
         <bt:String id="btnCondRegion.Label" DefaultValue="Conditional Region"/>
         <bt:String id="btnAllFields.Label" DefaultValue="All Fields"/>
+        <bt:String id="menuMoreInsert.Label" DefaultValue="More..."/>
         <bt:String id="grpPreview.Label" DefaultValue="Preview"/>
+        <bt:String id="menuPreview.Label" DefaultValue="Preview"/>
         <bt:String id="btnPDF.Label" DefaultValue="PDF"/>
         <bt:String id="btnHTML.Label" DefaultValue="HTML"/>
         <bt:String id="btnExcel.Label" DefaultValue="Excel"/>
@@ -391,6 +403,8 @@
         <bt:String id="btnCondFormat.Tip" DefaultValue="Apply formatting based on conditions"/>
         <bt:String id="btnCondRegion.Tip" DefaultValue="Show or hide regions based on conditions"/>
         <bt:String id="btnAllFields.Tip" DefaultValue="Insert all fields from the data source"/>
+        <bt:String id="menuMoreInsert.Tip" DefaultValue="More insert options: Table/Form, Repeating Group, Conditional Format/Region, All Fields"/>
+        <bt:String id="menuPreview.Tip" DefaultValue="Preview template in various output formats"/>
         <bt:String id="btnPDF.Tip" DefaultValue="Preview as PDF"/>
         <bt:String id="btnHTML.Tip" DefaultValue="Preview as HTML"/>
         <bt:String id="btnExcel.Tip" DefaultValue="Preview as Excel"/>
