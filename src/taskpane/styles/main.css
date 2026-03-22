@@ -1,0 +1,613 @@
+/* ============================================================================
+   BI Publisher Template Builder – Task Pane Styles
+   Designed for 329×445px Word task pane on macOS
+   Uses Microsoft Fabric Core CSS classes for typography
+   4px grid, 20px horizontal margins per Office design guidelines
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   CSS Custom Properties
+   --------------------------------------------------------------------------- */
+:root {
+  --bip-bg: #ffffff;
+  --bip-surface: #f3f2f1;
+  --bip-border: #edebe9;
+  --bip-text: #323130;
+  --bip-text-muted: #605e5c;
+  --bip-primary: #0078d4;
+  --bip-primary-hover: #106ebe;
+  --bip-primary-text: #ffffff;
+  --bip-danger: #d13438;
+  --bip-success: #107c10;
+  --bip-warning: #ffb900;
+  --bip-info: #0078d4;
+  --bip-header-bg: #0078d4;
+  --bip-header-text: #ffffff;
+  --bip-radius: 4px;
+  --bip-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  --bip-gutter: 20px;
+  --bip-status-h: 28px;
+  --bip-header-h: 40px;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bip-bg: #1b1a19;
+    --bip-surface: #252423;
+    --bip-border: #3b3a39;
+    --bip-text: #f3f2f1;
+    --bip-text-muted: #a19f9d;
+    --bip-header-bg: #1b1a19;
+    --bip-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reset & Base
+   --------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--bip-text);
+  background: var(--bip-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   Loading Overlay
+   --------------------------------------------------------------------------- */
+.bip-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bip-bg);
+  z-index: 1000;
+}
+
+.bip-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--bip-border);
+  border-top-color: var(--bip-primary);
+  border-radius: 50%;
+  animation: bip-spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes bip-spin {
+  to { transform: rotate(360deg); }
+}
+
+.bip-loading p {
+  color: var(--bip-text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Main Layout – full height, flex column
+   --------------------------------------------------------------------------- */
+.bip-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Header – 40px, compact nav selector
+   --------------------------------------------------------------------------- */
+.bip-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--bip-header-h);
+  min-height: var(--bip-header-h);
+  padding: 0 var(--bip-gutter);
+  background: var(--bip-header-bg);
+  color: var(--bip-header-text);
+  /* Avoid Mac personality menu in top-right 34x32px */
+  padding-right: max(var(--bip-gutter), 38px);
+}
+
+.bip-title {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.bip-nav-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.bip-nav-select {
+  width: 100%;
+  height: 28px;
+  padding: 0 4px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: var(--bip-radius);
+  background: rgba(255,255,255,0.15);
+  color: var(--bip-header-text);
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.bip-nav-select:focus {
+  border-color: rgba(255,255,255,0.6);
+}
+
+.bip-nav-select option,
+.bip-nav-select optgroup {
+  background: var(--bip-bg);
+  color: var(--bip-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Panel Container – scrollable area between header and status bar
+   --------------------------------------------------------------------------- */
+.bip-panels {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px var(--bip-gutter) 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bip-panel {
+  display: none;
+}
+
+.bip-panel.active {
+  display: block;
+}
+
+.bip-panel h2 {
+  margin-bottom: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Cards & Fields
+   --------------------------------------------------------------------------- */
+.bip-card {
+  background: var(--bip-surface);
+  border: 1px solid var(--bip-border);
+  border-radius: var(--bip-radius);
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.bip-field {
+  margin-bottom: 8px;
+}
+
+.bip-field:last-child {
+  margin-bottom: 0;
+}
+
+.bip-field label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--bip-text);
+}
+
+.bip-input,
+.bip-select {
+  width: 100%;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid var(--bip-border);
+  border-radius: var(--bip-radius);
+  background: var(--bip-bg);
+  color: var(--bip-text);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.bip-input:focus,
+.bip-select:focus {
+  border-color: var(--bip-primary);
+}
+
+.bip-select-sm {
+  height: 28px;
+  font-size: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------------- */
+.bip-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.bip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--bip-radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.bip-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.bip-btn-primary {
+  background: var(--bip-primary);
+  color: var(--bip-primary-text);
+  border-color: var(--bip-primary);
+}
+
+.bip-btn-primary:hover:not(:disabled) {
+  background: var(--bip-primary-hover);
+}
+
+.bip-btn-secondary {
+  background: var(--bip-bg);
+  color: var(--bip-text);
+  border-color: var(--bip-border);
+}
+
+.bip-btn-secondary:hover:not(:disabled) {
+  background: var(--bip-surface);
+}
+
+.bip-btn-block {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.bip-btn-block:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Drop Zone
+   --------------------------------------------------------------------------- */
+.bip-dropzone {
+  border: 2px dashed var(--bip-border);
+  border-radius: var(--bip-radius);
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.bip-dropzone:hover,
+.bip-dropzone.dragover {
+  border-color: var(--bip-primary);
+  background: rgba(0, 120, 212, 0.04);
+}
+
+.bip-dropzone p {
+  color: var(--bip-text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Summary, Results, Tree
+   --------------------------------------------------------------------------- */
+.bip-summary {
+  margin-top: 8px;
+  padding: 8px;
+  background: var(--bip-bg);
+  border: 1px solid var(--bip-border);
+  border-radius: var(--bip-radius);
+}
+
+.bip-results {
+  margin-top: 8px;
+}
+
+.bip-tree {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tree-node {
+  padding: 2px 4px;
+  font-size: 12px;
+  color: var(--bip-text);
+  cursor: default;
+}
+
+.tree-node:hover {
+  background: var(--bip-surface);
+}
+
+/* ---------------------------------------------------------------------------
+   Tabs (Translation, Options)
+   --------------------------------------------------------------------------- */
+.bip-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--bip-border);
+  margin-bottom: 8px;
+}
+
+.bip-tab {
+  flex: 1;
+  height: 32px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--bip-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.bip-tab:hover {
+  color: var(--bip-text);
+}
+
+.bip-tab.active {
+  color: var(--bip-primary);
+  border-bottom-color: var(--bip-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Row helper
+   --------------------------------------------------------------------------- */
+.bip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.bip-row label {
+  flex-shrink: 0;
+}
+
+.bip-row .bip-select {
+  flex: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Preview output
+   --------------------------------------------------------------------------- */
+.bip-preview-output {
+  margin-top: 8px;
+  min-height: 80px;
+  border: 1px solid var(--bip-border);
+  border-radius: var(--bip-radius);
+  padding: 8px;
+  background: var(--bip-bg);
+}
+
+/* ---------------------------------------------------------------------------
+   Divider
+   --------------------------------------------------------------------------- */
+.bip-divider {
+  border: none;
+  border-top: 1px solid var(--bip-border);
+  margin: 8px 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Muted text helper
+   --------------------------------------------------------------------------- */
+.bip-muted {
+  color: var(--bip-text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Status Bar – fixed at bottom, 28px
+   --------------------------------------------------------------------------- */
+.bip-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  height: var(--bip-status-h);
+  min-height: var(--bip-status-h);
+  padding: 0 var(--bip-gutter);
+  background: var(--bip-surface);
+  border-top: 1px solid var(--bip-border);
+  overflow: hidden;
+}
+
+.bip-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bip-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bip-status.connected .bip-status-dot {
+  background: var(--bip-success);
+}
+
+.bip-status.disconnected .bip-status-dot {
+  background: var(--bip-danger);
+}
+
+.bip-status-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--bip-text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Toast Notifications
+   --------------------------------------------------------------------------- */
+.bip-toasts {
+  position: fixed;
+  top: 44px;
+  right: 4px;
+  left: 4px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.bip-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--bip-radius);
+  background: var(--bip-bg);
+  border: 1px solid var(--bip-border);
+  box-shadow: var(--bip-shadow);
+  animation: bip-slide-in 0.25s ease-out;
+  pointer-events: auto;
+}
+
+.bip-toast.removing {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.bip-toast.success { border-left: 3px solid var(--bip-success); }
+.bip-toast.error   { border-left: 3px solid var(--bip-danger); }
+.bip-toast.warning { border-left: 3px solid var(--bip-warning); }
+.bip-toast.info    { border-left: 3px solid var(--bip-info); }
+
+.bip-toast-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.bip-toast-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.bip-toast-title {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.bip-toast-message {
+  font-size: 11px;
+  color: var(--bip-text-muted);
+  margin-top: 2px;
+}
+
+.bip-toast-close {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--bip-text-muted);
+  line-height: 1;
+}
+
+@keyframes bip-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------------------------------------------------------------------
+   Modal / Error Dialog
+   --------------------------------------------------------------------------- */
+.bip-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.bip-modal {
+  width: calc(100% - 32px);
+  max-width: 300px;
+  background: var(--bip-bg);
+  border-radius: var(--bip-radius);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.bip-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bip-border);
+}
+
+.bip-modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--bip-text-muted);
+}
+
+.bip-modal-body {
+  padding: 12px 16px;
+}
+
+.bip-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   Scrollbar styling (thin, for macOS WebKit)
+   --------------------------------------------------------------------------- */
+.bip-panels::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bip-panels::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bip-panels::-webkit-scrollbar-thumb {
+  background: var(--bip-border);
+  border-radius: 3px;
+}
+
+.bip-panels::-webkit-scrollbar-thumb:hover {
+  background: var(--bip-text-muted);
+}
