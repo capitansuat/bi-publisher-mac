@@ -518,6 +518,17 @@ function initializeKeyboardShortcuts() {
 // ============================================================================
 
 function checkRequestedPanel() {
+  // 1. Check URL query parameter (from ShowTaskpane SourceLocation)
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const urlPanel = params.get('panel');
+    if (urlPanel) {
+      switchPanel(urlPanel);
+      return;
+    }
+  } catch (_) { /* ignore */ }
+
+  // 2. Fallback: check document settings (from ExecuteFunction commands)
   try {
     const panel = Office.context.document.settings.get('bip_requested_panel');
     if (panel) {
