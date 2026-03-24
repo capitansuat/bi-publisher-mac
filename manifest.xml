@@ -9,18 +9,12 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="BI Publisher"/>
   <Description DefaultValue="Oracle BI Publisher Template Builder for macOS — design report templates in Word."/>
-  <IconUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-online-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-online-80.png"/>
-  <SupportUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=help"/>
+  <IconUrl DefaultValue="https://localhost:3000/images/ico-field-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/images/ico-field-80.png"/>
+  <SupportUrl DefaultValue="https://localhost:3000/taskpane.html?panel=help"/>
 
-  <Hosts>
-    <Host Name="Document"/>
-  </Hosts>
-
-  <DefaultSettings>
-    <SourceLocation DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html"/>
-  </DefaultSettings>
-
+  <Hosts><Host Name="Document"/></Hosts>
+  <DefaultSettings><SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/></DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
 
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
@@ -67,7 +61,7 @@
                 </Control>
               </Group>
 
-              <!-- ============ INSERT (5 controls, max 6) ============ -->
+              <!-- ============ INSERT (5 buttons + 1 menu = 6) ============ -->
               <Group id="grpInsert">
                 <Label resid="grp.insert"/>
                 <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
@@ -115,7 +109,7 @@
                 <Control xsi:type="Menu" id="menuMoreInsert">
                   <Label resid="lbl.more"/>
                   <Supertip><Title resid="lbl.more"/><Description resid="tip.more"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.more.16"/><bt:Image size="32" resid="ico.more.32"/><bt:Image size="80" resid="ico.more.80"/></Icon>
+                  <Icon><bt:Image size="16" resid="ico.allfields.16"/><bt:Image size="32" resid="ico.allfields.32"/><bt:Image size="80" resid="ico.allfields.80"/></Icon>
                   <Items>
                     <Item id="itemTableForm">
                       <Label resid="lbl.tableform"/>
@@ -151,7 +145,7 @@
                 </Control>
               </Group>
 
-              <!-- ============ PREVIEW (1 menu control) ============ -->
+              <!-- ============ PREVIEW (1 button) ============ -->
               <Group id="grpPreview">
                 <Label resid="grp.preview"/>
                 <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
@@ -167,7 +161,7 @@
                 </Control>
               </Group>
 
-              <!-- ============ TOOLS (5 controls) ============ -->
+              <!-- ============ TOOLS (5 buttons) ============ -->
               <Group id="grpTools">
                 <Label resid="grp.tools"/>
                 <Icon><bt:Image size="16" resid="ico.fieldbrowser.16"/><bt:Image size="32" resid="ico.fieldbrowser.32"/><bt:Image size="80" resid="ico.fieldbrowser.80"/></Icon>
@@ -263,45 +257,38 @@
             </CustomTab>
           </ExtensionPoint>
 
-          <!-- Right-click context menu -->
+          <!-- Right-click context menu: individual buttons (Mac compatible) -->
           <ExtensionPoint xsi:type="ContextMenu">
             <OfficeMenu id="ContextMenuText">
-              <Control xsi:type="Menu" id="ctxBIPMenu">
-                <Label resid="lbl.bipmenu"/>
-                <Supertip><Title resid="lbl.bipmenu"/><Description resid="tip.bipmenu"/></Supertip>
+              <Control xsi:type="Button" id="ctxFieldProps">
+                <Label resid="lbl.ctx.props"/>
+                <Supertip><Title resid="lbl.ctx.props"/><Description resid="tip.ctx.props"/></Supertip>
+                <Icon><bt:Image size="16" resid="ico.fieldbrowser.16"/><bt:Image size="32" resid="ico.fieldbrowser.32"/><bt:Image size="80" resid="ico.fieldbrowser.80"/></Icon>
+                <Action xsi:type="ExecuteFunction"><FunctionName>cmdFieldProperties</FunctionName></Action>
+              </Control>
+              <Control xsi:type="Button" id="ctxInsertField">
+                <Label resid="lbl.ctx.field"/>
+                <Supertip><Title resid="lbl.ctx.field"/><Description resid="tip.ctx.field"/></Supertip>
                 <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
-                <Items>
-                  <Item id="ctxField">
-                    <Label resid="lbl.ctx.field"/>
-                    <Supertip><Title resid="lbl.ctx.field"/><Description resid="tip.ctx.field"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdInsertFieldAtSelection</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxRepGroup">
-                    <Label resid="lbl.ctx.repgroup"/>
-                    <Supertip><Title resid="lbl.ctx.repgroup"/><Description resid="tip.ctx.repgroup"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapRepeatingGroup</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxCondRegion">
-                    <Label resid="lbl.ctx.condreg"/>
-                    <Supertip><Title resid="lbl.ctx.condreg"/><Description resid="tip.ctx.condreg"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.condreg.16"/><bt:Image size="32" resid="ico.condreg.32"/><bt:Image size="80" resid="ico.condreg.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapConditionalRegion</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxCondFmt">
-                    <Label resid="lbl.ctx.condfmt"/>
-                    <Supertip><Title resid="lbl.ctx.condfmt"/><Description resid="tip.ctx.condfmt"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.condfmt.16"/><bt:Image size="32" resid="ico.condfmt.32"/><bt:Image size="80" resid="ico.condfmt.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapConditionalFormat</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxFieldBrowser">
-                    <Label resid="lbl.ctx.browse"/>
-                    <Supertip><Title resid="lbl.ctx.browse"/><Description resid="tip.ctx.browse"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.fieldbrowser.16"/><bt:Image size="32" resid="ico.fieldbrowser.32"/><bt:Image size="80" resid="ico.fieldbrowser.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdBrowseFieldAtSelection</FunctionName></Action>
-                  </Item>
-                </Items>
+                <Action xsi:type="ExecuteFunction"><FunctionName>cmdInsertFieldAtSelection</FunctionName></Action>
+              </Control>
+              <Control xsi:type="Button" id="ctxRepGroup">
+                <Label resid="lbl.ctx.repgroup"/>
+                <Supertip><Title resid="lbl.ctx.repgroup"/><Description resid="tip.ctx.repgroup"/></Supertip>
+                <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
+                <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapRepeatingGroup</FunctionName></Action>
+              </Control>
+              <Control xsi:type="Button" id="ctxCondRegion">
+                <Label resid="lbl.ctx.condreg"/>
+                <Supertip><Title resid="lbl.ctx.condreg"/><Description resid="tip.ctx.condreg"/></Supertip>
+                <Icon><bt:Image size="16" resid="ico.condreg.16"/><bt:Image size="32" resid="ico.condreg.32"/><bt:Image size="80" resid="ico.condreg.80"/></Icon>
+                <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapConditionalRegion</FunctionName></Action>
+              </Control>
+              <Control xsi:type="Button" id="ctxCondFmt">
+                <Label resid="lbl.ctx.condfmt"/>
+                <Supertip><Title resid="lbl.ctx.condfmt"/><Description resid="tip.ctx.condfmt"/></Supertip>
+                <Icon><bt:Image size="16" resid="ico.condfmt.16"/><bt:Image size="32" resid="ico.condfmt.32"/><bt:Image size="80" resid="ico.condfmt.80"/></Icon>
+                <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapConditionalFormat</FunctionName></Action>
               </Control>
             </OfficeMenu>
           </ExtensionPoint>
@@ -312,111 +299,93 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="ico.logon.16"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-logon-16.png"/>
-        <bt:Image id="ico.logon.32"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-logon-32.png"/>
-        <bt:Image id="ico.logon.80"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-logon-80.png"/>
-        <bt:Image id="ico.open.16"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-open-16.png"/>
-        <bt:Image id="ico.open.32"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-open-32.png"/>
-        <bt:Image id="ico.open.80"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-open-80.png"/>
-        <bt:Image id="ico.upload.16"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-upload-16.png"/>
-        <bt:Image id="ico.upload.32"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-upload-32.png"/>
-        <bt:Image id="ico.upload.80"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-upload-80.png"/>
-        <bt:Image id="ico.samplexml.16"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-samplexml-16.png"/>
-        <bt:Image id="ico.samplexml.32"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-samplexml-32.png"/>
-        <bt:Image id="ico.samplexml.80"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-samplexml-80.png"/>
-        <bt:Image id="ico.xmlschema.16"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-xmlschema-16.png"/>
-        <bt:Image id="ico.xmlschema.32"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-xmlschema-32.png"/>
-        <bt:Image id="ico.xmlschema.80"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-xmlschema-80.png"/>
-        <bt:Image id="ico.field.16"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-field-16.png"/>
-        <bt:Image id="ico.field.32"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-field-32.png"/>
-        <bt:Image id="ico.field.80"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-field-80.png"/>
-        <bt:Image id="ico.tablewiz.16"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-tablewiz-16.png"/>
-        <bt:Image id="ico.tablewiz.32"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-tablewiz-32.png"/>
-        <bt:Image id="ico.tablewiz.80"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-tablewiz-80.png"/>
-        <bt:Image id="ico.chart.16"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-chart-16.png"/>
-        <bt:Image id="ico.chart.32"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-chart-32.png"/>
-        <bt:Image id="ico.chart.80"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-chart-80.png"/>
-        <bt:Image id="ico.pivot.16"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-pivot-16.png"/>
-        <bt:Image id="ico.pivot.32"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-pivot-32.png"/>
-        <bt:Image id="ico.pivot.80"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-pivot-80.png"/>
-        <bt:Image id="ico.more.16"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-allfields-16.png"/>
-        <bt:Image id="ico.more.32"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-allfields-32.png"/>
-        <bt:Image id="ico.more.80"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-allfields-80.png"/>
-        <bt:Image id="ico.tableform.16"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-tableform-16.png"/>
-        <bt:Image id="ico.tableform.32"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-tableform-32.png"/>
-        <bt:Image id="ico.tableform.80"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-tableform-80.png"/>
-        <bt:Image id="ico.repgroup.16"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-repgroup-16.png"/>
-        <bt:Image id="ico.repgroup.32"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-repgroup-32.png"/>
-        <bt:Image id="ico.repgroup.80"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-repgroup-80.png"/>
-        <bt:Image id="ico.condfmt.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condfmt-16.png"/>
-        <bt:Image id="ico.condfmt.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condfmt-32.png"/>
-        <bt:Image id="ico.condfmt.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condfmt-80.png"/>
-        <bt:Image id="ico.condreg.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condreg-16.png"/>
-        <bt:Image id="ico.condreg.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condreg-32.png"/>
-        <bt:Image id="ico.condreg.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condreg-80.png"/>
-        <bt:Image id="ico.allfields.16"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-allfields-16.png"/>
-        <bt:Image id="ico.allfields.32"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-allfields-32.png"/>
-        <bt:Image id="ico.allfields.80"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-allfields-80.png"/>
-        <bt:Image id="ico.preview.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-preview-16.png"/>
-        <bt:Image id="ico.preview.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-preview-32.png"/>
-        <bt:Image id="ico.preview.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-preview-80.png"/>
-        <bt:Image id="ico.fieldbrowser.16" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-fieldbrowser-16.png"/>
-        <bt:Image id="ico.fieldbrowser.32" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-fieldbrowser-32.png"/>
-        <bt:Image id="ico.fieldbrowser.80" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-fieldbrowser-80.png"/>
-        <bt:Image id="ico.validate.16"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-validate-16.png"/>
-        <bt:Image id="ico.validate.32"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-validate-32.png"/>
-        <bt:Image id="ico.validate.80"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-validate-80.png"/>
-        <bt:Image id="ico.a11y.16"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-a11y-16.png"/>
-        <bt:Image id="ico.a11y.32"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-a11y-32.png"/>
-        <bt:Image id="ico.a11y.80"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-a11y-80.png"/>
-        <bt:Image id="ico.translation.16"  DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-translation-16.png"/>
-        <bt:Image id="ico.translation.32"  DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-translation-32.png"/>
-        <bt:Image id="ico.translation.80"  DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-translation-80.png"/>
-        <bt:Image id="ico.export.16"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-export-16.png"/>
-        <bt:Image id="ico.export.32"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-export-32.png"/>
-        <bt:Image id="ico.export.80"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-export-80.png"/>
-        <bt:Image id="ico.options.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-options-16.png"/>
-        <bt:Image id="ico.options.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-options-32.png"/>
-        <bt:Image id="ico.options.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-options-80.png"/>
-        <bt:Image id="ico.help.16"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-help-16.png"/>
-        <bt:Image id="ico.help.32"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-help-32.png"/>
-        <bt:Image id="ico.help.80"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-help-80.png"/>
-        <bt:Image id="ico.about.16"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-about-16.png"/>
-        <bt:Image id="ico.about.32"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-about-32.png"/>
-        <bt:Image id="ico.about.80"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-about-80.png"/>
+        <bt:Image id="ico.samplexml.16"    DefaultValue="https://localhost:3000/images/ico-samplexml-16.png"/>
+        <bt:Image id="ico.samplexml.32"    DefaultValue="https://localhost:3000/images/ico-samplexml-32.png"/>
+        <bt:Image id="ico.samplexml.80"    DefaultValue="https://localhost:3000/images/ico-samplexml-80.png"/>
+        <bt:Image id="ico.xmlschema.16"    DefaultValue="https://localhost:3000/images/ico-xmlschema-16.png"/>
+        <bt:Image id="ico.xmlschema.32"    DefaultValue="https://localhost:3000/images/ico-xmlschema-32.png"/>
+        <bt:Image id="ico.xmlschema.80"    DefaultValue="https://localhost:3000/images/ico-xmlschema-80.png"/>
+        <bt:Image id="ico.field.16"        DefaultValue="https://localhost:3000/images/ico-field-16.png"/>
+        <bt:Image id="ico.field.32"        DefaultValue="https://localhost:3000/images/ico-field-32.png"/>
+        <bt:Image id="ico.field.80"        DefaultValue="https://localhost:3000/images/ico-field-80.png"/>
+        <bt:Image id="ico.tablewiz.16"     DefaultValue="https://localhost:3000/images/ico-tablewiz-16.png"/>
+        <bt:Image id="ico.tablewiz.32"     DefaultValue="https://localhost:3000/images/ico-tablewiz-32.png"/>
+        <bt:Image id="ico.tablewiz.80"     DefaultValue="https://localhost:3000/images/ico-tablewiz-80.png"/>
+        <bt:Image id="ico.chart.16"        DefaultValue="https://localhost:3000/images/ico-chart-16.png"/>
+        <bt:Image id="ico.chart.32"        DefaultValue="https://localhost:3000/images/ico-chart-32.png"/>
+        <bt:Image id="ico.chart.80"        DefaultValue="https://localhost:3000/images/ico-chart-80.png"/>
+        <bt:Image id="ico.pivot.16"        DefaultValue="https://localhost:3000/images/ico-pivot-16.png"/>
+        <bt:Image id="ico.pivot.32"        DefaultValue="https://localhost:3000/images/ico-pivot-32.png"/>
+        <bt:Image id="ico.pivot.80"        DefaultValue="https://localhost:3000/images/ico-pivot-80.png"/>
+        <bt:Image id="ico.allfields.16"    DefaultValue="https://localhost:3000/images/ico-allfields-16.png"/>
+        <bt:Image id="ico.allfields.32"    DefaultValue="https://localhost:3000/images/ico-allfields-32.png"/>
+        <bt:Image id="ico.allfields.80"    DefaultValue="https://localhost:3000/images/ico-allfields-80.png"/>
+        <bt:Image id="ico.tableform.16"    DefaultValue="https://localhost:3000/images/ico-tableform-16.png"/>
+        <bt:Image id="ico.tableform.32"    DefaultValue="https://localhost:3000/images/ico-tableform-32.png"/>
+        <bt:Image id="ico.tableform.80"    DefaultValue="https://localhost:3000/images/ico-tableform-80.png"/>
+        <bt:Image id="ico.repgroup.16"     DefaultValue="https://localhost:3000/images/ico-repgroup-16.png"/>
+        <bt:Image id="ico.repgroup.32"     DefaultValue="https://localhost:3000/images/ico-repgroup-32.png"/>
+        <bt:Image id="ico.repgroup.80"     DefaultValue="https://localhost:3000/images/ico-repgroup-80.png"/>
+        <bt:Image id="ico.condfmt.16"      DefaultValue="https://localhost:3000/images/ico-condfmt-16.png"/>
+        <bt:Image id="ico.condfmt.32"      DefaultValue="https://localhost:3000/images/ico-condfmt-32.png"/>
+        <bt:Image id="ico.condfmt.80"      DefaultValue="https://localhost:3000/images/ico-condfmt-80.png"/>
+        <bt:Image id="ico.condreg.16"      DefaultValue="https://localhost:3000/images/ico-condreg-16.png"/>
+        <bt:Image id="ico.condreg.32"      DefaultValue="https://localhost:3000/images/ico-condreg-32.png"/>
+        <bt:Image id="ico.condreg.80"      DefaultValue="https://localhost:3000/images/ico-condreg-80.png"/>
+        <bt:Image id="ico.preview.16"      DefaultValue="https://localhost:3000/images/ico-preview-16.png"/>
+        <bt:Image id="ico.preview.32"      DefaultValue="https://localhost:3000/images/ico-preview-32.png"/>
+        <bt:Image id="ico.preview.80"      DefaultValue="https://localhost:3000/images/ico-preview-80.png"/>
+        <bt:Image id="ico.fieldbrowser.16" DefaultValue="https://localhost:3000/images/ico-fieldbrowser-16.png"/>
+        <bt:Image id="ico.fieldbrowser.32" DefaultValue="https://localhost:3000/images/ico-fieldbrowser-32.png"/>
+        <bt:Image id="ico.fieldbrowser.80" DefaultValue="https://localhost:3000/images/ico-fieldbrowser-80.png"/>
+        <bt:Image id="ico.validate.16"     DefaultValue="https://localhost:3000/images/ico-validate-16.png"/>
+        <bt:Image id="ico.validate.32"     DefaultValue="https://localhost:3000/images/ico-validate-32.png"/>
+        <bt:Image id="ico.validate.80"     DefaultValue="https://localhost:3000/images/ico-validate-80.png"/>
+        <bt:Image id="ico.a11y.16"         DefaultValue="https://localhost:3000/images/ico-a11y-16.png"/>
+        <bt:Image id="ico.a11y.32"         DefaultValue="https://localhost:3000/images/ico-a11y-32.png"/>
+        <bt:Image id="ico.a11y.80"         DefaultValue="https://localhost:3000/images/ico-a11y-80.png"/>
+        <bt:Image id="ico.translation.16"  DefaultValue="https://localhost:3000/images/ico-translation-16.png"/>
+        <bt:Image id="ico.translation.32"  DefaultValue="https://localhost:3000/images/ico-translation-32.png"/>
+        <bt:Image id="ico.translation.80"  DefaultValue="https://localhost:3000/images/ico-translation-80.png"/>
+        <bt:Image id="ico.export.16"       DefaultValue="https://localhost:3000/images/ico-export-16.png"/>
+        <bt:Image id="ico.export.32"       DefaultValue="https://localhost:3000/images/ico-export-32.png"/>
+        <bt:Image id="ico.export.80"       DefaultValue="https://localhost:3000/images/ico-export-80.png"/>
+        <bt:Image id="ico.options.16"      DefaultValue="https://localhost:3000/images/ico-options-16.png"/>
+        <bt:Image id="ico.options.32"      DefaultValue="https://localhost:3000/images/ico-options-32.png"/>
+        <bt:Image id="ico.options.80"      DefaultValue="https://localhost:3000/images/ico-options-80.png"/>
+        <bt:Image id="ico.help.16"         DefaultValue="https://localhost:3000/images/ico-help-16.png"/>
+        <bt:Image id="ico.help.32"         DefaultValue="https://localhost:3000/images/ico-help-32.png"/>
+        <bt:Image id="ico.help.80"         DefaultValue="https://localhost:3000/images/ico-help-80.png"/>
+        <bt:Image id="ico.about.16"        DefaultValue="https://localhost:3000/images/ico-about-16.png"/>
+        <bt:Image id="ico.about.32"        DefaultValue="https://localhost:3000/images/ico-about-32.png"/>
+        <bt:Image id="ico.about.80"        DefaultValue="https://localhost:3000/images/ico-about-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="url.commands"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/commands.html"/>
-        <bt:Url id="url.taskpane"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html"/>
-        <bt:Url id="url.open"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=open-report"/>
-        <bt:Url id="url.upload"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=upload-template"/>
-        <bt:Url id="url.samplexml"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=sample-xml"/>
-        <bt:Url id="url.xmlschema"    DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=xml-schema"/>
-        <bt:Url id="url.field"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=insert-field"/>
-        <bt:Url id="url.tablewiz"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=table-wizard"/>
-        <bt:Url id="url.chart"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=chart"/>
-        <bt:Url id="url.pivot"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=pivot-table"/>
-        <bt:Url id="url.preview"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=preview"/>
-        <bt:Url id="url.fieldbrowser" DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=field-browser"/>
-        <bt:Url id="url.validate"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=validate-template"/>
-        <bt:Url id="url.a11y"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=accessibility"/>
-        <bt:Url id="url.translation"  DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=translation"/>
-        <bt:Url id="url.export"       DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=export"/>
-        <bt:Url id="url.options"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=options"/>
-        <bt:Url id="url.help"         DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=help"/>
-        <bt:Url id="url.about"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=about"/>
+        <bt:Url id="url.commands"     DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="url.taskpane"     DefaultValue="https://localhost:3000/taskpane.html"/>
+        <bt:Url id="url.samplexml"    DefaultValue="https://localhost:3000/taskpane.html?panel=sample-xml"/>
+        <bt:Url id="url.xmlschema"    DefaultValue="https://localhost:3000/taskpane.html?panel=xml-schema"/>
+        <bt:Url id="url.field"        DefaultValue="https://localhost:3000/taskpane.html?panel=insert-field"/>
+        <bt:Url id="url.tablewiz"     DefaultValue="https://localhost:3000/taskpane.html?panel=table-wizard"/>
+        <bt:Url id="url.chart"        DefaultValue="https://localhost:3000/taskpane.html?panel=chart"/>
+        <bt:Url id="url.pivot"        DefaultValue="https://localhost:3000/taskpane.html?panel=pivot-table"/>
+        <bt:Url id="url.preview"      DefaultValue="https://localhost:3000/taskpane.html?panel=preview"/>
+        <bt:Url id="url.fieldbrowser" DefaultValue="https://localhost:3000/taskpane.html?panel=field-browser"/>
+        <bt:Url id="url.validate"     DefaultValue="https://localhost:3000/taskpane.html?panel=validate-template"/>
+        <bt:Url id="url.a11y"         DefaultValue="https://localhost:3000/taskpane.html?panel=accessibility"/>
+        <bt:Url id="url.translation"  DefaultValue="https://localhost:3000/taskpane.html?panel=translation"/>
+        <bt:Url id="url.export"       DefaultValue="https://localhost:3000/taskpane.html?panel=export"/>
+        <bt:Url id="url.options"      DefaultValue="https://localhost:3000/taskpane.html?panel=options"/>
+        <bt:Url id="url.help"         DefaultValue="https://localhost:3000/taskpane.html?panel=help"/>
+        <bt:Url id="url.about"        DefaultValue="https://localhost:3000/taskpane.html?panel=about"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="tab.publisher"    DefaultValue="Publisher"/>
-        <bt:String id="grp.online"       DefaultValue="Online"/>
         <bt:String id="grp.data"         DefaultValue="Load Data"/>
         <bt:String id="grp.insert"       DefaultValue="Insert"/>
         <bt:String id="grp.preview"      DefaultValue="Preview"/>
         <bt:String id="grp.tools"        DefaultValue="Tools"/>
         <bt:String id="grp.options"      DefaultValue="Options"/>
-        <bt:String id="lbl.logon"        DefaultValue="Log On"/>
-        <bt:String id="lbl.open"         DefaultValue="Open"/>
-        <bt:String id="lbl.upload"       DefaultValue="Upload"/>
         <bt:String id="lbl.samplexml"    DefaultValue="Sample XML"/>
         <bt:String id="lbl.xmlschema"    DefaultValue="XML Schema"/>
         <bt:String id="lbl.field"        DefaultValue="Field"/>
@@ -435,22 +404,17 @@
         <bt:String id="lbl.a11y"         DefaultValue="Accessibility"/>
         <bt:String id="lbl.translation"  DefaultValue="Translation"/>
         <bt:String id="lbl.export"       DefaultValue="Export"/>
-        <bt:String id="lbl.optmenu"      DefaultValue="Options"/>
         <bt:String id="lbl.options"      DefaultValue="Options"/>
         <bt:String id="lbl.help"         DefaultValue="Help"/>
         <bt:String id="lbl.about"        DefaultValue="About"/>
         <bt:String id="getStarted.Title" DefaultValue="BI Publisher Template Builder"/>
-        <bt:String id="lbl.bipmenu"      DefaultValue="BI Publisher"/>
-        <bt:String id="lbl.ctx.field"    DefaultValue="Insert Field"/>
-        <bt:String id="lbl.ctx.repgroup" DefaultValue="Wrap as Repeating Group"/>
-        <bt:String id="lbl.ctx.condreg"  DefaultValue="Wrap as Conditional Region"/>
-        <bt:String id="lbl.ctx.condfmt"  DefaultValue="Apply Conditional Format"/>
-        <bt:String id="lbl.ctx.browse"   DefaultValue="Browse Field..."/>
+        <bt:String id="lbl.ctx.props"    DefaultValue="BIP: Field Properties..."/>
+        <bt:String id="lbl.ctx.field"    DefaultValue="BIP: Insert Field"/>
+        <bt:String id="lbl.ctx.repgroup" DefaultValue="BIP: Repeating Group"/>
+        <bt:String id="lbl.ctx.condreg"  DefaultValue="BIP: Conditional Region"/>
+        <bt:String id="lbl.ctx.condfmt"  DefaultValue="BIP: Conditional Format"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="tip.logon"        DefaultValue="Log on to Oracle BI Publisher server"/>
-        <bt:String id="tip.open"         DefaultValue="Open a report from the BI Publisher catalog"/>
-        <bt:String id="tip.upload"       DefaultValue="Upload current template to the server"/>
         <bt:String id="tip.samplexml"    DefaultValue="Load sample XML data file"/>
         <bt:String id="tip.xmlschema"    DefaultValue="Load an XML Schema (.xsd) file"/>
         <bt:String id="tip.field"        DefaultValue="Insert a data field placeholder"/>
@@ -469,17 +433,15 @@
         <bt:String id="tip.a11y"         DefaultValue="Check template accessibility"/>
         <bt:String id="tip.translation"  DefaultValue="Translation and localization tools"/>
         <bt:String id="tip.export"       DefaultValue="Export template in various formats"/>
-        <bt:String id="tip.optmenu"      DefaultValue="Settings, help, and about"/>
         <bt:String id="tip.options"      DefaultValue="Configure add-in preferences"/>
         <bt:String id="tip.help"         DefaultValue="Open help documentation"/>
         <bt:String id="tip.about"        DefaultValue="About BI Publisher Template Builder"/>
         <bt:String id="getStarted.Desc"  DefaultValue="Design Oracle BI Publisher report templates directly in Word."/>
-        <bt:String id="tip.bipmenu"      DefaultValue="BI Publisher template actions for selected text"/>
+        <bt:String id="tip.ctx.props"    DefaultValue="View and edit properties of the selected BI Publisher field"/>
         <bt:String id="tip.ctx.field"    DefaultValue="Insert a BI Publisher field tag at cursor position"/>
         <bt:String id="tip.ctx.repgroup" DefaultValue="Wrap selected text in a repeating group"/>
         <bt:String id="tip.ctx.condreg"  DefaultValue="Wrap selected text in a conditional region"/>
         <bt:String id="tip.ctx.condfmt"  DefaultValue="Apply conditional formatting to selected text"/>
-        <bt:String id="tip.ctx.browse"   DefaultValue="Open field browser for selected content control"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
