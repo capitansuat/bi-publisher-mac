@@ -77,14 +77,14 @@ const components = {};
 function initComponents() {
   const ctx = { AppState, wordApi, xmlParser, templateEngine, showNotification, showErrorDialog, setLoading, log };
 
-  // Only init components whose containers exist in the HTML
+  // Components take (services) in constructor, render(container) separately
   const el = (id) => document.getElementById(id);
-  if (el('insert-field-container'))        components.insertField       = new InsertField(el('insert-field-container'), ctx);
-  if (el('table-form-container'))          components.tableWizard       = new TableWizard(el('table-form-container'), ctx);
-  if (el('repeating-group-container'))     components.repeatingGroup    = new RepeatingGroup(el('repeating-group-container'), ctx);
-  if (el('conditional-region-container'))  components.conditionalRegion = new ConditionalRegion(el('conditional-region-container'), ctx);
-  if (el('conditional-format-container'))  components.formatHelper      = new FormatHelper(el('conditional-format-container'), ctx);
-  if (el('all-fields-container'))          components.barcodeInserter   = new BarcodeInserter(el('all-fields-container'), ctx);
+  try { components.insertField       = new InsertField(ctx);       } catch(e) { log('InsertField init error', e); }
+  try { components.tableWizard       = new TableWizard(ctx);       } catch(e) { log('TableWizard init error', e); }
+  try { components.repeatingGroup    = new RepeatingGroup(ctx);    } catch(e) { log('RepeatingGroup init error', e); }
+  try { components.conditionalRegion = new ConditionalRegion(ctx); } catch(e) { log('ConditionalRegion init error', e); }
+  try { components.formatHelper      = new FormatHelper(ctx);      } catch(e) { log('FormatHelper init error', e); }
+  try { components.barcodeInserter   = new BarcodeInserter(ctx);   } catch(e) { log('BarcodeInserter init error', e); }
 
   log('INFO', 'All components initialised');
 }
@@ -238,10 +238,21 @@ function renderComponentForPanel(panelId) {
     'all-fields': 'barcodeInserter'
   };
 
+  const containerMap = {
+    'insert-field': 'insert-field-container',
+    'table-form': 'table-form-container',
+    'repeating-group': 'repeating-group-container',
+    'conditional-region': 'conditional-region-container',
+    'conditional-format': 'conditional-format-container',
+    'all-fields': 'all-fields-container'
+  };
+
   const key = map[panelId];
+  const containerId = containerMap[panelId];
+  const container = containerId ? document.getElementById(containerId) : null;
   if (key && components[key] && typeof components[key].render === 'function') {
     try {
-      components[key].render();
+      components[key].render(container);
     } catch (err) {
       log('ERROR', `Component render error (${key})`, err);
     }
