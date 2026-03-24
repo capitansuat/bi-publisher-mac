@@ -80,32 +80,11 @@
                   <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.allfields"/></Action>
                 </Control>
 
-                <Control xsi:type="Button" id="btnTableWizard">
-                  <Label resid="lbl.tablewiz"/>
-                  <Supertip><Title resid="lbl.tablewiz"/><Description resid="tip.tablewiz"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.tablewiz.16"/><bt:Image size="32" resid="ico.tablewiz.32"/><bt:Image size="80" resid="ico.tablewiz.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.tablewiz"/></Action>
-                </Control>
-
                 <Control xsi:type="Button" id="btnTableForm">
                   <Label resid="lbl.tableform"/>
                   <Supertip><Title resid="lbl.tableform"/><Description resid="tip.tableform"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.tableform.16"/><bt:Image size="32" resid="ico.tableform.32"/><bt:Image size="80" resid="ico.tableform.80"/></Icon>
                   <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.tableform"/></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnChart">
-                  <Label resid="lbl.chart"/>
-                  <Supertip><Title resid="lbl.chart"/><Description resid="tip.chart"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.chart.16"/><bt:Image size="32" resid="ico.chart.32"/><bt:Image size="80" resid="ico.chart.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.chart"/></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnPivotTable">
-                  <Label resid="lbl.pivot"/>
-                  <Supertip><Title resid="lbl.pivot"/><Description resid="tip.pivot"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.pivot.16"/><bt:Image size="32" resid="ico.pivot.32"/><bt:Image size="80" resid="ico.pivot.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.pivot"/></Action>
                 </Control>
               </Group>
 
