@@ -77,18 +77,14 @@ const components = {};
 function initComponents() {
   const ctx = { AppState, wordApi, xmlParser, templateEngine, showNotification, showErrorDialog, setLoading, log };
 
-  components.insertField       = new InsertField(document.getElementById('insert-field-container'), ctx);
-  components.tableWizard       = new TableWizard(document.getElementById('table-wizard-container'), ctx);
-  components.chartWizard       = new ChartWizard(document.getElementById('chart-container'), ctx);
-  components.crossTabWizard    = new CrossTabWizard(document.getElementById('pivot-table-container'), ctx);
-  components.repeatingGroup    = new RepeatingGroup(document.getElementById('repeating-group-container'), ctx);
-  components.conditionalRegion = new ConditionalRegion(document.getElementById('conditional-region-container'), ctx);
-  components.previewPanel      = new PreviewPanel(document.getElementById('preview-container'), ctx);
-  components.barcodeInserter   = new BarcodeInserter(document.getElementById('all-fields-container'), ctx);
-  components.accessibility     = new AccessibilityChecker(document.getElementById('accessibility-container'), ctx);
-  components.translation       = new TranslationManager(document.getElementById('translation-container'), ctx);
-  components.formatHelper      = new FormatHelper(document.getElementById('conditional-format-container'), ctx);
-  components.helpPanel         = new HelpPanel(document.getElementById('help-container'), ctx);
+  // Only init components whose containers exist in the HTML
+  const el = (id) => document.getElementById(id);
+  if (el('insert-field-container'))        components.insertField       = new InsertField(el('insert-field-container'), ctx);
+  if (el('table-form-container'))          components.tableWizard       = new TableWizard(el('table-form-container'), ctx);
+  if (el('repeating-group-container'))     components.repeatingGroup    = new RepeatingGroup(el('repeating-group-container'), ctx);
+  if (el('conditional-region-container'))  components.conditionalRegion = new ConditionalRegion(el('conditional-region-container'), ctx);
+  if (el('conditional-format-container'))  components.formatHelper      = new FormatHelper(el('conditional-format-container'), ctx);
+  if (el('all-fields-container'))          components.barcodeInserter   = new BarcodeInserter(el('all-fields-container'), ctx);
 
   log('INFO', 'All components initialised');
 }
