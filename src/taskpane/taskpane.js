@@ -264,7 +264,7 @@ function initializeNavigation() {
       switchPanel(selector.value);
     });
   }
-  switchPanel('connection');
+  switchPanel('sample-xml');
 }
 
 // ============================================================================
@@ -517,7 +517,7 @@ function initializeKeyboardShortcuts() {
     }
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
-      switchPanel('connection');
+      switchPanel('sample-xml');
     }
   });
 }
@@ -593,11 +593,7 @@ Office.onReady(info => {
       initializeKeyboardShortcuts();
 
       // Wire up panels
-      setupConnectionPanel();
       setupLoadDataPanels();
-      setupPreviewPanel();
-      setupValidatePanel();
-      setupExportPanel();
 
       // Initialise all components
       initComponents();
