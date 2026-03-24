@@ -438,18 +438,102 @@ function renderFieldTreeHTML(tree) {
 }
 
 function broadcastDataLoaded() {
-  // Notify components that have onDataLoaded
-  Object.values(components).forEach(comp => {
-    if (typeof comp.onDataLoaded === 'function') {
-      try { comp.onDataLoaded(AppState.loadedData || AppState.loadedSchema, AppState.fieldTree); } catch (_) { /* skip */ }
-    }
-  });
+  // Directly populate insert-field-container with clickable field tree
+  populateFieldPanel();
 
   // Re-render the currently visible panel's component
   const activePanel = document.querySelector('.bip-panel.active');
   if (activePanel) {
     const panelId = activePanel.id.replace('panel-', '');
     renderComponentForPanel(panelId);
+  }
+}
+
+function populateFieldPanel() {
+  const container = document.getElementById('insert-field-container');
+  if (!container || !AppState.fieldTree) return;
+
+  container.innerHTML = '';
+
+  function renderClickableTree(node, depth, parentEl) {
+    if (!node) return;
+    const div = document.createElement('div');
+    div.style.paddingLeft = (depth * 16) + 'px';
+
+    const hasChildren = node.children && node.children.length > 0;
+    const isLeaf = !hasChildren;
+
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;border-radius:4px;font-size:13px;';
+    row.onmouseover = () => row.style.background = '#e8f0fe';
+    row.onmouseout = () => row.style.background = 'transparent';
+
+    // Icon
+    const icon = document.createElement('span');
+    icon.style.cssText = 'font-size:11px;width:14px;text-align:center;color:#666;';
+    icon.textContent = hasChildren ? '📁' : '📄';
+    row.appendChild(icon);
+
+    // Name
+    const label = document.createElement('span');
+    label.textContent = node.name || 'unknown';
+    label.style.cssText = isLeaf ? 'color:#0066cc;' : 'font-weight:600;color:#333;';
+    row.appendChild(label);
+
+    // Sample value
+    if (node.sampleValue) {
+      const sample = document.createElement('span');
+      sample.textContent = node.sampleValue.substring(0, 20);
+      sample.style.cssText = 'color:#999;font-size:11px;margin-left:auto;';
+      row.appendChild(sample);
+    }
+
+    div.appendChild(row);
+    parentEl.appendChild(div);
+
+    // Click handler: leaf nodes insert as ContentControl
+    if (isLeaf) {
+      row.addEventListener('click', () => insertFieldIntoDocument(node));
+    }
+
+    // Children container (collapsible)
+    if (hasChildren) {
+      const childContainer = document.createElement('div');
+      childContainer.style.display = 'block';
+      node.children.forEach(child => renderClickableTree(child, depth + 1, childContainer));
+      div.appendChild(childContainer);
+
+      // Toggle collapse
+      row.addEventListener('click', () => {
+        childContainer.style.display = childContainer.style.display === 'none' ? 'block' : 'none';
+        icon.textContent = childContainer.style.display === 'none' ? '📁' : '📂';
+      });
+    }
+  }
+
+  const tree = AppState.fieldTree;
+  const root = Array.isArray(tree) ? tree : [tree];
+  root.forEach(node => renderClickableTree(node, 0, container));
+
+  log('INFO', `Field panel populated with ${root.length} root nodes`);
+}
+
+async function insertFieldIntoDocument(node) {
+  try {
+    await Word.run(async (context) => {
+      const selection = context.document.getSelection();
+      const cc = selection.insertContentControl();
+      cc.tag = node.xpath || node.name;
+      cc.title = node.name;
+      cc.appearance = 'BoundingBox';
+      // Set placeholder text
+      const displayText = node.sampleValue || node.name;
+      cc.insertText(displayText, 'Replace');
+      await context.sync();
+      showNotification('success', 'Field Inserted', `${node.name} added to document`);
+    });
+  } catch (err) {
+    showErrorDialog('Insert Error', err.message || String(err));
   }
 }
 
