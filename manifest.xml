@@ -61,7 +61,7 @@
                 </Control>
               </Group>
 
-              <!-- ============ INSERT (5 buttons + 1 menu = 6) ============ -->
+              <!-- ============ INSERT (6 buttons) ============ -->
               <Group id="grpInsert">
                 <Label resid="grp.insert"/>
                 <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
@@ -70,78 +70,69 @@
                   <Label resid="lbl.field"/>
                   <Supertip><Title resid="lbl.field"/><Description resid="tip.field"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.field"/>
-                  </Action>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.field"/></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnAllFields">
+                  <Label resid="lbl.allfields"/>
+                  <Supertip><Title resid="lbl.allfields"/><Description resid="tip.allfields"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.allfields.16"/><bt:Image size="32" resid="ico.allfields.32"/><bt:Image size="80" resid="ico.allfields.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.allfields"/></Action>
                 </Control>
 
                 <Control xsi:type="Button" id="btnTableWizard">
                   <Label resid="lbl.tablewiz"/>
                   <Supertip><Title resid="lbl.tablewiz"/><Description resid="tip.tablewiz"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.tablewiz.16"/><bt:Image size="32" resid="ico.tablewiz.32"/><bt:Image size="80" resid="ico.tablewiz.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.tablewiz"/>
-                  </Action>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.tablewiz"/></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnTableForm">
+                  <Label resid="lbl.tableform"/>
+                  <Supertip><Title resid="lbl.tableform"/><Description resid="tip.tableform"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.tableform.16"/><bt:Image size="32" resid="ico.tableform.32"/><bt:Image size="80" resid="ico.tableform.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.tableform"/></Action>
                 </Control>
 
                 <Control xsi:type="Button" id="btnChart">
                   <Label resid="lbl.chart"/>
                   <Supertip><Title resid="lbl.chart"/><Description resid="tip.chart"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.chart.16"/><bt:Image size="32" resid="ico.chart.32"/><bt:Image size="80" resid="ico.chart.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.chart"/>
-                  </Action>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.chart"/></Action>
                 </Control>
 
                 <Control xsi:type="Button" id="btnPivotTable">
                   <Label resid="lbl.pivot"/>
                   <Supertip><Title resid="lbl.pivot"/><Description resid="tip.pivot"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.pivot.16"/><bt:Image size="32" resid="ico.pivot.32"/><bt:Image size="80" resid="ico.pivot.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.pivot"/>
-                  </Action>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.pivot"/></Action>
+                </Control>
+              </Group>
+
+              <!-- ============ TEMPLATE (3 buttons) ============ -->
+              <Group id="grpTemplate">
+                <Label resid="grp.template"/>
+                <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnRepGroup">
+                  <Label resid="lbl.repgroup"/>
+                  <Supertip><Title resid="lbl.repgroup"/><Description resid="tip.repgroup"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.repgroup"/></Action>
                 </Control>
 
-                <Control xsi:type="Menu" id="menuMoreInsert">
-                  <Label resid="lbl.more"/>
-                  <Supertip><Title resid="lbl.more"/><Description resid="tip.more"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.allfields.16"/><bt:Image size="32" resid="ico.allfields.32"/><bt:Image size="80" resid="ico.allfields.80"/></Icon>
-                  <Items>
-                    <Item id="itemTableForm">
-                      <Label resid="lbl.tableform"/>
-                      <Supertip><Title resid="lbl.tableform"/><Description resid="tip.tableform"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.tableform.16"/><bt:Image size="32" resid="ico.tableform.32"/><bt:Image size="80" resid="ico.tableform.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdTableForm</FunctionName></Action>
-                    </Item>
-                    <Item id="itemRepGroup">
-                      <Label resid="lbl.repgroup"/>
-                      <Supertip><Title resid="lbl.repgroup"/><Description resid="tip.repgroup"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdRepeatingGroup</FunctionName></Action>
-                    </Item>
-                    <Item id="itemCondFmt">
-                      <Label resid="lbl.condfmt"/>
-                      <Supertip><Title resid="lbl.condfmt"/><Description resid="tip.condfmt"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.condfmt.16"/><bt:Image size="32" resid="ico.condfmt.32"/><bt:Image size="80" resid="ico.condfmt.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondFormat</FunctionName></Action>
-                    </Item>
-                    <Item id="itemCondReg">
-                      <Label resid="lbl.condreg"/>
-                      <Supertip><Title resid="lbl.condreg"/><Description resid="tip.condreg"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.condreg.16"/><bt:Image size="32" resid="ico.condreg.32"/><bt:Image size="80" resid="ico.condreg.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdCondRegion</FunctionName></Action>
-                    </Item>
-                    <Item id="itemAllFields">
-                      <Label resid="lbl.allfields"/>
-                      <Supertip><Title resid="lbl.allfields"/><Description resid="tip.allfields"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.allfields.16"/><bt:Image size="32" resid="ico.allfields.32"/><bt:Image size="80" resid="ico.allfields.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdAllFields</FunctionName></Action>
-                    </Item>
-                  </Items>
+                <Control xsi:type="Button" id="btnCondFmt">
+                  <Label resid="lbl.condfmt"/>
+                  <Supertip><Title resid="lbl.condfmt"/><Description resid="tip.condfmt"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.condfmt.16"/><bt:Image size="32" resid="ico.condfmt.32"/><bt:Image size="80" resid="ico.condfmt.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.condfmt"/></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnCondReg">
+                  <Label resid="lbl.condreg"/>
+                  <Supertip><Title resid="lbl.condreg"/><Description resid="tip.condreg"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.condreg.16"/><bt:Image size="32" resid="ico.condreg.32"/><bt:Image size="80" resid="ico.condreg.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.condreg"/></Action>
                 </Control>
               </Group>
 
@@ -266,6 +257,11 @@
         <bt:Url id="url.tablewiz"     DefaultValue="https://localhost:3000/taskpane.html?panel=table-wizard"/>
         <bt:Url id="url.chart"        DefaultValue="https://localhost:3000/taskpane.html?panel=chart"/>
         <bt:Url id="url.pivot"        DefaultValue="https://localhost:3000/taskpane.html?panel=pivot-table"/>
+        <bt:Url id="url.allfields"    DefaultValue="https://localhost:3000/taskpane.html?panel=all-fields"/>
+        <bt:Url id="url.tableform"    DefaultValue="https://localhost:3000/taskpane.html?panel=table-form"/>
+        <bt:Url id="url.repgroup"     DefaultValue="https://localhost:3000/taskpane.html?panel=repeating-group"/>
+        <bt:Url id="url.condfmt"      DefaultValue="https://localhost:3000/taskpane.html?panel=conditional-format"/>
+        <bt:Url id="url.condreg"      DefaultValue="https://localhost:3000/taskpane.html?panel=conditional-region"/>
         <bt:Url id="url.options"      DefaultValue="https://localhost:3000/taskpane.html?panel=options"/>
         <bt:Url id="url.about"        DefaultValue="https://localhost:3000/taskpane.html?panel=about"/>
       </bt:Urls>
@@ -273,6 +269,7 @@
         <bt:String id="tab.publisher"    DefaultValue="Publisher"/>
         <bt:String id="grp.data"         DefaultValue="Load Data"/>
         <bt:String id="grp.insert"       DefaultValue="Insert"/>
+        <bt:String id="grp.template"     DefaultValue="Template"/>
         <bt:String id="grp.options"      DefaultValue="Options"/>
         <bt:String id="lbl.samplexml"    DefaultValue="Sample XML"/>
         <bt:String id="lbl.xmlschema"    DefaultValue="XML Schema"/>
@@ -280,7 +277,6 @@
         <bt:String id="lbl.tablewiz"     DefaultValue="Table Wizard"/>
         <bt:String id="lbl.chart"        DefaultValue="Chart"/>
         <bt:String id="lbl.pivot"        DefaultValue="Pivot Table"/>
-        <bt:String id="lbl.more"         DefaultValue="More..."/>
         <bt:String id="lbl.tableform"    DefaultValue="Table/Form"/>
         <bt:String id="lbl.repgroup"     DefaultValue="Repeating Group"/>
         <bt:String id="lbl.condfmt"      DefaultValue="Conditional Format"/>
@@ -302,7 +298,6 @@
         <bt:String id="tip.tablewiz"     DefaultValue="Step-by-step wizard to create data tables"/>
         <bt:String id="tip.chart"        DefaultValue="Insert a chart to visualize data"/>
         <bt:String id="tip.pivot"        DefaultValue="Create a cross-tabulation (pivot table)"/>
-        <bt:String id="tip.more"         DefaultValue="Table/Form, Repeating Group, Conditional Format/Region, All Fields"/>
         <bt:String id="tip.tableform"    DefaultValue="Insert a table or form layout"/>
         <bt:String id="tip.repgroup"     DefaultValue="Define repeating sections"/>
         <bt:String id="tip.condfmt"      DefaultValue="Apply formatting based on conditions"/>
