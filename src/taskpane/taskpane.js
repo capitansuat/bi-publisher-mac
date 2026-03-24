@@ -546,20 +546,35 @@ function populateFieldPanel() {
 
 async function insertFieldIntoDocument(node) {
   try {
+    log('INFO', 'Inserting field:', node.name);
     await Word.run(async (context) => {
-      const selection = context.document.getSelection();
-      const cc = selection.insertContentControl();
+      const range = context.document.getSelection();
+      // Insert the field text at cursor
+      const displayText = node.sampleValue || node.name;
+      const inserted = range.insertText(displayText, Word.InsertLocation.replace);
+      // Wrap in content control
+      const cc = inserted.insertContentControl();
       cc.tag = node.xpath || node.name;
       cc.title = node.name;
-      cc.appearance = 'BoundingBox';
-      // Set placeholder text
-      const displayText = node.sampleValue || node.name;
-      cc.insertText(displayText, 'Replace');
+      cc.appearance = Word.ContentControlAppearance.boundingBox;
+      cc.color = '#0078D4';
       await context.sync();
       showNotification('success', 'Field Inserted', `${node.name} added to document`);
     });
   } catch (err) {
-    showErrorDialog('Insert Error', err.message || String(err));
+    log('ERROR', 'Insert field error:', err);
+    // Fallback: try simple text insertion
+    try {
+      await Word.run(async (context) => {
+        const range = context.document.getSelection();
+        const tag = `<?${node.xpath || node.name}?>`;
+        range.insertText(tag, Word.InsertLocation.replace);
+        await context.sync();
+        showNotification('success', 'Field Inserted', `${node.name} added as text tag`);
+      });
+    } catch (err2) {
+      showErrorDialog('Insert Error', err2.message || String(err2));
+    }
   }
 }
 
