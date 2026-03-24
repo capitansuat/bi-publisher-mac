@@ -41,42 +41,6 @@
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <CustomTab id="TabPublisher">
 
-              <!-- ============ ONLINE (3 controls) ============ -->
-              <Group id="grpOnline">
-                <Label resid="grp.online"/>
-                <Icon><bt:Image size="16" resid="ico.logon.16"/><bt:Image size="32" resid="ico.logon.32"/><bt:Image size="80" resid="ico.logon.80"/></Icon>
-
-                <Control xsi:type="Button" id="btnLogOn">
-                  <Label resid="lbl.logon"/>
-                  <Supertip><Title resid="lbl.logon"/><Description resid="tip.logon"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.logon.16"/><bt:Image size="32" resid="ico.logon.32"/><bt:Image size="80" resid="ico.logon.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.taskpane"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnOpen">
-                  <Label resid="lbl.open"/>
-                  <Supertip><Title resid="lbl.open"/><Description resid="tip.open"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.open.16"/><bt:Image size="32" resid="ico.open.32"/><bt:Image size="80" resid="ico.open.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.open"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnUpload">
-                  <Label resid="lbl.upload"/>
-                  <Supertip><Title resid="lbl.upload"/><Description resid="tip.upload"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.upload.16"/><bt:Image size="32" resid="ico.upload.32"/><bt:Image size="80" resid="ico.upload.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.upload"/>
-                  </Action>
-                </Control>
-              </Group>
-
               <!-- ============ LOAD DATA (2 controls) ============ -->
               <Group id="grpLoadData">
                 <Label resid="grp.data"/>
@@ -259,35 +223,39 @@
                 </Control>
               </Group>
 
-              <!-- ============ OPTIONS (1 menu control) ============ -->
+              <!-- ============ OPTIONS (3 buttons) ============ -->
               <Group id="grpOptions">
                 <Label resid="grp.options"/>
                 <Icon><bt:Image size="16" resid="ico.options.16"/><bt:Image size="32" resid="ico.options.32"/><bt:Image size="80" resid="ico.options.80"/></Icon>
 
-                <Control xsi:type="Menu" id="menuOptions">
-                  <Label resid="lbl.optmenu"/>
-                  <Supertip><Title resid="lbl.optmenu"/><Description resid="tip.optmenu"/></Supertip>
+                <Control xsi:type="Button" id="btnOptions">
+                  <Label resid="lbl.options"/>
+                  <Supertip><Title resid="lbl.options"/><Description resid="tip.options"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.options.16"/><bt:Image size="32" resid="ico.options.32"/><bt:Image size="80" resid="ico.options.80"/></Icon>
-                  <Items>
-                    <Item id="itemOptions">
-                      <Label resid="lbl.options"/>
-                      <Supertip><Title resid="lbl.options"/><Description resid="tip.options"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.options.16"/><bt:Image size="32" resid="ico.options.32"/><bt:Image size="80" resid="ico.options.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdOptions</FunctionName></Action>
-                    </Item>
-                    <Item id="itemHelp">
-                      <Label resid="lbl.help"/>
-                      <Supertip><Title resid="lbl.help"/><Description resid="tip.help"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.help.16"/><bt:Image size="32" resid="ico.help.32"/><bt:Image size="80" resid="ico.help.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdHelp</FunctionName></Action>
-                    </Item>
-                    <Item id="itemAbout">
-                      <Label resid="lbl.about"/>
-                      <Supertip><Title resid="lbl.about"/><Description resid="tip.about"/></Supertip>
-                      <Icon><bt:Image size="16" resid="ico.about.16"/><bt:Image size="32" resid="ico.about.32"/><bt:Image size="80" resid="ico.about.80"/></Icon>
-                      <Action xsi:type="ExecuteFunction"><FunctionName>cmdAbout</FunctionName></Action>
-                    </Item>
-                  </Items>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>BIP</TaskpaneId>
+                    <SourceLocation resid="url.options"/>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnHelp">
+                  <Label resid="lbl.help"/>
+                  <Supertip><Title resid="lbl.help"/><Description resid="tip.help"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.help.16"/><bt:Image size="32" resid="ico.help.32"/><bt:Image size="80" resid="ico.help.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>BIP</TaskpaneId>
+                    <SourceLocation resid="url.help"/>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnAbout">
+                  <Label resid="lbl.about"/>
+                  <Supertip><Title resid="lbl.about"/><Description resid="tip.about"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.about.16"/><bt:Image size="32" resid="ico.about.32"/><bt:Image size="80" resid="ico.about.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>BIP</TaskpaneId>
+                    <SourceLocation resid="url.about"/>
+                  </Action>
                 </Control>
               </Group>
 
@@ -434,6 +402,9 @@
         <bt:Url id="url.a11y"         DefaultValue="https://localhost:3000/taskpane.html?panel=accessibility"/>
         <bt:Url id="url.translation"  DefaultValue="https://localhost:3000/taskpane.html?panel=translation"/>
         <bt:Url id="url.export"       DefaultValue="https://localhost:3000/taskpane.html?panel=export"/>
+        <bt:Url id="url.options"      DefaultValue="https://localhost:3000/taskpane.html?panel=options"/>
+        <bt:Url id="url.help"         DefaultValue="https://localhost:3000/taskpane.html?panel=help"/>
+        <bt:Url id="url.about"        DefaultValue="https://localhost:3000/taskpane.html?panel=about"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="tab.publisher"    DefaultValue="Publisher"/>
