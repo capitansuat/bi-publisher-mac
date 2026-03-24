@@ -575,30 +575,48 @@ class TableWizard {
    * Load available data groups
    */
   loadDataGroups() {
-    this.dataGroups = [
-      {
-        name: 'Employees',
-        xpath: '/Company/Employees/Employee',
-        selected: true,
-        fields: [
-          { name: 'Name', type: 'text' },
-          { name: 'Department', type: 'text' },
-          { name: 'Salary', type: 'number' },
-          { name: 'HireDate', type: 'date' }
-        ]
-      },
-      {
-        name: 'Orders',
-        xpath: '/Company/Orders/Order',
-        selected: false,
-        fields: [
-          { name: 'OrderID', type: 'text' },
-          { name: 'Customer', type: 'text' },
-          { name: 'Amount', type: 'number' },
-          { name: 'OrderDate', type: 'date' }
-        ]
+    // Load groups and fields from AppState.fieldTree (loaded XML)
+    this.dataGroups = [];
+    const tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    if (!tree) return;
+
+    const collectGroups = (node, path) => {
+      if (!node || !node.children || node.children.length === 0) return;
+      const currentPath = path ? `${path}/${node.name}` : node.name;
+
+      // Check if this group has leaf children (fields)
+      const fields = [];
+      const childGroups = [];
+      node.children.forEach(child => {
+        if (child.children && child.children.length > 0) {
+          childGroups.push(child);
+        } else {
+          let type = 'text';
+          if (child.sampleValue) {
+            if (!isNaN(Number(child.sampleValue))) type = 'number';
+            else if (/^\d{4}-\d{2}-\d{2}/.test(child.sampleValue)) type = 'date';
+          }
+          fields.push({ name: child.name, xpath: child.xpath || child.name, type });
+        }
+      });
+
+      if (fields.length > 0) {
+        this.dataGroups.push({
+          name: node.name,
+          xpath: currentPath,
+          selected: this.dataGroups.length === 0,
+          fields
+        });
       }
-    ];
+
+      childGroups.forEach(child => collectGroups(child, currentPath));
+    };
+
+    if (Array.isArray(tree)) {
+      tree.forEach(node => collectGroups(node, ''));
+    } else {
+      collectGroups(tree, '');
+    }
   }
 
   /**

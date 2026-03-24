@@ -277,11 +277,30 @@ class RepeatingGroup {
    * Load available data elements
    */
   loadDataElements() {
-    this.dataElements = [
-      { name: 'Employees', xpath: '/Company/Employees/Employee', isRepeating: true },
-      { name: 'Orders', xpath: '/Company/Orders/Order', isRepeating: true },
-      { name: 'Items', xpath: '/Company/Orders/Order/Items/Item', isRepeating: true }
-    ];
+    // Load repeating elements from AppState.fieldTree (loaded XML)
+    this.dataElements = [];
+    const tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    if (!tree) return;
+
+    // Find all nodes that have children (potential repeating groups)
+    const collectGroups = (node, path) => {
+      if (!node) return;
+      const currentPath = path ? `${path}/${node.name}` : node.name;
+      if (node.children && node.children.length > 0) {
+        this.dataElements.push({
+          name: node.name,
+          xpath: currentPath,
+          isRepeating: true
+        });
+        node.children.forEach(child => collectGroups(child, currentPath));
+      }
+    };
+
+    if (Array.isArray(tree)) {
+      tree.forEach(node => collectGroups(node, ''));
+    } else {
+      collectGroups(tree, '');
+    }
   }
 
   /**

@@ -326,13 +326,31 @@ class ConditionalRegion {
    * Load available data fields
    */
   loadDataFields() {
-    this.dataFields = [
-      { name: 'Status', type: 'text' },
-      { name: 'Amount', type: 'number' },
-      { name: 'Date', type: 'date' },
-      { name: 'Category', type: 'text' },
-      { name: 'Region', type: 'text' }
-    ];
+    // Load fields from AppState.fieldTree (loaded XML)
+    this.dataFields = [];
+    const tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    if (!tree) return;
+
+    const collectLeaves = (node) => {
+      if (!node) return;
+      if (node.children && node.children.length > 0) {
+        node.children.forEach(child => collectLeaves(child));
+      } else {
+        // Guess type from sample value
+        let type = 'text';
+        if (node.sampleValue) {
+          if (!isNaN(Number(node.sampleValue))) type = 'number';
+          else if (/^\d{4}-\d{2}-\d{2}/.test(node.sampleValue)) type = 'date';
+        }
+        this.dataFields.push({ name: node.name, xpath: node.xpath || node.name, type });
+      }
+    };
+
+    if (Array.isArray(tree)) {
+      tree.forEach(node => collectLeaves(node));
+    } else {
+      collectLeaves(tree);
+    }
   }
 
   /**
