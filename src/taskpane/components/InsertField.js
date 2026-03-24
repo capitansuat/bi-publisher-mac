@@ -215,13 +215,32 @@ class InsertField {
   loadDataFields() {
     try {
       // Use AppState.fieldTree if available (from loaded XML/XSD)
-      const appState = this.services.AppState;
+      const appState = this.services.AppState || (typeof AppState !== 'undefined' ? AppState : null);
+      console.log('[InsertField] loadDataFields - AppState:', !!appState, 'fieldTree:', !!(appState && appState.fieldTree), 'loadedData:', !!(appState && appState.loadedData));
+
       if (appState && appState.fieldTree) {
         this.dataFields = Array.isArray(appState.fieldTree) ? appState.fieldTree : [appState.fieldTree];
+        console.log('[InsertField] Using fieldTree, fields:', this.dataFields.length, JSON.stringify(this.dataFields[0]?.name));
+        this.filteredFields = JSON.parse(JSON.stringify(this.dataFields));
         return;
       }
 
-      const template = this.templateEngine.getCurrentTemplate();
+      // Fallback: if raw XML data is loaded, build tree from it
+      if (appState && appState.loadedData && this.xmlParser) {
+        try {
+          const tree = this.xmlParser.getFieldTree(appState.loadedData);
+          if (tree) {
+            this.dataFields = [tree];
+            console.log('[InsertField] Built tree from loadedData:', tree.name);
+            this.filteredFields = JSON.parse(JSON.stringify(this.dataFields));
+            return;
+          }
+        } catch (e) {
+          console.warn('[InsertField] Failed to build tree from loadedData', e);
+        }
+      }
+
+      const template = this.templateEngine ? this.templateEngine.getCurrentTemplate() : null;
       if (template && template.dataSource) {
         this.dataFields = this.xmlParser.parseToFieldTree(template.dataSource);
       } else {
