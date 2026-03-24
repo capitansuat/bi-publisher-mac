@@ -365,6 +365,12 @@ function handleXMLFile(file) {
       AppState.loadedData = parsed;
       AppState.fieldTree = xmlParser.getFieldTree(parsed);
 
+      // Persist to localStorage so data survives panel switches (page reloads)
+      try {
+        localStorage.setItem('bip_xml_raw', xmlString);
+        localStorage.setItem('bip_xml_filename', file.name);
+      } catch (_) { /* quota exceeded - ignore */ }
+
       const summary = document.getElementById('xml-data-summary');
       const content = document.getElementById('xml-summary-content');
       if (summary && content) {
@@ -387,6 +393,26 @@ function handleXMLFile(file) {
   };
   reader.onerror = () => { setLoading(false); showErrorDialog('File Error', 'Failed to read file'); };
   reader.readAsText(file);
+}
+
+// Restore XML data from localStorage (survives taskpane reloads)
+function restoreDataFromStorage() {
+  try {
+    const xmlRaw = localStorage.getItem('bip_xml_raw');
+    const fileName = localStorage.getItem('bip_xml_filename');
+    if (xmlRaw && xmlParser) {
+      const parsed = xmlParser.parseXML(xmlRaw);
+      AppState.loadedData = parsed;
+      AppState.fieldTree = xmlParser.getFieldTree(parsed);
+      updateDataStatus(`XML: ${fileName || 'restored'}`);
+      log('INFO', `Restored XML data from storage: ${fileName}`);
+      broadcastDataLoaded();
+      return true;
+    }
+  } catch (err) {
+    log('WARN', 'Could not restore data from storage', err);
+  }
+  return false;
 }
 
 function handleXSDFile(file) {
@@ -681,6 +707,9 @@ Office.onReady(info => {
 
       // Initialise all components
       initComponents();
+
+      // Restore previously loaded XML data from localStorage
+      restoreDataFromStorage();
 
       // Check if a ribbon command requested a panel
       checkRequestedPanel();
