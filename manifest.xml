@@ -11,7 +11,7 @@
   <Description DefaultValue="Oracle BI Publisher Template Builder for macOS — design report templates in Word."/>
   <IconUrl DefaultValue="https://localhost:3000/images/ico-field-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/images/ico-field-80.png"/>
-  <SupportUrl DefaultValue="https://localhost:3000/taskpane.html?panel=help"/>
+  <SupportUrl DefaultValue="https://localhost:3000/taskpane.html"/>
 
   <Hosts><Host Name="Document"/></Hosts>
   <DefaultSettings><SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/></DefaultSettings>
@@ -35,7 +35,7 @@
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <CustomTab id="TabPublisher">
 
-              <!-- ============ LOAD DATA (2 controls) ============ -->
+              <!-- ============ LOAD DATA ============ -->
               <Group id="grpLoadData">
                 <Label resid="grp.data"/>
                 <Icon><bt:Image size="16" resid="ico.samplexml.16"/><bt:Image size="32" resid="ico.samplexml.32"/><bt:Image size="80" resid="ico.samplexml.80"/></Icon>
@@ -145,79 +145,7 @@
                 </Control>
               </Group>
 
-              <!-- ============ PREVIEW (1 button) ============ -->
-              <Group id="grpPreview">
-                <Label resid="grp.preview"/>
-                <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
-
-                <Control xsi:type="Button" id="btnPreview">
-                  <Label resid="lbl.preview"/>
-                  <Supertip><Title resid="lbl.preview"/><Description resid="tip.preview"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.preview"/>
-                  </Action>
-                </Control>
-              </Group>
-
-              <!-- ============ TOOLS (5 buttons) ============ -->
-              <Group id="grpTools">
-                <Label resid="grp.tools"/>
-                <Icon><bt:Image size="16" resid="ico.fieldbrowser.16"/><bt:Image size="32" resid="ico.fieldbrowser.32"/><bt:Image size="80" resid="ico.fieldbrowser.80"/></Icon>
-
-                <Control xsi:type="Button" id="btnFieldBrowser">
-                  <Label resid="lbl.fieldbrowser"/>
-                  <Supertip><Title resid="lbl.fieldbrowser"/><Description resid="tip.fieldbrowser"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.fieldbrowser.16"/><bt:Image size="32" resid="ico.fieldbrowser.32"/><bt:Image size="80" resid="ico.fieldbrowser.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.fieldbrowser"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnValidate">
-                  <Label resid="lbl.validate"/>
-                  <Supertip><Title resid="lbl.validate"/><Description resid="tip.validate"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.validate.16"/><bt:Image size="32" resid="ico.validate.32"/><bt:Image size="80" resid="ico.validate.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.validate"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnAccessibility">
-                  <Label resid="lbl.a11y"/>
-                  <Supertip><Title resid="lbl.a11y"/><Description resid="tip.a11y"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.a11y.16"/><bt:Image size="32" resid="ico.a11y.32"/><bt:Image size="80" resid="ico.a11y.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.a11y"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnTranslation">
-                  <Label resid="lbl.translation"/>
-                  <Supertip><Title resid="lbl.translation"/><Description resid="tip.translation"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.translation.16"/><bt:Image size="32" resid="ico.translation.32"/><bt:Image size="80" resid="ico.translation.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.translation"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnExport">
-                  <Label resid="lbl.export"/>
-                  <Supertip><Title resid="lbl.export"/><Description resid="tip.export"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.export.16"/><bt:Image size="32" resid="ico.export.32"/><bt:Image size="80" resid="ico.export.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.export"/>
-                  </Action>
-                </Control>
-              </Group>
-
-              <!-- ============ OPTIONS (3 buttons) ============ -->
+              <!-- ============ OPTIONS (2 buttons) ============ -->
               <Group id="grpOptions">
                 <Label resid="grp.options"/>
                 <Icon><bt:Image size="16" resid="ico.options.16"/><bt:Image size="32" resid="ico.options.32"/><bt:Image size="80" resid="ico.options.80"/></Icon>
@@ -229,16 +157,6 @@
                   <Action xsi:type="ShowTaskpane">
                     <TaskpaneId>BIP</TaskpaneId>
                     <SourceLocation resid="url.options"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnHelp">
-                  <Label resid="lbl.help"/>
-                  <Supertip><Title resid="lbl.help"/><Description resid="tip.help"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.help.16"/><bt:Image size="32" resid="ico.help.32"/><bt:Image size="80" resid="ico.help.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.help"/>
                   </Action>
                 </Control>
 
@@ -257,13 +175,13 @@
             </CustomTab>
           </ExtensionPoint>
 
-          <!-- Right-click context menu: individual buttons (Mac compatible) -->
+          <!-- Right-click context menu -->
           <ExtensionPoint xsi:type="ContextMenu">
             <OfficeMenu id="ContextMenuText">
               <Control xsi:type="Button" id="ctxFieldProps">
                 <Label resid="lbl.ctx.props"/>
                 <Supertip><Title resid="lbl.ctx.props"/><Description resid="tip.ctx.props"/></Supertip>
-                <Icon><bt:Image size="16" resid="ico.fieldbrowser.16"/><bt:Image size="32" resid="ico.fieldbrowser.32"/><bt:Image size="80" resid="ico.fieldbrowser.80"/></Icon>
+                <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
                 <Action xsi:type="ExecuteFunction"><FunctionName>cmdFieldProperties</FunctionName></Action>
               </Control>
               <Control xsi:type="Button" id="ctxInsertField">
@@ -332,30 +250,9 @@
         <bt:Image id="ico.condreg.16"      DefaultValue="https://localhost:3000/images/ico-condreg-16.png"/>
         <bt:Image id="ico.condreg.32"      DefaultValue="https://localhost:3000/images/ico-condreg-32.png"/>
         <bt:Image id="ico.condreg.80"      DefaultValue="https://localhost:3000/images/ico-condreg-80.png"/>
-        <bt:Image id="ico.preview.16"      DefaultValue="https://localhost:3000/images/ico-preview-16.png"/>
-        <bt:Image id="ico.preview.32"      DefaultValue="https://localhost:3000/images/ico-preview-32.png"/>
-        <bt:Image id="ico.preview.80"      DefaultValue="https://localhost:3000/images/ico-preview-80.png"/>
-        <bt:Image id="ico.fieldbrowser.16" DefaultValue="https://localhost:3000/images/ico-fieldbrowser-16.png"/>
-        <bt:Image id="ico.fieldbrowser.32" DefaultValue="https://localhost:3000/images/ico-fieldbrowser-32.png"/>
-        <bt:Image id="ico.fieldbrowser.80" DefaultValue="https://localhost:3000/images/ico-fieldbrowser-80.png"/>
-        <bt:Image id="ico.validate.16"     DefaultValue="https://localhost:3000/images/ico-validate-16.png"/>
-        <bt:Image id="ico.validate.32"     DefaultValue="https://localhost:3000/images/ico-validate-32.png"/>
-        <bt:Image id="ico.validate.80"     DefaultValue="https://localhost:3000/images/ico-validate-80.png"/>
-        <bt:Image id="ico.a11y.16"         DefaultValue="https://localhost:3000/images/ico-a11y-16.png"/>
-        <bt:Image id="ico.a11y.32"         DefaultValue="https://localhost:3000/images/ico-a11y-32.png"/>
-        <bt:Image id="ico.a11y.80"         DefaultValue="https://localhost:3000/images/ico-a11y-80.png"/>
-        <bt:Image id="ico.translation.16"  DefaultValue="https://localhost:3000/images/ico-translation-16.png"/>
-        <bt:Image id="ico.translation.32"  DefaultValue="https://localhost:3000/images/ico-translation-32.png"/>
-        <bt:Image id="ico.translation.80"  DefaultValue="https://localhost:3000/images/ico-translation-80.png"/>
-        <bt:Image id="ico.export.16"       DefaultValue="https://localhost:3000/images/ico-export-16.png"/>
-        <bt:Image id="ico.export.32"       DefaultValue="https://localhost:3000/images/ico-export-32.png"/>
-        <bt:Image id="ico.export.80"       DefaultValue="https://localhost:3000/images/ico-export-80.png"/>
         <bt:Image id="ico.options.16"      DefaultValue="https://localhost:3000/images/ico-options-16.png"/>
         <bt:Image id="ico.options.32"      DefaultValue="https://localhost:3000/images/ico-options-32.png"/>
         <bt:Image id="ico.options.80"      DefaultValue="https://localhost:3000/images/ico-options-80.png"/>
-        <bt:Image id="ico.help.16"         DefaultValue="https://localhost:3000/images/ico-help-16.png"/>
-        <bt:Image id="ico.help.32"         DefaultValue="https://localhost:3000/images/ico-help-32.png"/>
-        <bt:Image id="ico.help.80"         DefaultValue="https://localhost:3000/images/ico-help-80.png"/>
         <bt:Image id="ico.about.16"        DefaultValue="https://localhost:3000/images/ico-about-16.png"/>
         <bt:Image id="ico.about.32"        DefaultValue="https://localhost:3000/images/ico-about-32.png"/>
         <bt:Image id="ico.about.80"        DefaultValue="https://localhost:3000/images/ico-about-80.png"/>
@@ -369,22 +266,13 @@
         <bt:Url id="url.tablewiz"     DefaultValue="https://localhost:3000/taskpane.html?panel=table-wizard"/>
         <bt:Url id="url.chart"        DefaultValue="https://localhost:3000/taskpane.html?panel=chart"/>
         <bt:Url id="url.pivot"        DefaultValue="https://localhost:3000/taskpane.html?panel=pivot-table"/>
-        <bt:Url id="url.preview"      DefaultValue="https://localhost:3000/taskpane.html?panel=preview"/>
-        <bt:Url id="url.fieldbrowser" DefaultValue="https://localhost:3000/taskpane.html?panel=field-browser"/>
-        <bt:Url id="url.validate"     DefaultValue="https://localhost:3000/taskpane.html?panel=validate-template"/>
-        <bt:Url id="url.a11y"         DefaultValue="https://localhost:3000/taskpane.html?panel=accessibility"/>
-        <bt:Url id="url.translation"  DefaultValue="https://localhost:3000/taskpane.html?panel=translation"/>
-        <bt:Url id="url.export"       DefaultValue="https://localhost:3000/taskpane.html?panel=export"/>
         <bt:Url id="url.options"      DefaultValue="https://localhost:3000/taskpane.html?panel=options"/>
-        <bt:Url id="url.help"         DefaultValue="https://localhost:3000/taskpane.html?panel=help"/>
         <bt:Url id="url.about"        DefaultValue="https://localhost:3000/taskpane.html?panel=about"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="tab.publisher"    DefaultValue="Publisher"/>
         <bt:String id="grp.data"         DefaultValue="Load Data"/>
         <bt:String id="grp.insert"       DefaultValue="Insert"/>
-        <bt:String id="grp.preview"      DefaultValue="Preview"/>
-        <bt:String id="grp.tools"        DefaultValue="Tools"/>
         <bt:String id="grp.options"      DefaultValue="Options"/>
         <bt:String id="lbl.samplexml"    DefaultValue="Sample XML"/>
         <bt:String id="lbl.xmlschema"    DefaultValue="XML Schema"/>
@@ -398,14 +286,7 @@
         <bt:String id="lbl.condfmt"      DefaultValue="Conditional Format"/>
         <bt:String id="lbl.condreg"      DefaultValue="Conditional Region"/>
         <bt:String id="lbl.allfields"    DefaultValue="All Fields"/>
-        <bt:String id="lbl.preview"      DefaultValue="Preview"/>
-        <bt:String id="lbl.fieldbrowser" DefaultValue="Field Browser"/>
-        <bt:String id="lbl.validate"     DefaultValue="Validate"/>
-        <bt:String id="lbl.a11y"         DefaultValue="Accessibility"/>
-        <bt:String id="lbl.translation"  DefaultValue="Translation"/>
-        <bt:String id="lbl.export"       DefaultValue="Export"/>
         <bt:String id="lbl.options"      DefaultValue="Options"/>
-        <bt:String id="lbl.help"         DefaultValue="Help"/>
         <bt:String id="lbl.about"        DefaultValue="About"/>
         <bt:String id="getStarted.Title" DefaultValue="BI Publisher Template Builder"/>
         <bt:String id="lbl.ctx.props"    DefaultValue="BIP: Field Properties..."/>
@@ -427,14 +308,7 @@
         <bt:String id="tip.condfmt"      DefaultValue="Apply formatting based on conditions"/>
         <bt:String id="tip.condreg"      DefaultValue="Show or hide regions based on conditions"/>
         <bt:String id="tip.allfields"    DefaultValue="Insert all fields from the data source"/>
-        <bt:String id="tip.preview"      DefaultValue="Preview template in various output formats"/>
-        <bt:String id="tip.fieldbrowser" DefaultValue="Browse and edit template fields"/>
-        <bt:String id="tip.validate"     DefaultValue="Validate template for errors"/>
-        <bt:String id="tip.a11y"         DefaultValue="Check template accessibility"/>
-        <bt:String id="tip.translation"  DefaultValue="Translation and localization tools"/>
-        <bt:String id="tip.export"       DefaultValue="Export template in various formats"/>
         <bt:String id="tip.options"      DefaultValue="Configure add-in preferences"/>
-        <bt:String id="tip.help"         DefaultValue="Open help documentation"/>
         <bt:String id="tip.about"        DefaultValue="About BI Publisher Template Builder"/>
         <bt:String id="getStarted.Desc"  DefaultValue="Design Oracle BI Publisher report templates directly in Word."/>
         <bt:String id="tip.ctx.props"    DefaultValue="View and edit properties of the selected BI Publisher field"/>
