@@ -438,11 +438,19 @@ function renderFieldTreeHTML(tree) {
 }
 
 function broadcastDataLoaded() {
+  // Notify components that have onDataLoaded
   Object.values(components).forEach(comp => {
     if (typeof comp.onDataLoaded === 'function') {
       try { comp.onDataLoaded(AppState.loadedData || AppState.loadedSchema, AppState.fieldTree); } catch (_) { /* skip */ }
     }
   });
+
+  // Re-render the currently visible panel's component
+  const activePanel = document.querySelector('.bip-panel.active');
+  if (activePanel) {
+    const panelId = activePanel.id.replace('panel-', '');
+    renderComponentForPanel(panelId);
+  }
 }
 
 // ============================================================================

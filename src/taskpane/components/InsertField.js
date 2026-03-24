@@ -214,6 +214,13 @@ class InsertField {
    */
   loadDataFields() {
     try {
+      // Use AppState.fieldTree if available (from loaded XML/XSD)
+      const appState = this.services.AppState;
+      if (appState && appState.fieldTree) {
+        this.dataFields = Array.isArray(appState.fieldTree) ? appState.fieldTree : [appState.fieldTree];
+        return;
+      }
+
       const template = this.templateEngine.getCurrentTemplate();
       if (template && template.dataSource) {
         this.dataFields = this.xmlParser.parseToFieldTree(template.dataSource);
