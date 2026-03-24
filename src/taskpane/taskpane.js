@@ -207,6 +207,11 @@ function switchPanel(panelId) {
   }
 
   renderComponentForPanel(panelId);
+
+  // Always re-populate field panel when switching to it (data may have been loaded earlier)
+  if (panelId === 'insert-field' || panelId === 'all-fields') {
+    populateFieldPanel();
+  }
 }
 
 function createPlaceholderPanel(panelId) {
@@ -545,34 +550,36 @@ function populateFieldPanel() {
 }
 
 async function insertFieldIntoDocument(node) {
+  const fieldTag = node.xpath || node.name;
+  const displayText = node.sampleValue || node.name;
+  log('INFO', `Inserting field: ${node.name} tag=${fieldTag} value=${displayText}`);
+
   try {
-    log('INFO', 'Inserting field:', node.name);
     await Word.run(async (context) => {
       const range = context.document.getSelection();
-      // Insert the field text at cursor
-      const displayText = node.sampleValue || node.name;
-      const inserted = range.insertText(displayText, Word.InsertLocation.replace);
+      // Insert text first using string literal (more compatible)
+      const inserted = range.insertText(displayText, 'Replace');
       // Wrap in content control
       const cc = inserted.insertContentControl();
-      cc.tag = node.xpath || node.name;
+      cc.tag = fieldTag;
       cc.title = node.name;
-      cc.appearance = Word.ContentControlAppearance.boundingBox;
-      cc.color = '#0078D4';
+      try { cc.appearance = 'BoundingBox'; } catch(_) {}
+      try { cc.color = '#0078D4'; } catch(_) {}
       await context.sync();
-      showNotification('success', 'Field Inserted', `${node.name} added to document`);
+      log('INFO', 'Field inserted as ContentControl');
+      showNotification('success', 'Field Inserted', `${node.name}`);
     });
   } catch (err) {
-    log('ERROR', 'Insert field error:', err);
-    // Fallback: try simple text insertion
+    log('WARN', 'ContentControl insert failed, trying plain text:', err.message);
     try {
       await Word.run(async (context) => {
         const range = context.document.getSelection();
-        const tag = `<?${node.xpath || node.name}?>`;
-        range.insertText(tag, Word.InsertLocation.replace);
+        range.insertText(`<?${fieldTag}?>`, 'Replace');
         await context.sync();
-        showNotification('success', 'Field Inserted', `${node.name} added as text tag`);
+        showNotification('success', 'Field Inserted', `${node.name} (as tag)`);
       });
     } catch (err2) {
+      log('ERROR', 'Plain text insert also failed:', err2.message);
       showErrorDialog('Insert Error', err2.message || String(err2));
     }
   }
