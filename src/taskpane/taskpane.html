@@ -26,11 +26,6 @@
         <span class="bip-title ms-font-m ms-fontWeight-semibold">Publisher</span>
         <div class="bip-nav-wrap">
           <select id="panel-selector" class="bip-nav-select ms-font-s">
-            <optgroup label="Online">
-              <option value="connection">Log On</option>
-              <option value="open-report">Open</option>
-              <option value="upload-template">Upload Template</option>
-            </optgroup>
             <optgroup label="Load Data">
               <option value="sample-xml">Sample XML</option>
               <option value="xml-schema">XML Schema</option>
@@ -46,19 +41,8 @@
               <option value="conditional-region">Conditional Region</option>
               <option value="all-fields">All Fields</option>
             </optgroup>
-            <optgroup label="Preview">
-              <option value="preview">Preview</option>
-            </optgroup>
-            <optgroup label="Tools">
-              <option value="field-browser">Field Browser</option>
-              <option value="validate-template">Validate Template</option>
-              <option value="accessibility">Accessibility</option>
-              <option value="translation">Translation</option>
-              <option value="export">Export</option>
-            </optgroup>
-            <optgroup label="Options">
+            <optgroup label="Settings">
               <option value="options">Options</option>
-              <option value="help">Help</option>
               <option value="about">About</option>
             </optgroup>
           </select>
@@ -68,72 +52,8 @@
       <!-- ===== Scrollable Panel Container ===== -->
       <div id="panel-container" class="bip-panels">
 
-        <!-- CONNECTION / LOG ON -->
-        <div id="panel-connection" class="bip-panel active">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Log On</h2>
-          <p class="ms-font-s bip-muted">Connect to Oracle BI Publisher server</p>
-          <div class="bip-card">
-            <div class="bip-field">
-              <label class="ms-font-s" for="server-url">Server URL</label>
-              <input type="url" id="server-url" class="bip-input" placeholder="http://server:7001/xmlpserver" autocomplete="url"/>
-            </div>
-            <div class="bip-field">
-              <label class="ms-font-s" for="username">Username</label>
-              <input type="text" id="username" class="bip-input" placeholder="Username" autocomplete="username"/>
-            </div>
-            <div class="bip-field">
-              <label class="ms-font-s" for="password">Password</label>
-              <input type="password" id="password" class="bip-input" placeholder="Password" autocomplete="current-password"/>
-            </div>
-            <div class="bip-actions">
-              <button id="btn-connect" class="bip-btn bip-btn-primary ms-font-s">Log On</button>
-              <button id="btn-disconnect" class="bip-btn bip-btn-secondary ms-font-s" disabled>Disconnect</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- OPEN REPORT -->
-        <div id="panel-open-report" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Open Report</h2>
-          <p class="ms-font-s bip-muted">Browse the BI Publisher catalog</p>
-          <div class="bip-card">
-            <div id="catalog-tree" class="bip-tree">
-              <p class="bip-muted ms-font-s">Connect to server to browse catalog...</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- UPLOAD TEMPLATE -->
-        <div id="panel-upload-template" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Upload Template</h2>
-          <p class="ms-font-s bip-muted">Upload current template to the server</p>
-          <div class="bip-card">
-            <div class="bip-field">
-              <label class="ms-font-s" for="upload-report-path">Report Path</label>
-              <input type="text" id="upload-report-path" class="bip-input" placeholder="/Shared Folders/Reports/..."/>
-            </div>
-            <div class="bip-field">
-              <label class="ms-font-s" for="upload-template-name">Template Name</label>
-              <input type="text" id="upload-template-name" class="bip-input" placeholder="My Template"/>
-            </div>
-            <div class="bip-field">
-              <label class="ms-font-s" for="upload-locale">Locale</label>
-              <select id="upload-locale" class="bip-select">
-                <option value="en_US">English (US)</option>
-                <option value="tr_TR">Turkish</option>
-                <option value="de_DE">German</option>
-                <option value="fr_FR">French</option>
-              </select>
-            </div>
-            <div class="bip-actions">
-              <button id="btn-upload" class="bip-btn bip-btn-primary ms-font-s" disabled>Upload</button>
-              <button id="btn-upload-as" class="bip-btn bip-btn-secondary ms-font-s" disabled>Upload As...</button>
-            </div>
-          </div>
-        </div>
-
         <!-- SAMPLE XML -->
-        <div id="panel-sample-xml" class="bip-panel">
+        <div id="panel-sample-xml" class="bip-panel active">
           <h2 class="ms-font-l ms-fontWeight-semibold">Load Sample XML</h2>
           <p class="ms-font-s bip-muted">Load XML data for template design</p>
           <div class="bip-card">
@@ -245,118 +165,28 @@
           </div>
         </div>
 
-        <!-- PREVIEW -->
-        <div id="panel-preview" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Preview Report</h2>
-          <p class="ms-font-s bip-muted">Preview template output</p>
-          <div class="bip-card" id="preview-container">
-            <div class="bip-row">
-              <label class="ms-font-s">Format:</label>
-              <select id="preview-format" class="bip-select bip-select-sm">
-                <option value="pdf">PDF</option>
-                <option value="html">HTML</option>
-                <option value="excel">Excel</option>
-                <option value="excel2000">Excel 2000</option>
-                <option value="rtf">RTF</option>
-                <option value="pptx">PowerPoint</option>
-                <option value="docx">DOCX</option>
-              </select>
-            </div>
-            <button id="btn-generate-preview" class="bip-btn bip-btn-primary bip-btn-block ms-font-s">Generate Preview</button>
-            <div id="preview-output" class="bip-preview-output">
-              <p class="bip-muted ms-font-s">Load data and click Generate Preview...</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- FIELD BROWSER -->
-        <div id="panel-field-browser" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Field Browser</h2>
-          <p class="ms-font-s bip-muted">Browse and edit template field instructions</p>
-          <div class="bip-card" id="field-browser-container">
-            <p class="bip-muted ms-font-s">Insert fields to browse them here...</p>
-          </div>
-        </div>
-
-        <!-- VALIDATE TEMPLATE -->
-        <div id="panel-validate-template" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Validate Template</h2>
-          <p class="ms-font-s bip-muted">Check template for errors and warnings</p>
-          <div class="bip-card" id="validate-container">
-            <button id="btn-validate" class="bip-btn bip-btn-primary bip-btn-block ms-font-s">Validate Template</button>
-            <div id="validation-results" class="bip-results" style="display:none;"></div>
-          </div>
-        </div>
-
-        <!-- ACCESSIBILITY -->
-        <div id="panel-accessibility" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Accessibility</h2>
-          <p class="ms-font-s bip-muted">Validate template accessibility</p>
-          <div class="bip-card" id="accessibility-container">
-            <p class="bip-muted ms-font-s">Run accessibility check on your template...</p>
-          </div>
-        </div>
-
-        <!-- TRANSLATION -->
-        <div id="panel-translation" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Translation</h2>
-          <p class="ms-font-s bip-muted">Manage translations and localization</p>
-          <div class="bip-card" id="translation-container">
-            <div class="bip-tabs">
-              <button class="bip-tab active" data-tab="extract">Extract</button>
-              <button class="bip-tab" data-tab="preview-translation">Preview</button>
-              <button class="bip-tab" data-tab="localize">Localize</button>
-            </div>
-            <div id="translation-tab-content"></div>
-          </div>
-        </div>
-
-        <!-- EXPORT -->
-        <div id="panel-export" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Export</h2>
-          <p class="ms-font-s bip-muted">Export template in various formats</p>
-          <div class="bip-card">
-            <button class="bip-btn bip-btn-secondary bip-btn-block ms-font-s" id="btn-export-xslfo">Export XSL-FO Stylesheet</button>
-            <button class="bip-btn bip-btn-secondary bip-btn-block ms-font-s" id="btn-export-xml">Export Formatted XML</button>
-            <button class="bip-btn bip-btn-secondary bip-btn-block ms-font-s" id="btn-export-pdf">Export PDF</button>
-          </div>
-        </div>
-
         <!-- OPTIONS -->
         <div id="panel-options" class="bip-panel">
           <h2 class="ms-font-l ms-fontWeight-semibold">Options</h2>
           <p class="ms-font-s bip-muted">Configure add-in preferences</p>
           <div class="bip-card">
-            <div class="bip-tabs">
-              <button class="bip-tab active" data-tab="ui-settings">UI</button>
-              <button class="bip-tab" data-tab="preview-settings">Preview</button>
-              <button class="bip-tab" data-tab="build-settings">Build</button>
-              <button class="bip-tab" data-tab="connection-settings">Connection</button>
+            <div class="bip-field">
+              <label class="ms-font-s"><input type="checkbox" id="opt-dark-mode"/> Dark Mode</label>
             </div>
-            <div id="options-tab-content">
-              <div class="bip-field">
-                <label class="ms-font-s"><input type="checkbox" id="opt-dark-mode"/> Dark Mode</label>
-              </div>
-              <div class="bip-field">
-                <label class="ms-font-s">Field Display:</label>
-                <select id="opt-field-display" class="bip-select">
-                  <option value="descriptive">Descriptive</option>
-                  <option value="abbreviated">Abbreviated</option>
-                </select>
-              </div>
-              <div class="bip-field">
-                <label class="ms-font-s"><input type="checkbox" id="opt-xslt20" checked/> Enable XSLT 2.0</label>
-              </div>
+            <div class="bip-field">
+              <label class="ms-font-s">Field Display:</label>
+              <select id="opt-field-display" class="bip-select">
+                <option value="descriptive">Descriptive</option>
+                <option value="abbreviated">Abbreviated</option>
+              </select>
             </div>
-          </div>
-        </div>
-
-        <!-- HELP -->
-        <div id="panel-help" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Help</h2>
-          <p class="ms-font-s bip-muted">Documentation and reference</p>
-          <div class="bip-card" id="help-container">
-            <p class="bip-muted ms-font-s">Loading help content...</p>
+            <div class="bip-field">
+              <label class="ms-font-s"><input type="checkbox" id="opt-xslt20" checked/> Enable XSLT 2.0</label>
+            </div>
+            <hr class="bip-divider"/>
+            <div class="bip-actions">
+              <button id="btn-save-options" class="bip-btn bip-btn-primary ms-font-s">Save Options</button>
+            </div>
           </div>
         </div>
 
@@ -372,16 +202,32 @@
           </div>
         </div>
 
+        <!-- FIELD PROPERTIES (opened via right-click context menu) -->
+        <div id="panel-field-properties" class="bip-panel">
+          <h2 class="ms-font-l ms-fontWeight-semibold">Field Properties</h2>
+          <p class="ms-font-s bip-muted">Edit the selected field</p>
+          <div class="bip-card">
+            <div class="bip-field">
+              <label class="ms-font-s" for="fp-title">Display Name</label>
+              <input type="text" id="fp-title" class="bip-input" placeholder="Field title"/>
+            </div>
+            <div class="bip-field">
+              <label class="ms-font-s" for="fp-tag">Tag (Code)</label>
+              <input type="text" id="fp-tag" class="bip-input" placeholder="e.g. EMPLOYEE_NAME"/>
+            </div>
+            <div class="bip-actions">
+              <button id="btn-fp-save" class="bip-btn bip-btn-primary ms-font-s">Save</button>
+              <button id="btn-fp-delete" class="bip-btn bip-btn-danger ms-font-s">Delete Field</button>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /panel-container -->
 
       <!-- Status Bar -->
       <footer class="bip-statusbar">
-        <span id="connection-status" class="bip-status disconnected">
-          <span class="bip-status-dot"></span>
-          <span class="bip-status-text ms-font-xs">Disconnected</span>
-        </span>
+        <span id="data-status" class="bip-status-text ms-font-xs">No data loaded</span>
         <span id="document-status" class="bip-status-text ms-font-xs">Ready</span>
-        <span id="data-status" class="bip-status-text ms-font-xs">No data</span>
       </footer>
     </div><!-- /main-layout -->
   </div><!-- /app -->
