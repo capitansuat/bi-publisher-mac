@@ -119,3 +119,72 @@ Office.actions.associate("cmdExportPdf", cmdExportPdf);
 Office.actions.associate("cmdOptions", cmdOptions);
 Office.actions.associate("cmdHelp", cmdHelp);
 Office.actions.associate("cmdAbout", cmdAbout);
+
+// ---------------------------------------------------------------------------
+// Context Menu handlers (right-click on selected text)
+// ---------------------------------------------------------------------------
+function cmdInsertFieldAtSelection(event) {
+  Word.run(async (context) => {
+    const selection = context.document.getSelection();
+    selection.load('text');
+    await context.sync();
+    const text = selection.text.trim();
+    if (text) {
+      // Wrap selected text as a BI Publisher field tag
+      const cc = selection.insertContentControl();
+      cc.tag = text;
+      cc.title = `BIP:${text}`;
+      cc.appearance = 'BoundingBox';
+      await context.sync();
+    }
+    event.completed();
+  }).catch(() => event.completed());
+}
+
+function cmdWrapRepeatingGroup(event) {
+  Word.run(async (context) => {
+    const selection = context.document.getSelection();
+    selection.load('text');
+    await context.sync();
+    const cc = selection.insertContentControl();
+    cc.tag = 'for-each:GROUP';
+    cc.title = 'Repeating Group';
+    cc.appearance = 'BoundingBox';
+    await context.sync();
+    event.completed();
+  }).catch(() => event.completed());
+}
+
+function cmdWrapConditionalRegion(event) {
+  Word.run(async (context) => {
+    const selection = context.document.getSelection();
+    const cc = selection.insertContentControl();
+    cc.tag = 'if:CONDITION';
+    cc.title = 'Conditional Region';
+    cc.appearance = 'BoundingBox';
+    await context.sync();
+    event.completed();
+  }).catch(() => event.completed());
+}
+
+function cmdWrapConditionalFormat(event) {
+  Word.run(async (context) => {
+    const selection = context.document.getSelection();
+    const cc = selection.insertContentControl();
+    cc.tag = 'choose:CONDITION';
+    cc.title = 'Conditional Format';
+    cc.appearance = 'BoundingBox';
+    await context.sync();
+    event.completed();
+  }).catch(() => event.completed());
+}
+
+function cmdBrowseFieldAtSelection(event) {
+  requestPanel('field-browser', event);
+}
+
+Office.actions.associate("cmdInsertFieldAtSelection", cmdInsertFieldAtSelection);
+Office.actions.associate("cmdWrapRepeatingGroup", cmdWrapRepeatingGroup);
+Office.actions.associate("cmdWrapConditionalRegion", cmdWrapConditionalRegion);
+Office.actions.associate("cmdWrapConditionalFormat", cmdWrapConditionalFormat);
+Office.actions.associate("cmdBrowseFieldAtSelection", cmdBrowseFieldAtSelection);
