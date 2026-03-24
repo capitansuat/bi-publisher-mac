@@ -225,16 +225,10 @@ function createPlaceholderPanel(panelId) {
 function renderComponentForPanel(panelId) {
   const map = {
     'insert-field': 'insertField',
-    'table-wizard': 'tableWizard',
-    'chart': 'chartWizard',
-    'pivot-table': 'crossTabWizard',
+    'table-form': 'tableWizard',
     'repeating-group': 'repeatingGroup',
     'conditional-region': 'conditionalRegion',
     'conditional-format': 'formatHelper',
-    'preview': 'previewPanel',
-    'accessibility': 'accessibility',
-    'translation': 'translation',
-    'help': 'helpPanel',
     'all-fields': 'barcodeInserter'
   };
 
