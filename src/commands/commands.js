@@ -183,8 +183,48 @@ function cmdBrowseFieldAtSelection(event) {
   requestPanel('field-browser', event);
 }
 
+function cmdFieldProperties(event) {
+  Word.run(async (context) => {
+    const selection = context.document.getSelection();
+    const ccs = selection.contentControls;
+    ccs.load('items');
+    await context.sync();
+
+    if (ccs.items.length === 0) {
+      // No content control at cursor - try parent
+      const parentCCs = selection.parentContentControl;
+      parentCCs.load(['tag', 'title', 'id']);
+      await context.sync().catch(() => null);
+
+      if (parentCCs.isNullObject !== true && parentCCs.tag) {
+        // Found a parent content control - open taskpane with its info
+        Office.context.document.settings.set('bip_field_props', JSON.stringify({
+          id: parentCCs.id,
+          tag: parentCCs.tag,
+          title: parentCCs.title
+        }));
+        Office.context.document.settings.set('bip_requested_panel', 'field-properties');
+        await new Promise(r => Office.context.document.settings.saveAsync(r));
+      }
+    } else {
+      // Content control is selected directly
+      const cc = ccs.items[0];
+      cc.load(['tag', 'title', 'id']);
+      await context.sync();
+      Office.context.document.settings.set('bip_field_props', JSON.stringify({
+        id: cc.id,
+        tag: cc.tag,
+        title: cc.title
+      }));
+      Office.context.document.settings.set('bip_requested_panel', 'field-properties');
+      await new Promise(r => Office.context.document.settings.saveAsync(r));
+    }
+    event.completed();
+  }).catch(() => event.completed());
+}
+
+Office.actions.associate("cmdFieldProperties", cmdFieldProperties);
 Office.actions.associate("cmdInsertFieldAtSelection", cmdInsertFieldAtSelection);
 Office.actions.associate("cmdWrapRepeatingGroup", cmdWrapRepeatingGroup);
 Office.actions.associate("cmdWrapConditionalRegion", cmdWrapConditionalRegion);
 Office.actions.associate("cmdWrapConditionalFormat", cmdWrapConditionalFormat);
-Office.actions.associate("cmdBrowseFieldAtSelection", cmdBrowseFieldAtSelection);
