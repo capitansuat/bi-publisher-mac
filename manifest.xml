@@ -145,48 +145,6 @@
             </CustomTab>
           </ExtensionPoint>
 
-          <!-- Right-click context menu: single Menu with sub-items -->
-          <ExtensionPoint xsi:type="ContextMenu">
-            <OfficeMenu id="ContextMenuText">
-              <Control xsi:type="Menu" id="ctxBIPMenu">
-                <Label resid="lbl.ctx.bip"/>
-                <Supertip><Title resid="lbl.ctx.bip"/><Description resid="tip.ctx.bip"/></Supertip>
-                <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
-                <Items>
-                  <Item id="ctxFieldProps">
-                    <Label resid="lbl.ctx.props"/>
-                    <Supertip><Title resid="lbl.ctx.props"/><Description resid="tip.ctx.props"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdFieldProperties</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxInsertField">
-                    <Label resid="lbl.ctx.field"/>
-                    <Supertip><Title resid="lbl.ctx.field"/><Description resid="tip.ctx.field"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdInsertFieldAtSelection</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxRepGroup">
-                    <Label resid="lbl.ctx.repgroup"/>
-                    <Supertip><Title resid="lbl.ctx.repgroup"/><Description resid="tip.ctx.repgroup"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapRepeatingGroup</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxCondRegion">
-                    <Label resid="lbl.ctx.condreg"/>
-                    <Supertip><Title resid="lbl.ctx.condreg"/><Description resid="tip.ctx.condreg"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.condreg.16"/><bt:Image size="32" resid="ico.condreg.32"/><bt:Image size="80" resid="ico.condreg.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapConditionalRegion</FunctionName></Action>
-                  </Item>
-                  <Item id="ctxCondFmt">
-                    <Label resid="lbl.ctx.condfmt"/>
-                    <Supertip><Title resid="lbl.ctx.condfmt"/><Description resid="tip.ctx.condfmt"/></Supertip>
-                    <Icon><bt:Image size="16" resid="ico.condfmt.16"/><bt:Image size="32" resid="ico.condfmt.32"/><bt:Image size="80" resid="ico.condfmt.80"/></Icon>
-                    <Action xsi:type="ExecuteFunction"><FunctionName>cmdWrapConditionalFormat</FunctionName></Action>
-                  </Item>
-                </Items>
-              </Control>
-            </OfficeMenu>
-          </ExtensionPoint>
 
         </DesktopFormFactor>
       </Host>

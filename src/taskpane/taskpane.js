@@ -597,6 +597,10 @@ Office.onReady(info => {
       // Check if a ribbon command requested a panel
       checkRequestedPanel();
 
+      // Listen for selection changes — auto-open Field Properties when a ContentControl is selected
+      setupSelectionChangedHandler();
+      setupFieldPropertiesPanel();
+
       updateDocumentStatus('Ready');
       showNotification('info', 'Ready', 'BI Publisher Template Builder loaded');
       log('INFO', 'BI Publisher Template Builder ready');
@@ -608,6 +612,141 @@ Office.onReady(info => {
     showErrorDialog('Initialisation Error', err.message || String(err));
   }
 });
+
+// ============================================================================
+// Selection Changed Handler — detect ContentControl clicks
+// ============================================================================
+
+let _lastCCId = null; // prevent re-triggering for same control
+
+function setupSelectionChangedHandler() {
+  try {
+    Office.context.document.addHandlerAsync(
+      Office.EventType.DocumentSelectionChanged,
+      onSelectionChanged
+    );
+    log('INFO', 'SelectionChanged handler registered');
+  } catch (e) {
+    log('WARN', 'Could not register SelectionChanged handler', e);
+  }
+}
+
+function onSelectionChanged() {
+  // Debounce — Word fires this rapidly
+  clearTimeout(onSelectionChanged._timer);
+  onSelectionChanged._timer = setTimeout(checkForContentControl, 300);
+}
+
+async function checkForContentControl() {
+  try {
+    await Word.run(async (context) => {
+      const sel = context.document.getSelection();
+      let parentCC;
+      try {
+        parentCC = sel.parentContentControl;
+        parentCC.load(['id', 'tag', 'title', 'text']);
+        await context.sync();
+      } catch (_) {
+        // No parent content control — reset
+        if (_lastCCId !== null) {
+          _lastCCId = null;
+          // Optionally switch back to previous panel
+        }
+        return;
+      }
+
+      // Check if it's a BIP content control (has a tag)
+      if (!parentCC || parentCC.isNullObject || !parentCC.tag) {
+        _lastCCId = null;
+        return;
+      }
+
+      // Same control — don't re-trigger
+      if (parentCC.id === _lastCCId) return;
+      _lastCCId = parentCC.id;
+
+      // Populate Field Properties panel
+      const titleInput = document.getElementById('fp-title');
+      const tagInput = document.getElementById('fp-tag');
+      if (titleInput) titleInput.value = parentCC.title || '';
+      if (tagInput) tagInput.value = parentCC.tag || '';
+
+      // Store CC id for save/delete
+      AppState.selectedCCId = parentCC.id;
+
+      // Switch to field properties panel
+      switchPanel('field-properties');
+
+      log('INFO', `ContentControl selected: "${parentCC.title}" tag="${parentCC.tag}"`);
+    });
+  } catch (_) {
+    // Silently ignore — selection may not be in a CC
+  }
+}
+
+// Field Properties: Save and Delete buttons
+function setupFieldPropertiesPanel() {
+  const btnSave = document.getElementById('btn-fp-save');
+  const btnDelete = document.getElementById('btn-fp-delete');
+
+  if (btnSave) {
+    btnSave.addEventListener('click', async () => {
+      const newTitle = document.getElementById('fp-title')?.value || '';
+      const newTag = document.getElementById('fp-tag')?.value || '';
+      if (!AppState.selectedCCId) return;
+
+      try {
+        await Word.run(async (context) => {
+          const ccs = context.document.contentControls;
+          ccs.load('items');
+          await context.sync();
+          const cc = ccs.items.find(c => { c.load('id'); return true; });
+          // Find by iterating
+          for (const c of ccs.items) {
+            c.load('id');
+          }
+          await context.sync();
+          const target = ccs.items.find(c => c.id === AppState.selectedCCId);
+          if (target) {
+            target.title = newTitle;
+            target.tag = newTag;
+            await context.sync();
+            showNotification('success', 'Saved', `Field "${newTitle}" updated`);
+          }
+        });
+      } catch (err) {
+        showErrorDialog('Save Error', err.message || String(err));
+      }
+    });
+  }
+
+  if (btnDelete) {
+    btnDelete.addEventListener('click', async () => {
+      if (!AppState.selectedCCId) return;
+      try {
+        await Word.run(async (context) => {
+          const ccs = context.document.contentControls;
+          ccs.load('items');
+          await context.sync();
+          for (const c of ccs.items) {
+            c.load('id');
+          }
+          await context.sync();
+          const target = ccs.items.find(c => c.id === AppState.selectedCCId);
+          if (target) {
+            target.delete(true); // keep content, remove control
+            await context.sync();
+            showNotification('info', 'Deleted', 'Content control removed');
+            AppState.selectedCCId = null;
+            switchPanel('sample-xml');
+          }
+        });
+      } catch (err) {
+        showErrorDialog('Delete Error', err.message || String(err));
+      }
+    });
+  }
+}
 
 // ============================================================================
 // Expose global API for debugging
