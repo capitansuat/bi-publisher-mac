@@ -28,7 +28,6 @@
           <select id="panel-selector" class="bip-nav-select ms-font-s">
             <optgroup label="Load Data">
               <option value="sample-xml">Sample XML</option>
-              <option value="xml-schema">XML Schema</option>
             </optgroup>
             <optgroup label="Insert">
               <option value="insert-field">Field</option>
@@ -65,21 +64,6 @@
           </div>
         </div>
 
-        <!-- XML SCHEMA -->
-        <div id="panel-xml-schema" class="bip-panel">
-          <h2 class="ms-font-l ms-fontWeight-semibold">Load XML Schema</h2>
-          <p class="ms-font-s bip-muted">Load an XSD file to define data structure</p>
-          <div class="bip-card">
-            <div class="bip-dropzone" id="xsd-drop-zone">
-              <p class="ms-font-s">Drag &amp; drop an XSD file here<br/>or click to browse</p>
-              <input type="file" id="xsd-file-input" accept=".xsd" style="display:none"/>
-            </div>
-            <div id="xsd-data-summary" class="bip-summary" style="display:none;">
-              <h4 class="ms-font-s ms-fontWeight-semibold">Schema Structure</h4>
-              <div id="xsd-summary-content"></div>
-            </div>
-          </div>
-        </div>
 
         <!-- INSERT FIELD -->
         <div id="panel-insert-field" class="bip-panel">
