@@ -193,10 +193,13 @@ class XMLDataParser {
           children: []
         };
 
-        // Add sample value if leaf node
-        if (element.childNodes.length === 1 &&
-            element.childNodes[0].nodeType === 3) {
-          node.sampleValue = element.textContent.substring(0, 100);
+        // Add sample value if leaf node (has text content, no child elements)
+        const hasChildElements = Array.from(element.childNodes).some(c => c.nodeType === 1);
+        if (!hasChildElements) {
+          const text = (element.textContent || '').trim();
+          if (text) {
+            node.sampleValue = text.substring(0, 100);
+          }
         }
 
         // Build children
