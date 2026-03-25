@@ -712,8 +712,9 @@ function populateFieldPanel() {
 }
 
 async function insertFieldIntoDocument(node) {
-  const fieldTag = node.xpath || node.name;
-  const displayText = node.name; // Always show field name, not sample value
+  // Oracle BI Publisher uses just the field name as tag, e.g. A.NAME not query/row/A.NAME
+  const fieldTag = node.name; // Oracle format: just field name
+  const displayText = node.name;
   const bipCode = `<?${fieldTag}?>`; // BI Publisher tag code
   log('INFO', `Inserting field: ${node.name} tag=${fieldTag} code=${bipCode}`);
 
