@@ -350,8 +350,6 @@ function setupPreviewPanel() {
 
 async function generatePreview() {
   const status = document.getElementById('preview-status');
-  const output = document.getElementById('preview-output');
-  const iframe = document.getElementById('preview-iframe');
   const btn = document.getElementById('btn-generate-preview');
 
   // Restore data from localStorage if needed
@@ -377,21 +375,25 @@ async function generatePreview() {
       await context.sync();
       docContent = body.text;
 
-      // Collect content control data
       for (let i = 0; i < ccs.items.length; i++) {
         const cc = ccs.items[i];
         ccData.push({ tag: cc.tag, title: cc.title, text: cc.text });
       }
     });
 
-    // Build field→value map from loaded XML
+    // Build field→value map from loaded XML (map by name, xpath, and tag parts)
     const fieldMap = {};
     if (AppState.fieldTree) {
       const collect = (node) => {
         if (!node) return;
         if (node.sampleValue) {
           fieldMap[node.name] = node.sampleValue;
-          if (node.xpath) fieldMap[node.xpath] = node.sampleValue;
+          if (node.xpath) {
+            fieldMap[node.xpath] = node.sampleValue;
+            // Also map last part of xpath (e.g. "query/row/A.NAME" → "A.NAME")
+            const parts = node.xpath.split('/');
+            fieldMap[parts[parts.length - 1]] = node.sampleValue;
+          }
         }
         if (node.children) node.children.forEach(collect);
       };
@@ -399,38 +401,72 @@ async function generatePreview() {
       tree.forEach(collect);
     }
 
-    // Replace field names with sample data in document text
+    // Replace field names/titles with sample data
     let previewText = docContent;
     ccData.forEach(cc => {
-      const sampleVal = fieldMap[cc.tag] || fieldMap[cc.title] || '';
+      // Try matching by: full tag, title, last segment of tag
+      const tagParts = (cc.tag || '').split('/');
+      const lastPart = tagParts[tagParts.length - 1];
+      const sampleVal = fieldMap[cc.tag] || fieldMap[cc.title] || fieldMap[lastPart] || '';
+
       if (sampleVal && cc.text) {
         previewText = previewText.split(cc.text).join(sampleVal);
       }
     });
 
-    // Create HTML preview
+    // Create HTML and open in Dialog API (full-size popup)
     const htmlDoc = `<!DOCTYPE html>
-<html><head><style>
-  body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; padding: 30px; margin: 0; background: white; color: black; }
+<html><head><meta charset="utf-8"/><title>BI Publisher Preview</title>
+<style>
+  body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; padding: 40px 60px; margin: 0; background: white; color: black; }
   p { margin: 4px 0; white-space: pre-wrap; }
-  @media print { body { padding: 0; } }
+  .toolbar { position:fixed;top:0;left:0;right:0;background:#333;color:#fff;padding:8px 16px;font-family:sans-serif;font-size:13px;display:flex;align-items:center;gap:12px;z-index:100; }
+  .toolbar button { background:#0078d4;color:white;border:none;padding:6px 16px;border-radius:4px;cursor:pointer;font-size:13px; }
+  .content { margin-top:50px; }
+  @media print { .toolbar { display:none; } .content { margin-top:0; } body { padding: 20px; } }
 </style></head>
-<body>${previewText.split('\n').map(l => '<p>' + l.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>').join('\n')}</body></html>`;
+<body>
+<div class="toolbar">
+  <span>BI Publisher Preview</span>
+  <button onclick="window.print()">Print / Save PDF</button>
+</div>
+<div class="content">
+${previewText.split('\n').map(l => '<p>' + l.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>').join('\n')}
+</div>
+</body></html>`;
 
-    if (iframe) {
-      iframe.srcdoc = htmlDoc;
-      if (output) output.style.display = 'block';
-    }
+    // Use Office Dialog API to open in a large popup
+    const blob = new Blob([htmlDoc], { type: 'text/html' });
+    const blobUrl = URL.createObjectURL(blob);
 
-    if (status) status.textContent = 'Preview ready. Cmd+P to print as PDF.';
+    // Dialog API needs an https URL, blob won't work. Use data URI approach via taskpane page
+    // Store preview HTML and open a preview page
+    localStorage.setItem('bip_previewHtml', htmlDoc);
+
+    // Open dialog with preview page
+    const baseUrl = window.location.href.split('?')[0].replace('taskpane.html', '');
+    const previewUrl = baseUrl + 'taskpane.html?mode=preview';
+
+    Office.context.ui.displayDialogAsync(previewUrl, { height: 80, width: 80 }, (result) => {
+      if (result.status === Office.AsyncResultStatus.Succeeded) {
+        log('INFO', 'Preview dialog opened');
+      } else {
+        // Fallback: open in new window
+        const w = window.open('', '_blank', 'width=900,height=700');
+        if (w) {
+          w.document.write(htmlDoc);
+          w.document.close();
+        }
+      }
+    });
+
+    if (status) status.textContent = 'Preview opened in new window.';
   } catch (err) {
     if (status) status.textContent = 'Error: ' + (err.message || err);
   } finally {
     if (btn) btn.disabled = false;
   }
 }
-
-// Auto-generate preview when panel becomes visible
 
 // ============================================================================
 // Load Data – Sample XML
