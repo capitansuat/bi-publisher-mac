@@ -687,25 +687,6 @@ async function insertFieldIntoDocument(node) {
 }
 
 // ============================================================================
-// Preview panel setup
-// ============================================================================
-
-function setupPreviewPanel() {
-  const btn = document.getElementById('btn-generate-preview');
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const fmt = document.getElementById('preview-format');
-      const format = fmt ? fmt.value : 'pdf';
-      if (components.previewPanel && typeof components.previewPanel.generatePreview === 'function') {
-        components.previewPanel.generatePreview(format);
-      } else {
-        showNotification('info', 'Preview', `Preview in ${format.toUpperCase()} format would be generated here.`);
-      }
-    });
-  }
-}
-
-// ============================================================================
 // Validate template
 // ============================================================================
 
