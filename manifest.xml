@@ -64,19 +64,6 @@
                   <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.field"/></Action>
                 </Control>
 
-                <Control xsi:type="Button" id="btnAllFields">
-                  <Label resid="lbl.allfields"/>
-                  <Supertip><Title resid="lbl.allfields"/><Description resid="tip.allfields"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.allfields.16"/><bt:Image size="32" resid="ico.allfields.32"/><bt:Image size="80" resid="ico.allfields.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.allfields"/></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnTableForm">
-                  <Label resid="lbl.tableform"/>
-                  <Supertip><Title resid="lbl.tableform"/><Description resid="tip.tableform"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.tableform.16"/><bt:Image size="32" resid="ico.tableform.32"/><bt:Image size="80" resid="ico.tableform.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.tableform"/></Action>
-                </Control>
               </Group>
 
               <!-- ============ TEMPLATE (3 buttons) ============ -->
@@ -89,13 +76,6 @@
                   <Supertip><Title resid="lbl.repgroup"/><Description resid="tip.repgroup"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
                   <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.repgroup"/></Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnCondFmt">
-                  <Label resid="lbl.condfmt"/>
-                  <Supertip><Title resid="lbl.condfmt"/><Description resid="tip.condfmt"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.condfmt.16"/><bt:Image size="32" resid="ico.condfmt.32"/><bt:Image size="80" resid="ico.condfmt.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.condfmt"/></Action>
                 </Control>
 
                 <Control xsi:type="Button" id="btnCondReg">
@@ -116,32 +96,6 @@
                   <Supertip><Title resid="lbl.preview"/><Description resid="tip.preview"/></Supertip>
                   <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
                   <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.preview"/></Action>
-                </Control>
-              </Group>
-
-              <!-- ============ OPTIONS (2 buttons) ============ -->
-              <Group id="grpOptions">
-                <Label resid="grp.options"/>
-                <Icon><bt:Image size="16" resid="ico.options.16"/><bt:Image size="32" resid="ico.options.32"/><bt:Image size="80" resid="ico.options.80"/></Icon>
-
-                <Control xsi:type="Button" id="btnOptions">
-                  <Label resid="lbl.options"/>
-                  <Supertip><Title resid="lbl.options"/><Description resid="tip.options"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.options.16"/><bt:Image size="32" resid="ico.options.32"/><bt:Image size="80" resid="ico.options.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.options"/>
-                  </Action>
-                </Control>
-
-                <Control xsi:type="Button" id="btnAbout">
-                  <Label resid="lbl.about"/>
-                  <Supertip><Title resid="lbl.about"/><Description resid="tip.about"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.about.16"/><bt:Image size="32" resid="ico.about.32"/><bt:Image size="80" resid="ico.about.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.about"/>
-                  </Action>
                 </Control>
               </Group>
 
