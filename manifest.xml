@@ -106,6 +106,19 @@
                 </Control>
               </Group>
 
+              <!-- ============ PREVIEW ============ -->
+              <Group id="grpPreview">
+                <Label resid="grp.preview"/>
+                <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnPreview">
+                  <Label resid="lbl.preview"/>
+                  <Supertip><Title resid="lbl.preview"/><Description resid="tip.preview"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.preview"/></Action>
+                </Control>
+              </Group>
+
               <!-- ============ OPTIONS (2 buttons) ============ -->
               <Group id="grpOptions">
                 <Label resid="grp.options"/>
@@ -176,6 +189,9 @@
         <bt:Image id="ico.condreg.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condreg-16.png"/>
         <bt:Image id="ico.condreg.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condreg-32.png"/>
         <bt:Image id="ico.condreg.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-condreg-80.png"/>
+        <bt:Image id="ico.preview.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-preview-16.png"/>
+        <bt:Image id="ico.preview.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-preview-32.png"/>
+        <bt:Image id="ico.preview.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-preview-80.png"/>
         <bt:Image id="ico.options.16"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-options-16.png"/>
         <bt:Image id="ico.options.32"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-options-32.png"/>
         <bt:Image id="ico.options.80"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/ico-options-80.png"/>
@@ -197,6 +213,7 @@
         <bt:Url id="url.repgroup"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=repeating-group"/>
         <bt:Url id="url.condfmt"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=conditional-format"/>
         <bt:Url id="url.condreg"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=conditional-region"/>
+        <bt:Url id="url.preview"     DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=preview"/>
         <bt:Url id="url.options"      DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=options"/>
         <bt:Url id="url.about"        DefaultValue="https://capitansuat.github.io/bi-publisher-mac/taskpane.html?panel=about"/>
       </bt:Urls>
@@ -217,6 +234,8 @@
         <bt:String id="lbl.condfmt"      DefaultValue="Conditional Format"/>
         <bt:String id="lbl.condreg"      DefaultValue="Conditional Region"/>
         <bt:String id="lbl.allfields"    DefaultValue="All Fields"/>
+        <bt:String id="grp.preview"     DefaultValue="Preview"/>
+        <bt:String id="lbl.preview"     DefaultValue="Preview PDF"/>
         <bt:String id="lbl.options"      DefaultValue="Options"/>
         <bt:String id="lbl.about"        DefaultValue="About"/>
         <bt:String id="getStarted.Title" DefaultValue="BI Publisher Template Builder"/>
@@ -239,6 +258,7 @@
         <bt:String id="tip.condfmt"      DefaultValue="Apply formatting based on conditions"/>
         <bt:String id="tip.condreg"      DefaultValue="Show or hide regions based on conditions"/>
         <bt:String id="tip.allfields"    DefaultValue="Insert all fields from the data source"/>
+        <bt:String id="tip.preview"     DefaultValue="Preview template as PDF with loaded data"/>
         <bt:String id="tip.options"      DefaultValue="Configure add-in preferences"/>
         <bt:String id="tip.about"        DefaultValue="About BI Publisher Template Builder"/>
         <bt:String id="getStarted.Desc"  DefaultValue="Design Oracle BI Publisher report templates directly in Word."/>
