@@ -351,6 +351,7 @@ function setupPreviewPanel() {
 async function generatePreview() {
   const status = document.getElementById('preview-status');
   const btn = document.getElementById('btn-generate-preview');
+  const originalValues = []; // Store originals to restore after PDF export
 
   // Restore data from localStorage if needed
   if (!AppState.fieldTree) {
@@ -401,68 +402,107 @@ async function generatePreview() {
       tree.forEach(collect);
     }
 
-    // Replace field names/titles with sample data
-    let previewText = docContent;
-    ccData.forEach(cc => {
-      // Try matching by: full tag, title, last segment of tag
-      const tagParts = (cc.tag || '').split('/');
-      const lastPart = tagParts[tagParts.length - 1];
-      const sampleVal = fieldMap[cc.tag] || fieldMap[cc.title] || fieldMap[lastPart] || '';
+    // Step 1: Replace ContentControl text with sample values temporarily
+    if (status) status.textContent = 'Replacing fields with sample data...';
+    await Word.run(async (context) => {
+      const ccs = context.document.body.contentControls;
+      ccs.load(['id', 'tag', 'title', 'text']);
+      await context.sync();
 
-      if (sampleVal && cc.text) {
-        previewText = previewText.split(cc.text).join(sampleVal);
-      }
-    });
+      for (let i = 0; i < ccs.items.length; i++) {
+        const cc = ccs.items[i];
+        const tagParts = (cc.tag || '').split('/');
+        const lastPart = tagParts[tagParts.length - 1];
+        const sampleVal = fieldMap[cc.tag] || fieldMap[cc.title] || fieldMap[lastPart] || '';
 
-    // Create HTML and open in Dialog API (full-size popup)
-    const htmlDoc = `<!DOCTYPE html>
-<html><head><meta charset="utf-8"/><title>BI Publisher Preview</title>
-<style>
-  body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; padding: 40px 60px; margin: 0; background: white; color: black; }
-  p { margin: 4px 0; white-space: pre-wrap; }
-  .toolbar { position:fixed;top:0;left:0;right:0;background:#333;color:#fff;padding:8px 16px;font-family:sans-serif;font-size:13px;display:flex;align-items:center;gap:12px;z-index:100; }
-  .toolbar button { background:#0078d4;color:white;border:none;padding:6px 16px;border-radius:4px;cursor:pointer;font-size:13px; }
-  .content { margin-top:50px; }
-  @media print { .toolbar { display:none; } .content { margin-top:0; } body { padding: 20px; } }
-</style></head>
-<body>
-<div class="toolbar">
-  <span>BI Publisher Preview</span>
-  <button onclick="window.print()">Print / Save PDF</button>
-</div>
-<div class="content">
-${previewText.split('\n').map(l => '<p>' + l.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>').join('\n')}
-</div>
-</body></html>`;
-
-    // Use Office Dialog API to open in a large popup
-    const blob = new Blob([htmlDoc], { type: 'text/html' });
-    const blobUrl = URL.createObjectURL(blob);
-
-    // Dialog API needs an https URL, blob won't work. Use data URI approach via taskpane page
-    // Store preview HTML and open a preview page
-    localStorage.setItem('bip_previewHtml', htmlDoc);
-
-    // Open dialog with preview page
-    const baseUrl = window.location.href.split('?')[0].replace('taskpane.html', '');
-    const previewUrl = baseUrl + 'taskpane.html?mode=preview';
-
-    Office.context.ui.displayDialogAsync(previewUrl, { height: 80, width: 80 }, (result) => {
-      if (result.status === Office.AsyncResultStatus.Succeeded) {
-        log('INFO', 'Preview dialog opened');
-      } else {
-        // Fallback: open in new window
-        const w = window.open('', '_blank', 'width=900,height=700');
-        if (w) {
-          w.document.write(htmlDoc);
-          w.document.close();
+        if (sampleVal) {
+          originalValues.push({ id: cc.id, text: cc.text });
+          cc.insertText(sampleVal, 'Replace');
         }
       }
+      await context.sync();
     });
 
-    if (status) status.textContent = 'Preview opened in new window.';
+    // Step 2: Use Word's native PDF export
+    if (status) status.textContent = 'Generating PDF...';
+    await new Promise((resolve, reject) => {
+      Office.context.document.getFileAsync(Office.FileType.Pdf, { sliceSize: 4194304 }, async (result) => {
+        if (result.status !== Office.AsyncResultStatus.Succeeded) {
+          reject(new Error(result.error.message || 'PDF export failed'));
+          return;
+        }
+        try {
+          const file = result.value;
+          const slices = [];
+          for (let i = 0; i < file.sliceCount; i++) {
+            await new Promise((res, rej) => {
+              file.getSliceAsync(i, (sr) => {
+                if (sr.status === Office.AsyncResultStatus.Succeeded) { slices.push(sr.value.data); res(); }
+                else rej(sr.error);
+              });
+            });
+          }
+          file.closeAsync();
+
+          // Combine slices into PDF blob
+          let totalLen = 0;
+          slices.forEach(s => totalLen += s.length);
+          const pdfData = new Uint8Array(totalLen);
+          let off = 0;
+          slices.forEach(s => { pdfData.set(new Uint8Array(s), off); off += s.length; });
+
+          const blob = new Blob([pdfData], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
+
+          // Download PDF file
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'BI_Publisher_Preview.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          if (status) status.textContent = 'PDF downloaded. Open with your PDF reader.';
+          resolve();
+        } catch (e) { reject(e); }
+      });
+    });
+
+    // Step 3: Restore original field names
+    await Word.run(async (context) => {
+      const ccs = context.document.body.contentControls;
+      ccs.load(['id']);
+      await context.sync();
+      for (const orig of originalValues) {
+        for (let i = 0; i < ccs.items.length; i++) {
+          if (ccs.items[i].id === orig.id) {
+            ccs.items[i].insertText(orig.text, 'Replace');
+            break;
+          }
+        }
+      }
+      await context.sync();
+    });
+
+    log('INFO', 'Preview PDF exported, fields restored');
+
   } catch (err) {
     if (status) status.textContent = 'Error: ' + (err.message || err);
+    log('ERROR', 'Preview failed:', err);
+    // Restore on error
+    try {
+      await Word.run(async (context) => {
+        const ccs = context.document.body.contentControls;
+        ccs.load(['id']);
+        await context.sync();
+        for (const orig of originalValues) {
+          for (let i = 0; i < ccs.items.length; i++) {
+            if (ccs.items[i].id === orig.id) { ccs.items[i].insertText(orig.text, 'Replace'); break; }
+          }
+        }
+        await context.sync();
+      });
+    } catch (_) {}
   } finally {
     if (btn) btn.disabled = false;
   }
