@@ -277,9 +277,17 @@ class RepeatingGroup {
    * Load available data elements
    */
   loadDataElements() {
-    // Load repeating elements from AppState.fieldTree (loaded XML)
     this.dataElements = [];
-    const tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    let tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    if (!tree) {
+      try {
+        const stored = localStorage.getItem('bip_fieldTree');
+        if (stored) {
+          tree = JSON.parse(stored);
+          if (this.services.AppState) this.services.AppState.fieldTree = tree;
+        }
+      } catch (_) {}
+    }
     if (!tree) return;
 
     // Find all nodes that have children (potential repeating groups)

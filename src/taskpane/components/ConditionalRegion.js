@@ -351,7 +351,18 @@ class ConditionalRegion {
 
   loadDataFields() {
     this.dataFields = [];
-    const tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    let tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+
+    // Fallback: restore from localStorage if AppState is empty
+    if (!tree) {
+      try {
+        const stored = localStorage.getItem('bip_fieldTree');
+        if (stored) {
+          tree = JSON.parse(stored);
+          if (this.services.AppState) this.services.AppState.fieldTree = tree;
+        }
+      } catch (_) {}
+    }
     if (!tree) return;
 
     const collectLeaves = (node) => {

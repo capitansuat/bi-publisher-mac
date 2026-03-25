@@ -575,9 +575,17 @@ class TableWizard {
    * Load available data groups
    */
   loadDataGroups() {
-    // Load groups and fields from AppState.fieldTree (loaded XML)
     this.dataGroups = [];
-    const tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    let tree = this.services.AppState ? this.services.AppState.fieldTree : null;
+    if (!tree) {
+      try {
+        const stored = localStorage.getItem('bip_fieldTree');
+        if (stored) {
+          tree = JSON.parse(stored);
+          if (this.services.AppState) this.services.AppState.fieldTree = tree;
+        }
+      } catch (_) {}
+    }
     if (!tree) return;
 
     const collectGroups = (node, path) => {
