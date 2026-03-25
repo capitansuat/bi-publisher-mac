@@ -212,6 +212,11 @@ function switchPanel(panelId) {
   if (panelId === 'insert-field' || panelId === 'all-fields') {
     populateFieldPanel();
   }
+
+  // Auto-generate preview when Preview panel opens
+  if (panelId === 'preview') {
+    setTimeout(generatePreview, 200);
+  }
 }
 
 function createPlaceholderPanel(panelId) {
@@ -338,74 +343,94 @@ function setupConnectionPanel() {
 // ============================================================================
 
 function setupPreviewPanel() {
+  // Button click still works as manual trigger
   const btn = document.getElementById('btn-generate-preview');
-  if (!btn) return;
-
-  btn.addEventListener('click', async () => {
-    const status = document.getElementById('preview-status');
-    const output = document.getElementById('preview-output');
-    const iframe = document.getElementById('preview-iframe');
-
-    if (!AppState.loadedData && !AppState.fieldTree) {
-      if (status) status.textContent = 'No data loaded. Please load XML data first.';
-      return;
-    }
-
-    try {
-      if (status) status.textContent = 'Generating preview...';
-      btn.disabled = true;
-
-      // Get document content as OOXML
-      let docContent = '';
-      await Word.run(async (context) => {
-        const body = context.document.body;
-        body.load('text');
-        await context.sync();
-        docContent = body.text;
-      });
-
-      // Replace field placeholders with actual data
-      let previewHtml = docContent;
-      if (AppState.fieldTree) {
-        const replaceFields = (text, node) => {
-          if (!node) return text;
-          if (node.sampleValue) {
-            // Replace field tags like <?FIELD_NAME?> or ContentControl titles
-            const patterns = [node.name, node.xpath].filter(Boolean);
-            patterns.forEach(p => {
-              text = text.split(p).join(node.sampleValue);
-            });
-          }
-          if (node.children) {
-            node.children.forEach(child => { text = replaceFields(text, child); });
-          }
-          return text;
-        };
-        const tree = Array.isArray(AppState.fieldTree) ? AppState.fieldTree : [AppState.fieldTree];
-        tree.forEach(node => { previewHtml = replaceFields(previewHtml, node); });
-      }
-
-      // Create printable HTML for PDF
-      const htmlDoc = `<!DOCTYPE html>
-<html><head><style>
-  body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; padding: 40px; max-width: 800px; margin: 0 auto; }
-  p { margin: 6px 0; white-space: pre-wrap; }
-</style></head>
-<body>${previewHtml.split('\n').map(l => '<p>' + l.replace(/</g, '&lt;') + '</p>').join('\n')}</body></html>`;
-
-      if (iframe) {
-        iframe.srcdoc = htmlDoc;
-        if (output) output.style.display = 'block';
-      }
-
-      if (status) status.textContent = 'Preview generated. Use browser print (Cmd+P) for PDF.';
-    } catch (err) {
-      if (status) status.textContent = 'Error: ' + (err.message || err);
-    } finally {
-      btn.disabled = false;
-    }
-  });
+  if (btn) btn.addEventListener('click', generatePreview);
 }
+
+async function generatePreview() {
+  const status = document.getElementById('preview-status');
+  const output = document.getElementById('preview-output');
+  const iframe = document.getElementById('preview-iframe');
+  const btn = document.getElementById('btn-generate-preview');
+
+  // Restore data from localStorage if needed
+  if (!AppState.fieldTree) {
+    try {
+      const stored = localStorage.getItem('bip_fieldTree');
+      if (stored) AppState.fieldTree = JSON.parse(stored);
+    } catch (_) {}
+  }
+
+  try {
+    if (status) status.textContent = 'Generating preview...';
+    if (btn) btn.disabled = true;
+
+    // Get document text and content controls
+    let docContent = '';
+    const ccData = [];
+    await Word.run(async (context) => {
+      const body = context.document.body;
+      const ccs = body.contentControls;
+      body.load('text');
+      ccs.load(['tag', 'title', 'text']);
+      await context.sync();
+      docContent = body.text;
+
+      // Collect content control data
+      for (let i = 0; i < ccs.items.length; i++) {
+        const cc = ccs.items[i];
+        ccData.push({ tag: cc.tag, title: cc.title, text: cc.text });
+      }
+    });
+
+    // Build field→value map from loaded XML
+    const fieldMap = {};
+    if (AppState.fieldTree) {
+      const collect = (node) => {
+        if (!node) return;
+        if (node.sampleValue) {
+          fieldMap[node.name] = node.sampleValue;
+          if (node.xpath) fieldMap[node.xpath] = node.sampleValue;
+        }
+        if (node.children) node.children.forEach(collect);
+      };
+      const tree = Array.isArray(AppState.fieldTree) ? AppState.fieldTree : [AppState.fieldTree];
+      tree.forEach(collect);
+    }
+
+    // Replace field names with sample data in document text
+    let previewText = docContent;
+    ccData.forEach(cc => {
+      const sampleVal = fieldMap[cc.tag] || fieldMap[cc.title] || '';
+      if (sampleVal && cc.text) {
+        previewText = previewText.split(cc.text).join(sampleVal);
+      }
+    });
+
+    // Create HTML preview
+    const htmlDoc = `<!DOCTYPE html>
+<html><head><style>
+  body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; padding: 30px; margin: 0; background: white; color: black; }
+  p { margin: 4px 0; white-space: pre-wrap; }
+  @media print { body { padding: 0; } }
+</style></head>
+<body>${previewText.split('\n').map(l => '<p>' + l.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>').join('\n')}</body></html>`;
+
+    if (iframe) {
+      iframe.srcdoc = htmlDoc;
+      if (output) output.style.display = 'block';
+    }
+
+    if (status) status.textContent = 'Preview ready. Cmd+P to print as PDF.';
+  } catch (err) {
+    if (status) status.textContent = 'Error: ' + (err.message || err);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+// Auto-generate preview when panel becomes visible
 
 // ============================================================================
 // Load Data – Sample XML
@@ -652,8 +677,9 @@ function populateFieldPanel() {
 
 async function insertFieldIntoDocument(node) {
   const fieldTag = node.xpath || node.name;
-  const displayText = node.sampleValue || node.name;
-  log('INFO', `Inserting field: ${node.name} tag=${fieldTag} value=${displayText}`);
+  const displayText = node.name; // Always show field name, not sample value
+  const bipCode = `<?${fieldTag}?>`; // BI Publisher tag code
+  log('INFO', `Inserting field: ${node.name} tag=${fieldTag} code=${bipCode}`);
 
   try {
     await Word.run(async (context) => {
@@ -890,8 +916,10 @@ async function checkForContentControl() {
       // Populate Field Properties panel
       const titleInput = document.getElementById('fp-title');
       const tagInput = document.getElementById('fp-tag');
+      const codeDiv = document.getElementById('fp-code');
       if (titleInput) titleInput.value = parentCC.title || '';
       if (tagInput) tagInput.value = parentCC.tag || '';
+      if (codeDiv) codeDiv.textContent = `<?${parentCC.tag}?>`;
 
       // Store CC id for save/delete
       AppState.selectedCCId = parentCC.id;
