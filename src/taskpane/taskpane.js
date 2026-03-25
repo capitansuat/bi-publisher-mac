@@ -411,9 +411,11 @@ async function generatePreview() {
 
       for (let i = 0; i < ccs.items.length; i++) {
         const cc = ccs.items[i];
-        const tagParts = (cc.tag || '').split('/');
+        // Strip <?...?> wrapper if present (Oracle BI Publisher format)
+        let cleanTag = (cc.tag || '').replace(/^<\?/, '').replace(/\?>$/, '');
+        const tagParts = cleanTag.split('/');
         const lastPart = tagParts[tagParts.length - 1];
-        const sampleVal = fieldMap[cc.tag] || fieldMap[cc.title] || fieldMap[lastPart] || '';
+        const sampleVal = fieldMap[cleanTag] || fieldMap[cc.title] || fieldMap[lastPart] || fieldMap[cc.tag] || '';
 
         if (sampleVal) {
           originalValues.push({ id: cc.id, text: cc.text });
@@ -752,26 +754,26 @@ function populateFieldPanel() {
 }
 
 async function insertFieldIntoDocument(node) {
-  // Oracle BI Publisher uses just the field name as tag, e.g. A.NAME not query/row/A.NAME
-  const fieldTag = node.name; // Oracle format: just field name
-  const displayText = node.name;
-  const bipCode = `<?${fieldTag}?>`; // BI Publisher tag code
-  log('INFO', `Inserting field: ${node.name} tag=${fieldTag} code=${bipCode}`);
+  // Oracle BI Publisher format: <?FIELDNAME?> stored in tag
+  // Display text shows just the field name
+  const fieldName = node.name;
+  const bipCode = `<?${fieldName}?>`;
+  log('INFO', `Inserting field: ${fieldName} code=${bipCode}`);
 
   try {
     await Word.run(async (context) => {
       const range = context.document.getSelection();
-      // Insert text first using string literal (more compatible)
-      const inserted = range.insertText(displayText, 'Replace');
-      // Wrap in content control
+      // Insert field name as visible text
+      const inserted = range.insertText(fieldName, 'Replace');
+      // Wrap in content control with BIP tag
       const cc = inserted.insertContentControl();
-      cc.tag = fieldTag;
-      cc.title = node.name;
+      cc.tag = bipCode;           // Store <?A.NAME?> as tag (Oracle compat)
+      cc.title = fieldName;       // Display name
       try { cc.appearance = 'BoundingBox'; } catch(_) {}
       try { cc.color = '#0078D4'; } catch(_) {}
       await context.sync();
       log('INFO', 'Field inserted as ContentControl');
-      showNotification('success', 'Field Inserted', `${node.name}`);
+      showNotification('success', 'Field Inserted', `${fieldName}`);
     });
   } catch (err) {
     log('WARN', 'ContentControl insert failed, trying plain text:', err.message);
