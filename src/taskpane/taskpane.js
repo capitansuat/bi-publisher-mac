@@ -402,7 +402,7 @@ async function generatePreview() {
       tree.forEach(collect);
     }
 
-    // Step 1: Replace ContentControl text with sample values temporarily
+    // Step 1a: Replace ContentControl text with sample values
     if (status) status.textContent = 'Replacing fields with sample data...';
     await Word.run(async (context) => {
       const ccs = context.document.body.contentControls;
@@ -411,19 +411,39 @@ async function generatePreview() {
 
       for (let i = 0; i < ccs.items.length; i++) {
         const cc = ccs.items[i];
-        // Strip <?...?> wrapper if present (Oracle BI Publisher format)
         let cleanTag = (cc.tag || '').replace(/^<\?/, '').replace(/\?>$/, '');
         const tagParts = cleanTag.split('/');
         const lastPart = tagParts[tagParts.length - 1];
         const sampleVal = fieldMap[cleanTag] || fieldMap[cc.title] || fieldMap[lastPart] || fieldMap[cc.tag] || '';
 
         if (sampleVal) {
-          originalValues.push({ id: cc.id, text: cc.text });
+          originalValues.push({ id: cc.id, text: cc.text, type: 'cc' });
           cc.insertText(sampleVal, 'Replace');
         }
       }
       await context.sync();
     });
+
+    // Step 1b: Also search-and-replace plain text field names (Oracle FORMTEXT compat)
+    // This handles existing Oracle RTF files that use form fields, not ContentControls
+    const textReplacements = [];
+    for (const [fieldName, sampleVal] of Object.entries(fieldMap)) {
+      if (!sampleVal || fieldName.includes('/')) continue; // skip xpath paths
+      try {
+        await Word.run(async (context) => {
+          const results = context.document.body.search(fieldName, { matchCase: true, matchWholeWord: false });
+          results.load('text');
+          await context.sync();
+          if (results.items.length > 0) {
+            for (let i = 0; i < results.items.length; i++) {
+              textReplacements.push({ text: results.items[i].text, replacement: sampleVal });
+              results.items[i].insertText(sampleVal, 'Replace');
+            }
+            await context.sync();
+          }
+        });
+      } catch (_) { /* skip fields that can't be found */ }
+    }
 
     // Step 2: Use Word's native PDF export
     if (status) status.textContent = 'Generating PDF...';
@@ -456,26 +476,23 @@ async function generatePreview() {
           const blob = new Blob([pdfData], { type: 'application/pdf' });
           const url = URL.createObjectURL(blob);
 
-          // Download PDF file
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'BI_Publisher_Preview.pdf';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          // Open PDF in new window (system PDF reader)
+          window.open(url, '_blank');
 
-          if (status) status.textContent = 'PDF downloaded. Open with your PDF reader.';
+          if (status) status.textContent = 'PDF preview opened.';
           resolve();
         } catch (e) { reject(e); }
       });
     });
 
     // Step 3: Restore original field names
+    // 3a: Restore ContentControls
     await Word.run(async (context) => {
       const ccs = context.document.body.contentControls;
       ccs.load(['id']);
       await context.sync();
       for (const orig of originalValues) {
+        if (orig.type !== 'cc') continue;
         for (let i = 0; i < ccs.items.length; i++) {
           if (ccs.items[i].id === orig.id) {
             ccs.items[i].insertText(orig.text, 'Replace');
@@ -485,6 +502,21 @@ async function generatePreview() {
       }
       await context.sync();
     });
+
+    // 3b: Restore plain text replacements (reverse order)
+    for (const rep of textReplacements.reverse()) {
+      try {
+        await Word.run(async (context) => {
+          const results = context.document.body.search(rep.replacement, { matchCase: true, matchWholeWord: false });
+          results.load('text');
+          await context.sync();
+          if (results.items.length > 0) {
+            results.items[0].insertText(rep.text, 'Replace');
+            await context.sync();
+          }
+        });
+      } catch (_) { /* best effort restore */ }
+    }
 
     log('INFO', 'Preview PDF exported, fields restored');
 
