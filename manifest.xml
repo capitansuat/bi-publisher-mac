@@ -50,15 +50,6 @@
                   </Action>
                 </Control>
 
-                <Control xsi:type="Button" id="btnXMLSchema">
-                  <Label resid="lbl.xmlschema"/>
-                  <Supertip><Title resid="lbl.xmlschema"/><Description resid="tip.xmlschema"/></Supertip>
-                  <Icon><bt:Image size="16" resid="ico.xmlschema.16"/><bt:Image size="32" resid="ico.xmlschema.32"/><bt:Image size="80" resid="ico.xmlschema.80"/></Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>BIP</TaskpaneId>
-                    <SourceLocation resid="url.xmlschema"/>
-                  </Action>
-                </Control>
               </Group>
 
               <!-- ============ INSERT (6 buttons) ============ -->
