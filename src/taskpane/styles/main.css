@@ -28,6 +28,21 @@
   --bip-gutter: 20px;
   --bip-status-h: 28px;
   --bip-header-h: 40px;
+  /* Field panel */
+  --group-bg: #f0f0f0;
+  --group-text: #333;
+  --arrow-color: #666;
+  --count-color: #888;
+  --hover-bg: #e8f0fe;
+  --field-color: #0066cc;
+  --sample-color: #888;
+  /* Component panels */
+  --panel-card-bg: #ffffff;
+  --panel-card-border: #e0e0e0;
+  --panel-input-bg: #ffffff;
+  --panel-input-border: #ccc;
+  --panel-input-text: #333;
+  --panel-label-text: #555;
 }
 
 /* Dark mode */
@@ -40,6 +55,21 @@
     --bip-text-muted: #a19f9d;
     --bip-header-bg: #1b1a19;
     --bip-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    /* Field panel - dark */
+    --group-bg: #2a2a2a;
+    --group-text: #e0e0e0;
+    --arrow-color: #aaa;
+    --count-color: #777;
+    --hover-bg: #333;
+    --field-color: #6ab0f3;
+    --sample-color: #777;
+    /* Component panels - dark */
+    --panel-card-bg: #2a2a2a;
+    --panel-card-border: #444;
+    --panel-input-bg: #333;
+    --panel-input-border: #555;
+    --panel-input-text: #e0e0e0;
+    --panel-label-text: #bbb;
   }
 }
 

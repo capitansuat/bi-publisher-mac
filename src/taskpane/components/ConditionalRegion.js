@@ -42,7 +42,7 @@ class ConditionalRegion {
     // XSL Preview
     const previewBox = document.createElement('div');
     previewBox.id = 'cond-preview';
-    previewBox.style.cssText = 'background:#1e1e1e;color:#d4d4d4;padding:12px;border-radius:6px;font-family:monospace;font-size:11px;white-space:pre-wrap;max-height:200px;overflow:auto;';
+    previewBox.style.cssText = 'background:var(--panel-card-bg, #1e1e1e);color:var(--bip-text, #d4d4d4);padding:12px;border-radius:6px;font-family:monospace;font-size:11px;white-space:pre-wrap;max-height:200px;overflow:auto;';
     previewBox.textContent = this._generateExpression();
     w.appendChild(previewBox);
 
@@ -54,7 +54,7 @@ class ConditionalRegion {
 
   _buildModeSelector() {
     const fieldset = document.createElement('fieldset');
-    fieldset.style.cssText = 'border:1px solid #555;border-radius:6px;padding:10px;margin:0;';
+    fieldset.style.cssText = 'border:1px solid var(--panel-input-border, #555);border-radius:6px;padding:10px;margin:0;';
     const legend = document.createElement('legend');
     legend.textContent = 'Type';
     legend.style.cssText = 'padding:0 6px;font-weight:600;font-size:12px;';
@@ -84,7 +84,7 @@ class ConditionalRegion {
       });
       label.appendChild(radio);
       const span = document.createElement('span');
-      span.innerHTML = `<strong>${m.label}</strong><br><span style="font-size:11px;color:#999;">${m.desc}</span>`;
+      span.innerHTML = `<strong>${m.label}</strong><br><span style="font-size:11px;color:var(--bip-text-muted, #999);">${m.desc}</span>`;
       label.appendChild(span);
       fieldset.appendChild(label);
     });
@@ -94,12 +94,12 @@ class ConditionalRegion {
 
   _buildConditionBuilder(conditions, logic, onChange) {
     const section = document.createElement('div');
-    section.style.cssText = 'border:1px solid #555;border-radius:6px;padding:10px;';
+    section.style.cssText = 'border:1px solid var(--panel-input-border, #555);border-radius:6px;padding:10px;';
 
     // Existing conditions
     conditions.forEach((cond, idx) => {
       const row = document.createElement('div');
-      row.style.cssText = 'display:flex;align-items:center;gap:4px;padding:4px 0;background:#2a2a2a;border-radius:4px;padding:6px;margin-bottom:4px;';
+      row.style.cssText = 'display:flex;align-items:center;gap:4px;padding:4px 0;background:var(--panel-card-bg, #2a2a2a);border-radius:4px;padding:6px;margin-bottom:4px;';
       row.innerHTML = `<span style="flex:1;font-size:12px;">${cond.field} ${cond.operator} ${cond.value || ''}</span>`;
       const removeBtn = document.createElement('button');
       removeBtn.textContent = 'X';
@@ -120,7 +120,7 @@ class ConditionalRegion {
     // Logic selector (AND/OR) - only show if conditions exist
     if (conditions.length > 0) {
       const logicSel = document.createElement('select');
-      logicSel.style.cssText = 'padding:4px;border-radius:3px;border:1px solid #555;font-size:11px;background:#333;color:#fff;';
+      logicSel.style.cssText = 'padding:4px;border-radius:3px;border:1px solid var(--panel-input-border, #555);font-size:11px;background:var(--panel-input-bg, #333);color:var(--panel-input-text, #fff);';
       logicSel.innerHTML = '<option value="and">AND</option><option value="or">OR</option>';
       logicSel.value = logic;
       logicSel.addEventListener('change', () => {
@@ -132,7 +132,7 @@ class ConditionalRegion {
 
     // Field select
     const fieldSel = document.createElement('select');
-    fieldSel.style.cssText = 'flex:1;min-width:80px;padding:4px;border-radius:3px;border:1px solid #555;font-size:11px;background:#333;color:#fff;';
+    fieldSel.style.cssText = 'flex:1;min-width:80px;padding:4px;border-radius:3px;border:1px solid var(--panel-input-border, #555);font-size:11px;background:var(--panel-input-bg, #333);color:var(--panel-input-text, #fff);';
     fieldSel.innerHTML = '<option value="">Field</option>';
     this.dataFields.forEach(f => {
       fieldSel.innerHTML += `<option value="${f.name}">${f.name}</option>`;
@@ -141,7 +141,7 @@ class ConditionalRegion {
 
     // Operator select
     const opSel = document.createElement('select');
-    opSel.style.cssText = 'padding:4px;border-radius:3px;border:1px solid #555;font-size:11px;background:#333;color:#fff;';
+    opSel.style.cssText = 'padding:4px;border-radius:3px;border:1px solid var(--panel-input-border, #555);font-size:11px;background:var(--panel-input-bg, #333);color:var(--panel-input-text, #fff);';
     opSel.innerHTML = `
       <option value="=">=</option>
       <option value="!=">!=</option>
@@ -158,7 +158,7 @@ class ConditionalRegion {
     const valInput = document.createElement('input');
     valInput.type = 'text';
     valInput.placeholder = 'Value';
-    valInput.style.cssText = 'flex:1;min-width:60px;padding:4px;border-radius:3px;border:1px solid #555;font-size:11px;background:#333;color:#fff;';
+    valInput.style.cssText = 'flex:1;min-width:60px;padding:4px;border-radius:3px;border:1px solid var(--panel-input-border, #555);font-size:11px;background:var(--panel-input-bg, #333);color:var(--panel-input-text, #fff);';
     addRow.appendChild(valInput);
 
     // Add button
@@ -227,7 +227,7 @@ class ConditionalRegion {
 
     // Otherwise note
     const note = document.createElement('div');
-    note.style.cssText = 'padding:8px;background:#374151;border-radius:4px;font-size:11px;color:#9ca3af;';
+    note.style.cssText = 'padding:8px;background:var(--panel-card-bg, #374151);border-radius:4px;font-size:11px;color:var(--bip-text-muted, #9ca3af);';
     note.innerHTML = '<strong style="color:#f59e0b;">Otherwise:</strong> Otomatik eklenir — hiçbir koşul doğru değilse gösterilecek varsayılan içerik.';
     wrapper.appendChild(note);
 

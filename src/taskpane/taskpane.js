@@ -486,67 +486,94 @@ function populateFieldPanel() {
 
   container.innerHTML = '';
 
-  function renderClickableTree(node, depth, parentEl) {
+  // Flatten tree into Query (group) → Row (fields) structure
+  const groups = [];
+  function collectGroups(node, path) {
     if (!node) return;
-    const div = document.createElement('div');
-    div.style.paddingLeft = (depth * 16) + 'px';
-
+    const currentPath = path ? `${path}/${node.name}` : node.name;
     const hasChildren = node.children && node.children.length > 0;
-    const isLeaf = !hasChildren;
 
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;border-radius:4px;font-size:13px;';
-    row.onmouseover = () => row.style.background = '#e8f0fe';
-    row.onmouseout = () => row.style.background = 'transparent';
-
-    // Icon
-    const icon = document.createElement('span');
-    icon.style.cssText = 'font-size:11px;width:14px;text-align:center;color:#666;';
-    icon.textContent = hasChildren ? '📁' : '📄';
-    row.appendChild(icon);
-
-    // Name
-    const label = document.createElement('span');
-    label.textContent = node.name || 'unknown';
-    label.style.cssText = isLeaf ? 'color:#0066cc;' : 'font-weight:600;color:#333;';
-    row.appendChild(label);
-
-    // Sample value
-    if (node.sampleValue) {
-      const sample = document.createElement('span');
-      sample.textContent = node.sampleValue.substring(0, 20);
-      sample.style.cssText = 'color:#999;font-size:11px;margin-left:auto;';
-      row.appendChild(sample);
-    }
-
-    div.appendChild(row);
-    parentEl.appendChild(div);
-
-    // Click handler: leaf nodes insert as ContentControl
-    if (isLeaf) {
-      row.addEventListener('click', () => insertFieldIntoDocument(node));
-    }
-
-    // Children container (collapsible)
     if (hasChildren) {
-      const childContainer = document.createElement('div');
-      childContainer.style.display = 'block';
-      node.children.forEach(child => renderClickableTree(child, depth + 1, childContainer));
-      div.appendChild(childContainer);
+      const leafChildren = node.children.filter(c => !c.children || c.children.length === 0);
+      const groupChildren = node.children.filter(c => c.children && c.children.length > 0);
 
-      // Toggle collapse
-      row.addEventListener('click', () => {
-        childContainer.style.display = childContainer.style.display === 'none' ? 'block' : 'none';
-        icon.textContent = childContainer.style.display === 'none' ? '📁' : '📂';
-      });
+      if (leafChildren.length > 0) {
+        groups.push({ name: node.name, path: currentPath, fields: leafChildren });
+      }
+      groupChildren.forEach(child => collectGroups(child, currentPath));
     }
   }
 
   const tree = AppState.fieldTree;
   const root = Array.isArray(tree) ? tree : [tree];
-  root.forEach(node => renderClickableTree(node, 0, container));
+  root.forEach(node => collectGroups(node, ''));
 
-  log('INFO', `Field panel populated with ${root.length} root nodes`);
+  // If no groups found, show flat list
+  if (groups.length === 0) {
+    const flatFields = [];
+    function collectAll(node) {
+      if (!node) return;
+      if (!node.children || node.children.length === 0) {
+        flatFields.push(node);
+      } else {
+        node.children.forEach(collectAll);
+      }
+    }
+    root.forEach(collectAll);
+    if (flatFields.length > 0) {
+      groups.push({ name: 'Fields', path: '', fields: flatFields });
+    }
+  }
+
+  groups.forEach((group) => {
+    // Group header
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:center;gap:6px;padding:8px 10px;cursor:pointer;border-radius:4px;margin-bottom:2px;background:var(--group-bg, #2a2a2a);';
+    header.innerHTML = `<span style="font-size:10px;color:var(--arrow-color, #aaa);">&#9660;</span><span style="font-weight:600;font-size:12px;color:var(--group-text, #e0e0e0);">${group.name}</span><span style="margin-left:auto;font-size:10px;color:var(--count-color, #888);">${group.fields.length} fields</span>`;
+    container.appendChild(header);
+
+    // Fields container
+    const fieldsDiv = document.createElement('div');
+    fieldsDiv.style.cssText = 'margin-bottom:8px;';
+
+    group.fields.forEach(field => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;padding:5px 10px 5px 24px;cursor:pointer;border-radius:3px;transition:background 0.15s;';
+
+      row.onmouseover = () => { row.style.background = 'var(--hover-bg, #333)'; };
+      row.onmouseout = () => { row.style.background = 'transparent'; };
+
+      // Field name
+      const name = document.createElement('span');
+      name.textContent = field.name;
+      name.style.cssText = 'font-size:12px;color:var(--field-color, #6ab0f3);font-weight:500;';
+      row.appendChild(name);
+
+      // Sample value (always show if available)
+      const val = field.sampleValue || field.textContent || '';
+      if (val) {
+        const sample = document.createElement('span');
+        sample.textContent = val.length > 25 ? val.substring(0, 25) + '...' : val;
+        sample.style.cssText = 'margin-left:auto;font-size:11px;color:var(--sample-color, #777);font-style:italic;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+        row.appendChild(sample);
+      }
+
+      row.addEventListener('click', () => insertFieldIntoDocument(field));
+      fieldsDiv.appendChild(row);
+    });
+
+    container.appendChild(fieldsDiv);
+
+    // Toggle collapse
+    let collapsed = false;
+    header.addEventListener('click', () => {
+      collapsed = !collapsed;
+      fieldsDiv.style.display = collapsed ? 'none' : 'block';
+      header.querySelector('span').innerHTML = collapsed ? '&#9654;' : '&#9660;';
+    });
+  });
+
+  log('INFO', `Field panel: ${groups.length} groups, ${groups.reduce((s, g) => s + g.fields.length, 0)} total fields`);
 }
 
 async function insertFieldIntoDocument(node) {
