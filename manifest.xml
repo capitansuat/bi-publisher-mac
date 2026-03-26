@@ -9,8 +9,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="BI Publisher"/>
   <Description DefaultValue="Oracle BI Publisher Template Builder for macOS — design report templates in Word."/>
-  <IconUrl DefaultValue="https://localhost:3000/images/ico-field-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/images/ico-field-80.png"/>
+  <IconUrl DefaultValue="https://localhost:3000/images/icon-app-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/images/icon-app-80.png"/>
   <SupportUrl DefaultValue="https://localhost:3000/taskpane.html"/>
 
   <Hosts><Host Name="Document"/></Hosts>
