@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="TaskPaneApp">
+
+  <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>BI Publisher Tools</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="BI Publisher"/>
+  <Description DefaultValue="Oracle BI Publisher Template Builder for macOS — design report templates in Word."/>
+  <IconUrl DefaultValue="https://localhost:3000/images/ico-field-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/images/ico-field-80.png"/>
+  <SupportUrl DefaultValue="https://localhost:3000/taskpane.html"/>
+
+  <Hosts><Host Name="Document"/></Hosts>
+  <DefaultSettings><SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/></DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+                    xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+                    xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+
+          <GetStarted>
+            <Title resid="getStarted.Title"/>
+            <Description resid="getStarted.Desc"/>
+            <LearnMoreUrl resid="url.taskpane"/>
+          </GetStarted>
+
+          <FunctionFile resid="url.commands"/>
+
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <CustomTab id="TabPublisher">
+
+              <!-- ============ LOAD DATA ============ -->
+              <Group id="grpLoadData">
+                <Label resid="grp.data"/>
+                <Icon><bt:Image size="16" resid="ico.samplexml.16"/><bt:Image size="32" resid="ico.samplexml.32"/><bt:Image size="80" resid="ico.samplexml.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnSampleXML">
+                  <Label resid="lbl.samplexml"/>
+                  <Supertip><Title resid="lbl.samplexml"/><Description resid="tip.samplexml"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.samplexml.16"/><bt:Image size="32" resid="ico.samplexml.32"/><bt:Image size="80" resid="ico.samplexml.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>BIP</TaskpaneId>
+                    <SourceLocation resid="url.samplexml"/>
+                  </Action>
+                </Control>
+
+              </Group>
+
+              <!-- ============ INSERT (6 buttons) ============ -->
+              <Group id="grpInsert">
+                <Label resid="grp.insert"/>
+                <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnField">
+                  <Label resid="lbl.field"/>
+                  <Supertip><Title resid="lbl.field"/><Description resid="tip.field"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.field.16"/><bt:Image size="32" resid="ico.field.32"/><bt:Image size="80" resid="ico.field.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.field"/></Action>
+                </Control>
+
+              </Group>
+
+              <!-- ============ TEMPLATE (3 buttons) ============ -->
+              <Group id="grpTemplate">
+                <Label resid="grp.template"/>
+                <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnRepGroup">
+                  <Label resid="lbl.repgroup"/>
+                  <Supertip><Title resid="lbl.repgroup"/><Description resid="tip.repgroup"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.repgroup.16"/><bt:Image size="32" resid="ico.repgroup.32"/><bt:Image size="80" resid="ico.repgroup.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.repgroup"/></Action>
+                </Control>
+
+                <Control xsi:type="Button" id="btnCondReg">
+                  <Label resid="lbl.condreg"/>
+                  <Supertip><Title resid="lbl.condreg"/><Description resid="tip.condreg"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.condreg.16"/><bt:Image size="32" resid="ico.condreg.32"/><bt:Image size="80" resid="ico.condreg.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.condreg"/></Action>
+                </Control>
+              </Group>
+
+              <!-- ============ PREVIEW ============ -->
+              <Group id="grpPreview">
+                <Label resid="grp.preview"/>
+                <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
+
+                <Control xsi:type="Button" id="btnPreview">
+                  <Label resid="lbl.preview"/>
+                  <Supertip><Title resid="lbl.preview"/><Description resid="tip.preview"/></Supertip>
+                  <Icon><bt:Image size="16" resid="ico.preview.16"/><bt:Image size="32" resid="ico.preview.32"/><bt:Image size="80" resid="ico.preview.80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>BIP</TaskpaneId><SourceLocation resid="url.preview"/></Action>
+                </Control>
+              </Group>
+
+              <Label resid="tab.publisher"/>
+            </CustomTab>
+          </ExtensionPoint>
+
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="ico.samplexml.16"    DefaultValue="https://localhost:3000/images/ico-samplexml-16.png"/>
+        <bt:Image id="ico.samplexml.32"    DefaultValue="https://localhost:3000/images/ico-samplexml-32.png"/>
+        <bt:Image id="ico.samplexml.80"    DefaultValue="https://localhost:3000/images/ico-samplexml-80.png"/>
+        <bt:Image id="ico.xmlschema.16"    DefaultValue="https://localhost:3000/images/ico-xmlschema-16.png"/>
+        <bt:Image id="ico.xmlschema.32"    DefaultValue="https://localhost:3000/images/ico-xmlschema-32.png"/>
+        <bt:Image id="ico.xmlschema.80"    DefaultValue="https://localhost:3000/images/ico-xmlschema-80.png"/>
+        <bt:Image id="ico.field.16"        DefaultValue="https://localhost:3000/images/ico-field-16.png"/>
+        <bt:Image id="ico.field.32"        DefaultValue="https://localhost:3000/images/ico-field-32.png"/>
+        <bt:Image id="ico.field.80"        DefaultValue="https://localhost:3000/images/ico-field-80.png"/>
+        <bt:Image id="ico.tablewiz.16"     DefaultValue="https://localhost:3000/images/ico-tablewiz-16.png"/>
+        <bt:Image id="ico.tablewiz.32"     DefaultValue="https://localhost:3000/images/ico-tablewiz-32.png"/>
+        <bt:Image id="ico.tablewiz.80"     DefaultValue="https://localhost:3000/images/ico-tablewiz-80.png"/>
+        <bt:Image id="ico.chart.16"        DefaultValue="https://localhost:3000/images/ico-chart-16.png"/>
+        <bt:Image id="ico.chart.32"        DefaultValue="https://localhost:3000/images/ico-chart-32.png"/>
+        <bt:Image id="ico.chart.80"        DefaultValue="https://localhost:3000/images/ico-chart-80.png"/>
+        <bt:Image id="ico.pivot.16"        DefaultValue="https://localhost:3000/images/ico-pivot-16.png"/>
+        <bt:Image id="ico.pivot.32"        DefaultValue="https://localhost:3000/images/ico-pivot-32.png"/>
+        <bt:Image id="ico.pivot.80"        DefaultValue="https://localhost:3000/images/ico-pivot-80.png"/>
+        <bt:Image id="ico.allfields.16"    DefaultValue="https://localhost:3000/images/ico-allfields-16.png"/>
+        <bt:Image id="ico.allfields.32"    DefaultValue="https://localhost:3000/images/ico-allfields-32.png"/>
+        <bt:Image id="ico.allfields.80"    DefaultValue="https://localhost:3000/images/ico-allfields-80.png"/>
+        <bt:Image id="ico.tableform.16"    DefaultValue="https://localhost:3000/images/ico-tableform-16.png"/>
+        <bt:Image id="ico.tableform.32"    DefaultValue="https://localhost:3000/images/ico-tableform-32.png"/>
+        <bt:Image id="ico.tableform.80"    DefaultValue="https://localhost:3000/images/ico-tableform-80.png"/>
+        <bt:Image id="ico.repgroup.16"     DefaultValue="https://localhost:3000/images/ico-repgroup-16.png"/>
+        <bt:Image id="ico.repgroup.32"     DefaultValue="https://localhost:3000/images/ico-repgroup-32.png"/>
+        <bt:Image id="ico.repgroup.80"     DefaultValue="https://localhost:3000/images/ico-repgroup-80.png"/>
+        <bt:Image id="ico.condfmt.16"      DefaultValue="https://localhost:3000/images/ico-condfmt-16.png"/>
+        <bt:Image id="ico.condfmt.32"      DefaultValue="https://localhost:3000/images/ico-condfmt-32.png"/>
+        <bt:Image id="ico.condfmt.80"      DefaultValue="https://localhost:3000/images/ico-condfmt-80.png"/>
+        <bt:Image id="ico.condreg.16"      DefaultValue="https://localhost:3000/images/ico-condreg-16.png"/>
+        <bt:Image id="ico.condreg.32"      DefaultValue="https://localhost:3000/images/ico-condreg-32.png"/>
+        <bt:Image id="ico.condreg.80"      DefaultValue="https://localhost:3000/images/ico-condreg-80.png"/>
+        <bt:Image id="ico.preview.16"      DefaultValue="https://localhost:3000/images/ico-preview-16.png"/>
+        <bt:Image id="ico.preview.32"      DefaultValue="https://localhost:3000/images/ico-preview-32.png"/>
+        <bt:Image id="ico.preview.80"      DefaultValue="https://localhost:3000/images/ico-preview-80.png"/>
+        <bt:Image id="ico.options.16"      DefaultValue="https://localhost:3000/images/ico-options-16.png"/>
+        <bt:Image id="ico.options.32"      DefaultValue="https://localhost:3000/images/ico-options-32.png"/>
+        <bt:Image id="ico.options.80"      DefaultValue="https://localhost:3000/images/ico-options-80.png"/>
+        <bt:Image id="ico.about.16"        DefaultValue="https://localhost:3000/images/ico-about-16.png"/>
+        <bt:Image id="ico.about.32"        DefaultValue="https://localhost:3000/images/ico-about-32.png"/>
+        <bt:Image id="ico.about.80"        DefaultValue="https://localhost:3000/images/ico-about-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="url.commands"     DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="url.taskpane"     DefaultValue="https://localhost:3000/taskpane.html"/>
+        <bt:Url id="url.samplexml"    DefaultValue="https://localhost:3000/taskpane.html?panel=sample-xml"/>
+        <bt:Url id="url.xmlschema"    DefaultValue="https://localhost:3000/taskpane.html?panel=xml-schema"/>
+        <bt:Url id="url.field"        DefaultValue="https://localhost:3000/taskpane.html?panel=insert-field"/>
+        <bt:Url id="url.tablewiz"     DefaultValue="https://localhost:3000/taskpane.html?panel=table-wizard"/>
+        <bt:Url id="url.chart"        DefaultValue="https://localhost:3000/taskpane.html?panel=chart"/>
+        <bt:Url id="url.pivot"        DefaultValue="https://localhost:3000/taskpane.html?panel=pivot-table"/>
+        <bt:Url id="url.allfields"    DefaultValue="https://localhost:3000/taskpane.html?panel=all-fields"/>
+        <bt:Url id="url.tableform"    DefaultValue="https://localhost:3000/taskpane.html?panel=table-form"/>
+        <bt:Url id="url.repgroup"     DefaultValue="https://localhost:3000/taskpane.html?panel=repeating-group"/>
+        <bt:Url id="url.condfmt"      DefaultValue="https://localhost:3000/taskpane.html?panel=conditional-format"/>
+        <bt:Url id="url.condreg"      DefaultValue="https://localhost:3000/taskpane.html?panel=conditional-region"/>
+        <bt:Url id="url.preview"     DefaultValue="https://localhost:3000/taskpane.html?panel=preview"/>
+        <bt:Url id="url.options"      DefaultValue="https://localhost:3000/taskpane.html?panel=options"/>
+        <bt:Url id="url.about"        DefaultValue="https://localhost:3000/taskpane.html?panel=about"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="tab.publisher"    DefaultValue="Publisher"/>
+        <bt:String id="grp.data"         DefaultValue="Load Data"/>
+        <bt:String id="grp.insert"       DefaultValue="Insert"/>
+        <bt:String id="grp.template"     DefaultValue="Template"/>
+        <bt:String id="grp.options"      DefaultValue="Options"/>
+        <bt:String id="lbl.samplexml"    DefaultValue="Sample XML"/>
+        <bt:String id="lbl.xmlschema"    DefaultValue="XML Schema"/>
+        <bt:String id="lbl.field"        DefaultValue="Field"/>
+        <bt:String id="lbl.tablewiz"     DefaultValue="Table Wizard"/>
+        <bt:String id="lbl.chart"        DefaultValue="Chart"/>
+        <bt:String id="lbl.pivot"        DefaultValue="Pivot Table"/>
+        <bt:String id="lbl.tableform"    DefaultValue="Table/Form"/>
+        <bt:String id="lbl.repgroup"     DefaultValue="Repeating Group"/>
+        <bt:String id="lbl.condfmt"      DefaultValue="Conditional Format"/>
+        <bt:String id="lbl.condreg"      DefaultValue="Conditional Region"/>
+        <bt:String id="lbl.allfields"    DefaultValue="All Fields"/>
+        <bt:String id="grp.preview"     DefaultValue="Preview"/>
+        <bt:String id="lbl.preview"     DefaultValue="Preview PDF"/>
+        <bt:String id="lbl.options"      DefaultValue="Options"/>
+        <bt:String id="lbl.about"        DefaultValue="About"/>
+        <bt:String id="getStarted.Title" DefaultValue="BI Publisher Template Builder"/>
+        <bt:String id="lbl.ctx.bip"      DefaultValue="BI Publisher"/>
+        <bt:String id="lbl.ctx.props"    DefaultValue="Field Properties..."/>
+        <bt:String id="lbl.ctx.field"    DefaultValue="Insert Field"/>
+        <bt:String id="lbl.ctx.repgroup" DefaultValue="Repeating Group"/>
+        <bt:String id="lbl.ctx.condreg"  DefaultValue="Conditional Region"/>
+        <bt:String id="lbl.ctx.condfmt"  DefaultValue="Conditional Format"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="tip.samplexml"    DefaultValue="Load sample XML data file"/>
+        <bt:String id="tip.xmlschema"    DefaultValue="Load an XML Schema (.xsd) file"/>
+        <bt:String id="tip.field"        DefaultValue="Insert a data field placeholder"/>
+        <bt:String id="tip.tablewiz"     DefaultValue="Step-by-step wizard to create data tables"/>
+        <bt:String id="tip.chart"        DefaultValue="Insert a chart to visualize data"/>
+        <bt:String id="tip.pivot"        DefaultValue="Create a cross-tabulation (pivot table)"/>
+        <bt:String id="tip.tableform"    DefaultValue="Insert a table or form layout"/>
+        <bt:String id="tip.repgroup"     DefaultValue="Define repeating sections"/>
+        <bt:String id="tip.condfmt"      DefaultValue="Apply formatting based on conditions"/>
+        <bt:String id="tip.condreg"      DefaultValue="Show or hide regions based on conditions"/>
+        <bt:String id="tip.allfields"    DefaultValue="Insert all fields from the data source"/>
+        <bt:String id="tip.preview"     DefaultValue="Preview template as PDF with loaded data"/>
+        <bt:String id="tip.options"      DefaultValue="Configure add-in preferences"/>
+        <bt:String id="tip.about"        DefaultValue="About BI Publisher Template Builder"/>
+        <bt:String id="getStarted.Desc"  DefaultValue="Design Oracle BI Publisher report templates directly in Word."/>
+        <bt:String id="tip.ctx.bip"      DefaultValue="BI Publisher template actions"/>
+        <bt:String id="tip.ctx.props"    DefaultValue="View and edit properties of the selected BI Publisher field"/>
+        <bt:String id="tip.ctx.field"    DefaultValue="Insert a BI Publisher field tag at cursor position"/>
+        <bt:String id="tip.ctx.repgroup" DefaultValue="Wrap selected text in a repeating group"/>
+        <bt:String id="tip.ctx.condreg"  DefaultValue="Wrap selected text in a conditional region"/>
+        <bt:String id="tip.ctx.condfmt"  DefaultValue="Apply conditional formatting to selected text"/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
