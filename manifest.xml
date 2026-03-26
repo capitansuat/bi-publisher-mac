@@ -8,10 +8,11 @@
   <ProviderName>BI Publisher Tools</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="BI Publisher"/>
-  <Description DefaultValue="Oracle BI Publisher Template Builder for macOS — design report templates in Word."/>
+  <Description DefaultValue="BI Publisher Template Builder for macOS — design report templates in Word."/>
   <IconUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-app-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/images/icon-app-80.png"/>
   <SupportUrl DefaultValue="https://capitansuat.github.io/bi-publisher-mac/"/>
+  <AppDomains><AppDomain>https://capitansuat.github.io</AppDomain></AppDomains>
 
   <Hosts><Host Name="Document"/></Hosts>
   <DefaultSettings><SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/></DefaultSettings>
@@ -215,7 +216,7 @@
         <bt:String id="tip.preview"     DefaultValue="Preview template as PDF with loaded data"/>
         <bt:String id="tip.options"      DefaultValue="Configure add-in preferences"/>
         <bt:String id="tip.about"        DefaultValue="About BI Publisher Template Builder"/>
-        <bt:String id="getStarted.Desc"  DefaultValue="Design Oracle BI Publisher report templates directly in Word."/>
+        <bt:String id="getStarted.Desc"  DefaultValue="Design BI Publisher report templates directly in Word."/>
         <bt:String id="tip.ctx.bip"      DefaultValue="BI Publisher template actions"/>
         <bt:String id="tip.ctx.props"    DefaultValue="View and edit properties of the selected BI Publisher field"/>
         <bt:String id="tip.ctx.field"    DefaultValue="Insert a BI Publisher field tag at cursor position"/>
